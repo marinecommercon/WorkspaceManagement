@@ -23,6 +23,13 @@
 		3080948E1CAD5C7600B81DF0 /* page1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3080948A1CAD5C7600B81DF0 /* page1.png */; };
 		3080948F1CAD5C7600B81DF0 /* page2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3080948B1CAD5C7600B81DF0 /* page2.png */; };
 		308094901CAD5C7600B81DF0 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3080948C1CAD5C7600B81DF0 /* placeholder.png */; };
+		7810F8D81CAE918C00B259D3 /* Mapwize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7810F8D71CAE918C00B259D3 /* Mapwize.framework */; };
+		7810F8DA1CAE91A200B259D3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7810F8D91CAE91A200B259D3 /* CoreLocation.framework */; };
+		7810F8DC1CAE936900B259D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7810F8DB1CAE936900B259D3 /* CoreGraphics.framework */; };
+		7810F8DE1CAE937300B259D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7810F8DD1CAE937300B259D3 /* UIKit.framework */; };
+		7810F8E01CAE938100B259D3 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7810F8DF1CAE938100B259D3 /* CoreFoundation.framework */; };
+		7810F8E21CAE938900B259D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7810F8E11CAE938800B259D3 /* Foundation.framework */; };
+		A8BB2B838BDBD2A955E9D1D6 /* Pods_WorkspaceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73C7F5B83C8488D059645B4E /* Pods_WorkspaceManagement.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +56,15 @@
 		3080948A1CAD5C7600B81DF0 /* page1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page1.png; sourceTree = "<group>"; };
 		3080948B1CAD5C7600B81DF0 /* page2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page2.png; sourceTree = "<group>"; };
 		3080948C1CAD5C7600B81DF0 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
+		600ADB83DDE49F4708A05E9C /* Pods-WorkspaceManagement.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkspaceManagement.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WorkspaceManagement/Pods-WorkspaceManagement.debug.xcconfig"; sourceTree = "<group>"; };
+		73C7F5B83C8488D059645B4E /* Pods_WorkspaceManagement.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkspaceManagement.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7810F8D71CAE918C00B259D3 /* Mapwize.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapwize.framework; path = "Pods/../build/Debug-iphoneos/Mapwize.framework"; sourceTree = "<group>"; };
+		7810F8D91CAE91A200B259D3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		7810F8DB1CAE936900B259D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		7810F8DD1CAE937300B259D3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		7810F8DF1CAE938100B259D3 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		7810F8E11CAE938800B259D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		992E6CEDB193423AE207F1E4 /* Pods-WorkspaceManagement.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkspaceManagement.release.xcconfig"; path = "Pods/Target Support Files/Pods-WorkspaceManagement/Pods-WorkspaceManagement.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +72,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7810F8E21CAE938900B259D3 /* Foundation.framework in Frameworks */,
+				7810F8E01CAE938100B259D3 /* CoreFoundation.framework in Frameworks */,
+				7810F8DE1CAE937300B259D3 /* UIKit.framework in Frameworks */,
+				7810F8DC1CAE936900B259D3 /* CoreGraphics.framework in Frameworks */,
+				7810F8DA1CAE91A200B259D3 /* CoreLocation.framework in Frameworks */,
+				7810F8D81CAE918C00B259D3 /* Mapwize.framework in Frameworks */,
+				A8BB2B838BDBD2A955E9D1D6 /* Pods_WorkspaceManagement.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +90,8 @@
 			children = (
 				301832AB1CAD22A100964F60 /* WorkspaceManagement */,
 				301832AA1CAD22A100964F60 /* Products */,
+				FE716178EF97C873771B00DD /* Pods */,
+				EC82A11E1696FD062DE03708 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,6 +156,29 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		EC82A11E1696FD062DE03708 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7810F8E11CAE938800B259D3 /* Foundation.framework */,
+				7810F8DF1CAE938100B259D3 /* CoreFoundation.framework */,
+				7810F8DD1CAE937300B259D3 /* UIKit.framework */,
+				7810F8DB1CAE936900B259D3 /* CoreGraphics.framework */,
+				7810F8D91CAE91A200B259D3 /* CoreLocation.framework */,
+				7810F8D71CAE918C00B259D3 /* Mapwize.framework */,
+				73C7F5B83C8488D059645B4E /* Pods_WorkspaceManagement.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FE716178EF97C873771B00DD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				600ADB83DDE49F4708A05E9C /* Pods-WorkspaceManagement.debug.xcconfig */,
+				992E6CEDB193423AE207F1E4 /* Pods-WorkspaceManagement.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -138,9 +186,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 301832C31CAD22A100964F60 /* Build configuration list for PBXNativeTarget "WorkspaceManagement" */;
 			buildPhases = (
+				377F2C006966C4CA9138F39F /* Check Pods Manifest.lock */,
 				301832A51CAD22A100964F60 /* Sources */,
 				301832A61CAD22A100964F60 /* Frameworks */,
 				301832A71CAD22A100964F60 /* Resources */,
+				D0411FD4B9EFA2DB4BF23860 /* Embed Pods Frameworks */,
+				A3D9EC1B80A8C6FAA041894D /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -201,6 +252,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		377F2C006966C4CA9138F39F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A3D9EC1B80A8C6FAA041894D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WorkspaceManagement/Pods-WorkspaceManagement-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D0411FD4B9EFA2DB4BF23860 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WorkspaceManagement/Pods-WorkspaceManagement-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		301832A51CAD22A100964F60 /* Sources */ = {
@@ -323,9 +422,14 @@
 		};
 		301832C41CAD22A100964F60 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 600ADB83DDE49F4708A05E9C /* Pods-WorkspaceManagement.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = WorkspaceManagement/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -336,12 +440,18 @@
 		};
 		301832C51CAD22A100964F60 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 992E6CEDB193423AE207F1E4 /* Pods-WorkspaceManagement.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = WorkspaceManagement/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = docapost.WorkspaceManagement;
 				PRODUCT_NAME = WorkspaceManagement;
 			};
