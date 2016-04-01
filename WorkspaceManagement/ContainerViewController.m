@@ -87,18 +87,12 @@ alpha:1.0]
     
     UISwipeGestureRecognizer *recognizer;
     
-    recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                           action:@selector(handleSwipeFrom:)];
+    recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
-    [[self viewSlider] addGestureRecognizer:recognizer];
-    
-    recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                           action:@selector(handleSwipeFrom:)];
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
     [[self viewSlider] addGestureRecognizer:recognizer];
     
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                           action:@selector(sliderTapped:)];
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sliderTapped:)];
     [self.viewSlider addGestureRecognizer:tapGestureRecognizer];
     
     UIImage *sliderMinTrackImage = [UIImage imageNamed: @"B2.png"];
@@ -109,6 +103,15 @@ alpha:1.0]
     
     [slider setMinimumTrackImage:sliderMinTrackImage forState:UIControlStateNormal];
     [slider setMaximumTrackImage:sliderMaxTrackImage forState:UIControlStateNormal];
+    
+    UITapGestureRecognizer *tripleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tripleTapped:)];
+    tripleTapGestureRecognizer.numberOfTapsRequired = 3;
+    [self.carousel addGestureRecognizer:tripleTapGestureRecognizer];
+}
+
+- (void) tripleTapped:(UIGestureRecognizer *)gestureRecognizer {
+    DSIViewController *newView = [self.storyboard instantiateViewControllerWithIdentifier:@"DSIViewController"];
+    [self.navigationController pushViewController:newView animated:YES];
 }
 
 

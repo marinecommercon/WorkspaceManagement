@@ -27,16 +27,13 @@
     [self initContainerSwipeGesture];
     
     floor = 1;
-    
     [self initMap];
 
 
     
 }
-
 - (void)initMap
 {
-    
     locationManager = [[CLLocationManager alloc] init];
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
     

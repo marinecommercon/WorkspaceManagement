@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
+#import "DSIViewController.h"
 
 @interface ContainerViewController : UIViewController <iCarouselDataSource, iCarouselDelegate>
 
