@@ -101,25 +101,61 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cSp-na-CDK">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <subviews>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="TJE-HJ-RDh">
+                                        <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
+                                    </slider>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="TJE-HJ-RDh" firstAttribute="width" secondItem="cSp-na-CDK" secondAttribute="width" multiplier="0.9" id="9TZ-8q-n0s">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                    </constraint>
+                                    <constraint firstItem="TJE-HJ-RDh" firstAttribute="centerX" secondItem="cSp-na-CDK" secondAttribute="centerX" id="Ma8-f0-0wY"/>
+                                    <constraint firstItem="TJE-HJ-RDh" firstAttribute="centerY" secondItem="cSp-na-CDK" secondAttribute="centerY" id="dXR-YQ-w5c"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="TJE-HJ-RDh"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <exclude reference="9TZ-8q-n0s"/>
+                                        <exclude reference="Ma8-f0-0wY"/>
+                                        <exclude reference="dXR-YQ-w5c"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="subviews">
+                                        <include reference="TJE-HJ-RDh"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <include reference="9TZ-8q-n0s"/>
+                                        <include reference="Ma8-f0-0wY"/>
+                                        <include reference="dXR-YQ-w5c"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="cSp-na-CDK" firstAttribute="centerY" secondItem="opy-uH-0se" secondAttribute="centerY" multiplier="0.34" id="6cY-o1-dPh"/>
+                            <constraint firstItem="cSp-na-CDK" firstAttribute="centerY" secondItem="opy-uH-0se" secondAttribute="centerY" multiplier="0.39" id="6cY-o1-dPh">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstItem="qQS-DY-dqh" firstAttribute="height" secondItem="opy-uH-0se" secondAttribute="height" multiplier="0.1" id="Bup-97-suy">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="qQS-DY-dqh" firstAttribute="centerX" secondItem="opy-uH-0se" secondAttribute="centerX" id="EEm-LV-ub3"/>
+                            <constraint firstItem="cSp-na-CDK" firstAttribute="leading" secondItem="opy-uH-0se" secondAttribute="leading" id="QUJ-dm-dRu"/>
                             <constraint firstItem="qQS-DY-dqh" firstAttribute="width" secondItem="opy-uH-0se" secondAttribute="width" id="ZgO-OL-yeA">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="cSp-na-CDK" firstAttribute="width" secondItem="opy-uH-0se" secondAttribute="width" id="hTo-ev-mj6"/>
                             <constraint firstItem="qQS-DY-dqh" firstAttribute="centerY" secondItem="opy-uH-0se" secondAttribute="centerY" multiplier="0.1" id="kdW-Vy-0b2"/>
                             <constraint firstItem="cSp-na-CDK" firstAttribute="centerX" secondItem="opy-uH-0se" secondAttribute="centerX" id="kk1-BL-DUa"/>
-                            <constraint firstItem="cSp-na-CDK" firstAttribute="height" secondItem="opy-uH-0se" secondAttribute="height" multiplier="0.1" id="sdI-Zu-XmA">
+                            <constraint firstItem="cSp-na-CDK" firstAttribute="height" secondItem="opy-uH-0se" secondAttribute="height" multiplier="0.12" id="sdI-Zu-XmA">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
+                            <constraint firstAttribute="trailing" secondItem="cSp-na-CDK" secondAttribute="trailing" id="txI-X5-lxF"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -127,14 +163,16 @@
                                 <exclude reference="cSp-na-CDK"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="6cY-o1-dPh"/>
-                                <exclude reference="hTo-ev-mj6"/>
-                                <exclude reference="kk1-BL-DUa"/>
-                                <exclude reference="sdI-Zu-XmA"/>
                                 <exclude reference="Bup-97-suy"/>
                                 <exclude reference="EEm-LV-ub3"/>
                                 <exclude reference="ZgO-OL-yeA"/>
                                 <exclude reference="kdW-Vy-0b2"/>
+                                <exclude reference="6cY-o1-dPh"/>
+                                <exclude reference="QUJ-dm-dRu"/>
+                                <exclude reference="hTo-ev-mj6"/>
+                                <exclude reference="kk1-BL-DUa"/>
+                                <exclude reference="sdI-Zu-XmA"/>
+                                <exclude reference="txI-X5-lxF"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -143,19 +181,23 @@
                                 <include reference="cSp-na-CDK"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="6cY-o1-dPh"/>
-                                <include reference="hTo-ev-mj6"/>
-                                <include reference="kk1-BL-DUa"/>
-                                <include reference="sdI-Zu-XmA"/>
                                 <include reference="Bup-97-suy"/>
                                 <include reference="EEm-LV-ub3"/>
                                 <include reference="ZgO-OL-yeA"/>
                                 <include reference="kdW-Vy-0b2"/>
+                                <include reference="6cY-o1-dPh"/>
+                                <include reference="QUJ-dm-dRu"/>
+                                <include reference="hTo-ev-mj6"/>
+                                <include reference="kk1-BL-DUa"/>
+                                <include reference="sdI-Zu-XmA"/>
+                                <include reference="txI-X5-lxF"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="carousel" destination="qQS-DY-dqh" id="hrK-H3-MXt"/>
+                        <outlet property="slider" destination="TJE-HJ-RDh" id="qd1-eR-cr7"/>
+                        <outlet property="viewSlider" destination="cSp-na-CDK" id="7wp-gF-cm4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T2g-LH-KUj" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -13,4 +13,8 @@
 
 @property (nonatomic, strong) IBOutlet iCarousel *carousel;
 
+@property (weak, nonatomic) IBOutlet UISlider *slider;
+
+@property (strong, nonatomic) IBOutlet UIView *viewSlider;
+
 @end

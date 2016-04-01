@@ -15,6 +15,8 @@
 		301832BC1CAD22A100964F60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 301832BB1CAD22A100964F60 /* Assets.xcassets */; };
 		301832BF1CAD22A100964F60 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 301832BD1CAD22A100964F60 /* LaunchScreen.storyboard */; };
 		307599D11CAD4A3100EEA408 /* CustomNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 307599D01CAD4A3100EEA408 /* CustomNavigationBar.m */; };
+		307BF04D1CAE6B3200E02B3F /* B1.png in Resources */ = {isa = PBXBuildFile; fileRef = 307BF04B1CAE6B3200E02B3F /* B1.png */; };
+		307BF04E1CAE6B3200E02B3F /* B2.png in Resources */ = {isa = PBXBuildFile; fileRef = 307BF04C1CAE6B3200E02B3F /* B2.png */; };
 		308094841CAD4C6400B81DF0 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 308094831CAD4C6400B81DF0 /* iCarousel.m */; };
 		308094871CAD4D7000B81DF0 /* ContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 308094861CAD4D7000B81DF0 /* ContainerViewController.m */; };
 		3080948D1CAD5C7600B81DF0 /* page.png in Resources */ = {isa = PBXBuildFile; fileRef = 308094891CAD5C7600B81DF0 /* page.png */; };
@@ -37,6 +39,8 @@
 		301832C01CAD22A100964F60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		307599CF1CAD4A3100EEA408 /* CustomNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationBar.h; sourceTree = "<group>"; };
 		307599D01CAD4A3100EEA408 /* CustomNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationBar.m; sourceTree = "<group>"; };
+		307BF04B1CAE6B3200E02B3F /* B1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = B1.png; sourceTree = "<group>"; };
+		307BF04C1CAE6B3200E02B3F /* B2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = B2.png; sourceTree = "<group>"; };
 		308094821CAD4C6400B81DF0 /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		308094831CAD4C6400B81DF0 /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		308094851CAD4D7000B81DF0 /* ContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContainerViewController.h; sourceTree = "<group>"; };
@@ -117,6 +121,8 @@
 		308094881CAD5C7600B81DF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				307BF04B1CAE6B3200E02B3F /* B1.png */,
+				307BF04C1CAE6B3200E02B3F /* B2.png */,
 				308094891CAD5C7600B81DF0 /* page.png */,
 				3080948A1CAD5C7600B81DF0 /* page1.png */,
 				3080948B1CAD5C7600B81DF0 /* page2.png */,
@@ -186,9 +192,11 @@
 				3080948E1CAD5C7600B81DF0 /* page1.png in Resources */,
 				301832BF1CAD22A100964F60 /* LaunchScreen.storyboard in Resources */,
 				301832BC1CAD22A100964F60 /* Assets.xcassets in Resources */,
+				307BF04D1CAE6B3200E02B3F /* B1.png in Resources */,
 				308094901CAD5C7600B81DF0 /* placeholder.png in Resources */,
 				301832B71CAD22A100964F60 /* Main.storyboard in Resources */,
 				3080948F1CAD5C7600B81DF0 /* page2.png in Resources */,
+				307BF04E1CAE6B3200E02B3F /* B2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,6 +15,9 @@ alpha:1.0]
 #import "ContainerViewController.h"
 
 @interface ContainerViewController ()
+{
+    NSArray *numbers;
+}
 
 @property (nonatomic, strong) NSMutableArray *items;
 
@@ -23,8 +26,9 @@ alpha:1.0]
 @implementation ContainerViewController
 
 @synthesize carousel;
-
 @synthesize items;
+@synthesize slider;
+@synthesize viewSlider;
 
 - (void)awakeFromNib
 {
@@ -69,6 +73,76 @@ alpha:1.0]
     [super viewDidLoad];
     carousel.type = iCarouselTypeLinear;
     [self.carousel scrollToItemAtIndex:4 animated:NO];
+    
+    numbers = @[@(0), @(1), @(2), @(3), @(4)];
+    NSInteger numberOfSteps = ((float)[numbers count] - 1);
+    
+    slider.maximumValue = numberOfSteps;
+    slider.minimumValue = 0;
+    slider.continuous = YES;
+    
+    [slider addTarget:self
+               action:@selector(valueChanged:)
+     forControlEvents:UIControlEventValueChanged];
+    
+    UISwipeGestureRecognizer *recognizer;
+    
+    recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                           action:@selector(handleSwipeFrom:)];
+    [recognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
+    [[self viewSlider] addGestureRecognizer:recognizer];
+    
+    recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                           action:@selector(handleSwipeFrom:)];
+    [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
+    [[self viewSlider] addGestureRecognizer:recognizer];
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                           action:@selector(sliderTapped:)];
+    [self.viewSlider addGestureRecognizer:tapGestureRecognizer];
+    
+    UIImage *sliderMinTrackImage = [UIImage imageNamed: @"B2.png"];
+    UIImage *sliderMaxTrackImage = [UIImage imageNamed: @"B1.png"];
+    
+    sliderMinTrackImage = [sliderMinTrackImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 22)];
+    sliderMaxTrackImage = [sliderMaxTrackImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 22)];
+    
+    [slider setMinimumTrackImage:sliderMinTrackImage forState:UIControlStateNormal];
+    [slider setMaximumTrackImage:sliderMaxTrackImage forState:UIControlStateNormal];
+}
+
+
+- (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer
+{
+    CGPoint pointTaped = [gestureRecognizer locationInView:gestureRecognizer.view];
+    CGPoint positionOfSlider = slider.frame.origin;
+    
+    float widthOfSlider = slider.frame.size.width;
+    float newValue = ((pointTaped.x - positionOfSlider.x) * slider.maximumValue) / widthOfSlider;
+    int closedPoint = (int)roundf(newValue);
+    [slider setValue:closedPoint];
+}
+
+-(void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer
+{
+    if (recognizer.direction == UISwipeGestureRecognizerDirectionRight)
+    {
+        slider.value = slider.value + 1;
+    }
+    
+    if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft)
+    {
+        slider.value = slider.value - 1;
+    }
+}
+
+- (void)valueChanged:(UISlider *)sender
+{
+    NSUInteger index = (NSUInteger)(slider.value + 0.5);
+    [slider setValue:index animated:NO];
+    NSNumber *number = numbers[index];
+    NSLog(@"Index: %i", (int)index);
+    NSLog(@"Number: %@", number);
 }
 
 - (void)viewDidUnload
@@ -113,19 +187,12 @@ alpha:1.0]
         label = (UILabel *)[view viewWithTag:1];
     }
     
-    //Set label from array
     label.text = items[index];
     
-    //Detecter position centrale
     if (index == self.carousel.currentItemIndex)
     {
-        //Changement de font/couleur des items
         label.font = [label.font fontWithSize:20];
-        
-        //Changement de font/couleur des items
         label.textColor = UIColorFromRGB(0x24b270);
-        
-        //Ajout d'images en fonction de la position
         ((UIImageView *)view).image = [UIImage imageNamed:@"page1.png"];
     }
     
