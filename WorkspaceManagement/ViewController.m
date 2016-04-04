@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "FilterViewController.h"
 #import "DSIViewController.h"
+#import "CCMPopup/CCMPopupTransitioning.h"
+#import "PopupDetailController.h"
 
 @interface ViewController ()
 
@@ -31,9 +33,8 @@
     floor = 1;
     [self initMap];
 
-
-    
 }
+
 - (void)initMap
 {
     locationManager = [[CLLocationManager alloc] init];
@@ -144,6 +145,19 @@
 - (void) map:(MWZMapView*) map didClickOnPlace:(MWZPlace*) place {
     [myMapView access: @"h14aEHT8O6OvxoNo"];
     [myMapView centerOnCoordinates:@48.82594334079911 longitude:@2.259484827518463 floor:@5 zoom:@19];
+    
+    UIViewController *presentingController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"PopupDetailController"];
+    
+    CCMPopupTransitioning *popup = [CCMPopupTransitioning sharedInstance];
+    popup.destinationBounds = CGRectMake(0, 0, self.view.frame.size.width / 1.19, self.view.frame.size.height / 1.2);
+    popup.presentedController = presentingController;
+    popup.presentingController = self;
+    popup.dismissableByTouchingBackground = YES;
+    popup.backgroundBlurRadius = 0;
+    popup.backgroundViewAlpha = 0.7;
+    popup.backgroundViewColor = [UIColor blackColor];
+    [self presentViewController:presentingController animated:YES completion:nil];
+    
 }
 
 - (void) map:(MWZMapView*) map didClickOnVenue:(MWZVenue*) venue {

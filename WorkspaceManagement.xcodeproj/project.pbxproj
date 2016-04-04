@@ -17,6 +17,7 @@
 		307599D11CAD4A3100EEA408 /* CustomNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 307599D01CAD4A3100EEA408 /* CustomNavigationBar.m */; };
 		308094841CAD4C6400B81DF0 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 308094831CAD4C6400B81DF0 /* iCarousel.m */; };
 		308094871CAD4D7000B81DF0 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 308094861CAD4D7000B81DF0 /* FilterViewController.m */; };
+		30A3CD561CB26558005A5203 /* PopupDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A3CD551CB26558005A5203 /* PopupDetailController.m */; };
 		7810F8D81CAE918C00B259D3 /* Mapwize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7810F8D71CAE918C00B259D3 /* Mapwize.framework */; };
 		7810F8DA1CAE91A200B259D3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7810F8D91CAE91A200B259D3 /* CoreLocation.framework */; };
 		7810F8DC1CAE936900B259D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7810F8DB1CAE936900B259D3 /* CoreGraphics.framework */; };
@@ -48,6 +49,8 @@
 		308094831CAD4C6400B81DF0 /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		308094851CAD4D7000B81DF0 /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
 		308094861CAD4D7000B81DF0 /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
+		30A3CD541CB26558005A5203 /* PopupDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupDetailController.h; sourceTree = "<group>"; };
+		30A3CD551CB26558005A5203 /* PopupDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupDetailController.m; sourceTree = "<group>"; };
 		600ADB83DDE49F4708A05E9C /* Pods-WorkspaceManagement.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkspaceManagement.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WorkspaceManagement/Pods-WorkspaceManagement.debug.xcconfig"; sourceTree = "<group>"; };
 		73C7F5B83C8488D059645B4E /* Pods_WorkspaceManagement.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorkspaceManagement.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7810F8D71CAE918C00B259D3 /* Mapwize.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapwize.framework; path = "Pods/../build/Debug-iphoneos/Mapwize.framework"; sourceTree = "<group>"; };
@@ -118,6 +121,8 @@
 				308094861CAD4D7000B81DF0 /* FilterViewController.m */,
 				7810F8FB1CAEC11900B259D3 /* DSIViewController.h */,
 				7810F8FC1CAEC11900B259D3 /* DSIViewController.m */,
+				30A3CD541CB26558005A5203 /* PopupDetailController.h */,
+				30A3CD551CB26558005A5203 /* PopupDetailController.m */,
 				301832B51CAD22A100964F60 /* Main.storyboard */,
 				301832BB1CAD22A100964F60 /* Assets.xcassets */,
 				301832BD1CAD22A100964F60 /* LaunchScreen.storyboard */,
@@ -309,6 +314,7 @@
 				307599D11CAD4A3100EEA408 /* CustomNavigationBar.m in Sources */,
 				308094841CAD4C6400B81DF0 /* iCarousel.m in Sources */,
 				7810F8EC1CAEAEB800B259D3 /* Reservation.m in Sources */,
+				30A3CD561CB26558005A5203 /* PopupDetailController.m in Sources */,
 				7810F8FD1CAEC11900B259D3 /* DSIViewController.m in Sources */,
 				301832B11CAD22A100964F60 /* AppDelegate.m in Sources */,
 				7810F8E61CAEADB400B259D3 /* Room.m in Sources */,
