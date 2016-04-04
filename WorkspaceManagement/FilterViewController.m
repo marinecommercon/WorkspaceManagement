@@ -12,9 +12,9 @@ green:((float)((rgbValue & 0x00FF00) >>  8))/255.0 \
 blue:((float)((rgbValue & 0x0000FF) >>  0))/255.0 \
 alpha:1.0]
 
-#import "ContainerViewController.h"
+#import "FilterViewController.h"
 
-@interface ContainerViewController ()
+@interface FilterViewController ()
 {
     NSArray *numbers;
 }
@@ -23,7 +23,7 @@ alpha:1.0]
 
 @end
 
-@implementation ContainerViewController
+@implementation FilterViewController
 
 @synthesize carousel;
 @synthesize items;
@@ -95,8 +95,8 @@ alpha:1.0]
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sliderTapped:)];
     [self.viewSlider addGestureRecognizer:tapGestureRecognizer];
     
-    UIImage *sliderMinTrackImage = [UIImage imageNamed: @"B2.png"];
-    UIImage *sliderMaxTrackImage = [UIImage imageNamed: @"B1.png"];
+    UIImage *sliderMinTrackImage = [UIImage imageNamed: @"Maxtrackimage.png"];
+    UIImage *sliderMaxTrackImage = [UIImage imageNamed: @"Mintrackimage.png"];
     
     sliderMinTrackImage = [sliderMinTrackImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 22)];
     sliderMaxTrackImage = [sliderMaxTrackImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 22)];
@@ -171,7 +171,7 @@ alpha:1.0]
     if (view == nil)
     {
         view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 78.0f, 78.0f)];
-        ((UIImageView *)view).image = [UIImage imageNamed:@"page2.png"];
+        ((UIImageView *)view).image = [UIImage imageNamed:@"CarouselitemindexGrey.png"];
         view.contentMode = UIViewContentModeCenter;
         label = [[UILabel alloc] initWithFrame:view.bounds];
         label.backgroundColor = [UIColor clearColor];
@@ -196,7 +196,7 @@ alpha:1.0]
     {
         label.font = [label.font fontWithSize:20];
         label.textColor = UIColorFromRGB(0x24b270);
-        ((UIImageView *)view).image = [UIImage imageNamed:@"page1.png"];
+        ((UIImageView *)view).image = [UIImage imageNamed:@"CarouselitemindexGreen.png"];
     }
     
     return view;

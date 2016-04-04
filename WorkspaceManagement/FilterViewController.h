@@ -10,7 +10,7 @@
 #import "iCarousel.h"
 #import "DSIViewController.h"
 
-@interface ContainerViewController : UIViewController <iCarouselDataSource, iCarouselDelegate>
+@interface FilterViewController : UIViewController <iCarouselDataSource, iCarouselDelegate>
 
 @property (nonatomic, strong) IBOutlet iCarousel *carousel;
 

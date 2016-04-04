@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "FilterViewController.h"
+#import "DSIViewController.h"
 
 @interface ViewController ()
 
