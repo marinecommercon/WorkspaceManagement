@@ -75,4 +75,11 @@
     return dict;
 }
 
++ (NSMutableArray *) jsonWithPath:(NSString *)name {
+    NSError* error;
+    NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    return [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+}
+
 @end

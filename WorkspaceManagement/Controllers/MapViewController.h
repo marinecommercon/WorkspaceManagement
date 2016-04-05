@@ -1,16 +1,20 @@
 //
-//  ViewController.h
-//  Workspace Management
+//  MapViewController.h
+//  WorkspaceManagement
 //
-//  Created by Lyess on 31/03/2016.
+//  Created by Technique on 05/04/2016.
 //  Copyright © 2016 docapost. All rights reserved.
 //
 
 @import Mapwize;
 #import <UIKit/UIKit.h>
 #import "CoreLocation/CoreLocation.h"
+#import "FilterViewController.h"
+#import "DSIViewController.h"
+#import "CCMPopup/CCMPopupTransitioning.h"
+#import "PopupDetailViewController.h"
 
-@interface ViewController : UIViewController <MWZMapDelegate>
+@interface MapViewController : UIViewController <MWZMapDelegate>
 
 @property (strong, nonatomic)CLLocationManager* locationManager;
 @property (strong, nonatomic) IBOutlet UIView *container;

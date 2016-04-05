@@ -96,26 +96,94 @@
     [self saveContext];
 }
 
-/*
- * * * * * * * * * * * * * * * * * * * *
- * * * * *  HANDLE PLANNING * * * * * *
- * * * * * * * * * * * * * * * * * * * *
- */
+/* * * * * * * * * * * * * * * * * * * * *
+                SET LOCAL JSON
+ * * * * * * * * * * * * * * * * * * * * */
 
-+ (void)addRoomsForPlanning{
-    [self addRoomWithName:@"Espace partagé"          IdMapwize:@"56d5cb01ac5a950b003c89ad"];
-    [self addRoomWithName:@"Espace de concentration" IdMapwize:@"56d5ca7fac5a950b003c89a7"];
-    [self addRoomWithName:@"Salle de réunion"        IdMapwize:@"56d5ca6dac5a950b003c89a5"];
-    [self addRoomWithName:@"Café de l'Innovation"    IdMapwize:@"56d5ca45ac5a950b003c89a3"];
-    [self addRoomWithName:@"La fabrique à solutions" IdMapwize:@"56d5ca97ac5a950b003c89a9"];
-    [self addRoomWithName:@"Salle pitch"             IdMapwize:@"56d5cae2ac5a950b003c89ab"];
++(void) setRoomsWithReset:(BOOL)needReset{
+    
+    NSArray   *listRooms = [DAO getObjects:@"Room" withPredicate:nil];
+    if(needReset && [listRooms count] != 0){
+        [self deleteAllRooms];
+        NSMutableArray *rooms = [Utils jsonWithPath:@"rooms"];
+        for(NSDictionary* dico in rooms){
+            Room* room = (Room*)[DAO getInstance:@"Room"];
+            [room setName:[dico valueForKey:@"name"]];
+            [room setIdMapwize:[dico valueForKey:@"idMapwize"]];
+        }
+        [self saveContext];
+    }
+    
+    if([listRooms count] == 0){
+        NSMutableArray *rooms = [Utils jsonWithPath:@"rooms"];
+        for(NSDictionary* dico in rooms){
+            Room* room = (Room*)[DAO getInstance:@"Room"];
+            [room setName:[dico valueForKey:@"name"]];
+            [room setIdMapwize:[dico valueForKey:@"idMapwize"]];
+        }
+        [self saveContext];
+    }
 }
 
-/*
- * * * * * * * * * * * * * * * * * * * *
- * * * * * * GETTERS SETTERS * * * * * *
- * * * * * * * * * * * * * * * * * * * *
- */
++(void) setSensorsWithReset:(BOOL)needReset{
+    
+    NSArray   *listSensors = [DAO getObjects:@"Sensor" withPredicate:nil];
+    if(needReset && [listSensors count] != 0){
+        [self deleteAllSensors];
+        NSMutableArray *sensors = [Utils jsonWithPath:@"sensors"];
+        for(NSDictionary* dico in sensors){
+            Sensor* sensor = (Sensor*)[DAO getInstance:@"Sensor"];
+            [sensor setIdSensor:[dico valueForKey:@"idSensor"]];
+            [sensor setEventDate:[NSDate date]];
+            [sensor setEventValue:[dico valueForKey:@"eventValue"]];
+        }
+        [self saveContext];
+        [self setRoomSensor];
+    }
+    
+    if([listSensors count] == 0){
+        NSMutableArray *sensors = [Utils jsonWithPath:@"sensors"];
+        for(NSDictionary* dico in sensors){
+            Sensor* sensor = (Sensor*)[DAO getInstance:@"Sensor"];
+            [sensor setIdSensor:[dico valueForKey:@"idSensor"]];
+            [sensor setEventDate:[NSDate date]];
+            [sensor setEventValue:[dico valueForKey:@"eventValue"]];
+        }
+        [self saveContext];
+        [self setRoomSensor];
+    }
+}
+
++ (void) setRoomSensor{
+    NSMutableArray *roomSensor = [Utils jsonWithPath:@"roomsensor"];
+    
+    id lastRoomId;
+    Room *currentRoom = nil;
+    NSDictionary  *pair;
+    
+    for (int i = 0; i < [roomSensor count]; ++i) {
+        pair = [roomSensor objectAtIndex:i];
+        id valueRoom   = [pair objectForKey:@"idRoom"];
+        id valueSensor = [pair objectForKey:@"idSensor"];
+        
+        if (![valueRoom isEqual:lastRoomId]) {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"idMapwize == %@", valueRoom];
+            currentRoom = (Room*)[DAO getObject:@"Room" withPredicate:predicate];
+        }
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"idSensor == %@", valueSensor];
+        Sensor *sensor = (Sensor *)[DAO getObject:@"Sensor" withPredicate:predicate];
+        
+        [currentRoom addSensorsObject:sensor];
+        lastRoomId = valueRoom;
+    }
+}
+
+/* * * * * * * * * * * * * * * * * * * * *
+                    GET
+ * * * * * * * * * * * * * * * * * * * * */
+
+
+
 
 + (Room*)getRoomById: (NSString*) idMapwize {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"idMapwize == %@", idMapwize];

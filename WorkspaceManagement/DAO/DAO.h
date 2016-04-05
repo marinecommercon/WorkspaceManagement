@@ -31,21 +31,35 @@
 
 + (void)deleteAllObjects:(NSArray *)managedObjects;
 
-// HANDLE PLANNING
-
-+ (void)addRoomsForPlanning;
-
-// GETTERS SETTERS
+// GET
 
 + (Room*)getRoomById:(NSString*)idMapwize;
+
++ (Sensor*)getSensorById:(NSString*)idSensor;
+
++ (NSArray*)getAllRoomsName;
+
+// ADD
 
 + (void)addRoomWithName:(NSString*)name IdMapwize:(NSString*)idMapwize;
 
 + (void)addReservationWithBegin:(NSString*)begin forRoom:(Room*)room;
 
-+ (NSArray*)getAllRoomsName;
++ (void)addSensorWithId: (NSString*)idSensor eventDate:(NSDate*)eventDate eventValue:(NSString*) eventValue forRoom:(Room*)room;
 
-// DELETIONS
+// UPDATE
+
++ (void)updateSensorWithId: (NSString*)idSensor eventDate:(NSDate*)eventDate eventValue:(NSString*)eventValue;
+
+// SET
+
++ (void)setSensorsWithReset:(BOOL)needReset;
+
++ (void)setRoomsWithReset:(BOOL)needReset;
+
++ (void)setRoomSensor;
+
+// DELETE
 
 + (void)deletePlanning;
 
@@ -53,10 +67,11 @@
 
 + (void)deleteAllReservations;
 
++ (void)deleteAllSensors;
+
 + (void)deleteReservationWithBegin:(NSString*)begin;
 
 + (void)deleteReservationsFromRoom:(Room*)room;
-
 
 // LOGS
 
@@ -85,3 +100,4 @@
 + (BOOL)getStateForRoom:(NSString*)idMapwize time:(NSString*)time timeInterval:(int)interval;
 
 @end
+

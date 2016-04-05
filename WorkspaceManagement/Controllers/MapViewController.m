@@ -1,22 +1,18 @@
 //
-//  ViewController.m
-//  Workspace Management
+//  MapViewController.m
+//  WorkspaceManagement
 //
-//  Created by Lyess on 31/03/2016.
+//  Created by Technique on 05/04/2016.
 //  Copyright © 2016 docapost. All rights reserved.
 //
 
-#import "ViewController.h"
-#import "FilterViewController.h"
-#import "DSIViewController.h"
-#import "CCMPopup/CCMPopupTransitioning.h"
-#import "PopupDetailController.h"
+#import "MapViewController.h"
 
-@interface ViewController ()
+@interface MapViewController ()
 
 @end
 
-@implementation ViewController
+@implementation MapViewController
 {
     int floor;
 }
@@ -32,7 +28,7 @@
     
     floor = 1;
     [self initMap];
-
+    
 }
 
 - (void)initMap
@@ -161,27 +157,27 @@
 }
 
 - (void) map:(MWZMapView*) map didClickOnVenue:(MWZVenue*) venue {
-   
+    
 }
 
 - (void) map:(MWZMapView*) map didClickOnMarker:(MWZPosition *)marker {
-  
+    
 }
 
 - (void) map:(MWZMapView*) map didChangeFloor:(NSNumber*) floor {
-
+    
 }
 
 - (void) map:(MWZMapView*) map didChangeFloors:(NSArray*) floors {
-
+    
 }
 
 - (void) map:(MWZMapView *)map didMove:(MWZLatLon *)center {
-
+    
 }
 
 - (void) map:(MWZMapView*) map didFailWithError: (NSError *)error {
-   
+    
 }
 
 - (void) map:(MWZMapView*) map didChangeFollowUserMode:(BOOL)followUserMode {

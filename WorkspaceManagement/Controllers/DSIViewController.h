@@ -7,6 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DAO.h"
+#import "Room.h"
+#import "Reservation.h"
+#import "AppDelegate.h"
+#import "ScheduleTableViewCell.h"
 
 @interface DSIViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource>
 

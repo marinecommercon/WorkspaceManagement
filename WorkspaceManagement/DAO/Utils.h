@@ -21,4 +21,6 @@
 
 + (NSDictionary*)generateHoursForCaroussel;
 
++ (NSMutableArray*)jsonWithPath:(NSString*)name;
+
 @end
