@@ -66,6 +66,9 @@
 
 - (void)swipeUp:(UIGestureRecognizer *)swipe
 {
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration: 0.3];
+    
     CGRect frame = container.frame;
     switch (floor)
     {
@@ -91,10 +94,13 @@
             NSLog(@"Error");
             break;
     }
+    [UIView commitAnimations];
 }
 
 - (void)swipeDown:(UIGestureRecognizer *)swipe
 {
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration: 0.3];
     
     CGRect frame = container.frame;
     switch (floor) {
@@ -108,7 +114,7 @@
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
             container.frame = frame;
             floor = 1;
-            self.myMapView.userInteractionEnabled = false;
+            self.myMapView.userInteractionEnabled = true;
             break;
         case (3):
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.3;
@@ -120,6 +126,7 @@
             NSLog(@"Error");
             break;
     }
+    [UIView commitAnimations];
 }
 
 //Listering to delegate events
