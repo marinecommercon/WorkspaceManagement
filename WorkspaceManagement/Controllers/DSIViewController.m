@@ -6,6 +6,12 @@
 //  Copyright © 2016 docapost. All rights reserved.
 //
 
+#define UIColorFromRGB(rgbValue) \
+[UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+green:((float)((rgbValue & 0x00FF00) >>  8))/255.0 \
+blue:((float)((rgbValue & 0x0000FF) >>  0))/255.0 \
+alpha:1.0]
+
 #import "DSIViewController.h"
 
 @interface DSIViewController () {
@@ -116,30 +122,47 @@
         
         if(available){
             cellDetails[indexPath.row] = @[@"free",@"notChanged"];
-            [button setTitle:@"LIBRE" forState:UIControlStateNormal];
-            [button setBackgroundColor:[UIColor greenColor]];
+            [button setTitle:@"Libre" forState:UIControlStateNormal];
+            //[button setBackgroundColor:[UIColor greenColor]];
+            [cell setBackgroundColor:[UIColor clearColor]];
+            [cell.imageState1 setBackgroundColor:[UIColor clearColor]];
+            [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewLibreImage.png"]];
+            [cell.buttonCell setTitleColor:UIColorFromRGB(0x0086f4) forState:UIControlStateNormal];
         } else {
             cellDetails[indexPath.row] = @[@"busy",@"notChanged"];
-            [button setTitle:@"OCCUPE" forState:UIControlStateNormal];
-            [button setBackgroundColor:[UIColor redColor]];
+            [button setTitle:@"Occupé" forState:UIControlStateNormal];
+            //[button setBackgroundColor:[UIColor redColor]];
+            [cell setBackgroundColor:UIColorFromRGB(0xf5f5f5)];
+            [cell.imageState1 setBackgroundColor:UIColorFromRGB(0x0086f4)];
+            [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewOccupeImage.png"]];
+            [cell.buttonCell setTitleColor:UIColorFromRGB(0x7e7a70) forState:UIControlStateNormal];
+
         }
     }
     // Changes in changed
     else {
         NSString *state = [cellDetails objectAtIndex:indexPath.row][0];
         if([state isEqualToString:@"free"]){
-            [button setTitle:@"LIBRE" forState:UIControlStateNormal];
-            [button setBackgroundColor:[UIColor greenColor]];
+            [button setTitle:@"Libre" forState:UIControlStateNormal];
+            //[button setBackgroundColor:[UIColor greenColor]];
+            [cell setBackgroundColor:[UIColor clearColor]];
+            [cell.imageState1 setBackgroundColor:[UIColor clearColor]];
+            [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewLibreImage.png"]];
+            [cell.buttonCell setTitleColor:UIColorFromRGB(0x0086f4) forState:UIControlStateNormal];
         }
         
         else if([state isEqualToString:@"busy"]){
-            [button setTitle:@"OCCUPE" forState:UIControlStateNormal];
-            [button setBackgroundColor:[UIColor redColor]];
+            [button setTitle:@"Occupé" forState:UIControlStateNormal];
+            //[button setBackgroundColor:[UIColor redColor]];
+            [cell setBackgroundColor:UIColorFromRGB(0xf5f5f5)];
+            [cell.imageState1 setBackgroundColor:UIColorFromRGB(0x0086f4)];
+            [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewOccupeImage.png"]];
+            [cell.buttonCell setTitleColor:UIColorFromRGB(0x7e7a70) forState:UIControlStateNormal];
         }
         
         else {
             [button setTitle:@"ERROR" forState:UIControlStateNormal];
-            [button setBackgroundColor:[UIColor yellowColor]];
+            //[button setBackgroundColor:[UIColor yellowColor]];
         }
     }
     return cell;
