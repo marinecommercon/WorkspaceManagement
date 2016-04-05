@@ -64,18 +64,8 @@
     [container addGestureRecognizer:swipeDown];
 }
 
-- (void)initContainerAnimation
-{
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    [UIView setAnimationDelay:0];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-}
-
 - (void)swipeUp:(UIGestureRecognizer *)swipe
 {
-    [self initContainerAnimation];
-    
     CGRect frame = container.frame;
     switch (floor)
     {
@@ -105,7 +95,6 @@
 
 - (void)swipeDown:(UIGestureRecognizer *)swipe
 {
-    [self initContainerAnimation];
     
     CGRect frame = container.frame;
     switch (floor) {
