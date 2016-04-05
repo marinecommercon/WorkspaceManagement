@@ -56,18 +56,32 @@
     NSMutableArray *newSchedules = [[NSMutableArray alloc] init];
     [newSchedules addObject:schedules[0]];
     
-    for(int i = 0 ; i<[schedules count]-1 ; i++){
+    int i = 0;
+    while(i<[schedules count]-1){
         NSDate *begin = [self parseTimeToDate:schedules[i]];
         NSDate *end   = [self parseTimeToDate:schedules[i+1]];
         
-        if([date timeIntervalSinceDate:begin] > 0 && [end timeIntervalSinceDate:date] > 0
-           && !([centralTime isEqualToString:schedules[i]]) ){
+        // If current time is between two schedules (>=)
+        if([date timeIntervalSinceDate:begin] > 0 && [end timeIntervalSinceDate:date] > 0){
             
-            [newSchedules addObject:centralTime];
-            position = i+1;
+            // If current time inside two schedules (>)
+            if(![centralTime isEqualToString:schedules[i]] && ![centralTime isEqualToString:schedules[i+1]]){
+                [newSchedules addObject:centralTime];
+                [newSchedules addObject:schedules[i+1]];
+                position = i+1;
+            }
             
+            // If current time is one schedule (=)
+            else {
+                [newSchedules addObject:schedules[i+1]];
+                position = i+1;
+            }
         }
-        [newSchedules addObject:schedules[i+1]];
+        // If current time is not inside two schedules
+        else {
+            [newSchedules addObject:schedules[i+1]];
+        }
+        i++;
     }
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                           newSchedules, @"hours",
