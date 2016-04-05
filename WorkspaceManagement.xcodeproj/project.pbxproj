@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3008DAA71CB3B37600B7875F /* ScheduleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3008DAA61CB3B37600B7875F /* ScheduleTableViewCell.m */; };
+		3008DAAA1CB3B3B200B7875F /* DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 3008DAA91CB3B3B200B7875F /* DAO.m */; };
+		3008DAAD1CB3B41600B7875F /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3008DAAC1CB3B41600B7875F /* Utils.m */; };
 		301832AE1CAD22A100964F60 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 301832AD1CAD22A100964F60 /* main.m */; };
 		301832B11CAD22A100964F60 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 301832B01CAD22A100964F60 /* AppDelegate.m */; };
 		301832B41CAD22A100964F60 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 301832B31CAD22A100964F60 /* ViewController.m */; };
@@ -32,6 +35,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3008DAA51CB3B37600B7875F /* ScheduleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleTableViewCell.h; sourceTree = "<group>"; };
+		3008DAA61CB3B37600B7875F /* ScheduleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduleTableViewCell.m; sourceTree = "<group>"; };
+		3008DAA81CB3B3B200B7875F /* DAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAO.h; sourceTree = "<group>"; };
+		3008DAA91CB3B3B200B7875F /* DAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAO.m; sourceTree = "<group>"; };
+		3008DAAB1CB3B41600B7875F /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		3008DAAC1CB3B41600B7875F /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		301832A91CAD22A100964F60 /* WorkspaceManagement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkspaceManagement.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		301832AD1CAD22A100964F60 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		301832AF1CAD22A100964F60 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -88,6 +97,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3008DAA31CB3B2EE00B7875F /* DAO */ = {
+			isa = PBXGroup;
+			children = (
+				3008DAA81CB3B3B200B7875F /* DAO.h */,
+				3008DAA91CB3B3B200B7875F /* DAO.m */,
+				3008DAAB1CB3B41600B7875F /* Utils.h */,
+				3008DAAC1CB3B41600B7875F /* Utils.m */,
+			);
+			name = DAO;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		3008DAA41CB3B31300B7875F /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				3008DAA51CB3B37600B7875F /* ScheduleTableViewCell.h */,
+				3008DAA61CB3B37600B7875F /* ScheduleTableViewCell.m */,
+			);
+			name = "Custom Views";
+			sourceTree = "<group>";
+		};
 		301832A01CAD22A100964F60 = {
 			isa = PBXGroup;
 			children = (
@@ -109,8 +139,10 @@
 		301832AB1CAD22A100964F60 /* WorkspaceManagement */ = {
 			isa = PBXGroup;
 			children = (
-				7810F8E31CAEAD4C00B259D3 /* Model */,
 				308094811CAD4C6400B81DF0 /* iCarousel */,
+				3008DAA41CB3B31300B7875F /* Custom Views */,
+				7810F8E31CAEAD4C00B259D3 /* Model */,
+				3008DAA31CB3B2EE00B7875F /* DAO */,
 				301832AF1CAD22A100964F60 /* AppDelegate.h */,
 				301832B01CAD22A100964F60 /* AppDelegate.m */,
 				307599CF1CAD4A3100EEA408 /* CustomNavigationBar.h */,
@@ -310,11 +342,14 @@
 				301832BA1CAD22A100964F60 /* Workspace_Management.xcdatamodeld in Sources */,
 				301832B41CAD22A100964F60 /* ViewController.m in Sources */,
 				7810F8E91CAEAEA700B259D3 /* Sensor.m in Sources */,
+				3008DAAD1CB3B41600B7875F /* Utils.m in Sources */,
 				308094871CAD4D7000B81DF0 /* FilterViewController.m in Sources */,
 				307599D11CAD4A3100EEA408 /* CustomNavigationBar.m in Sources */,
 				308094841CAD4C6400B81DF0 /* iCarousel.m in Sources */,
+				3008DAAA1CB3B3B200B7875F /* DAO.m in Sources */,
 				7810F8EC1CAEAEB800B259D3 /* Reservation.m in Sources */,
 				30A3CD561CB26558005A5203 /* PopupDetailController.m in Sources */,
+				3008DAA71CB3B37600B7875F /* ScheduleTableViewCell.m in Sources */,
 				7810F8FD1CAEC11900B259D3 /* DSIViewController.m in Sources */,
 				301832B11CAD22A100964F60 /* AppDelegate.m in Sources */,
 				7810F8E61CAEADB400B259D3 /* Room.m in Sources */,
