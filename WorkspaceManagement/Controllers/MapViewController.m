@@ -124,12 +124,9 @@
 
 - (void)swipeDown:(UIGestureRecognizer *)swipe
 {
-<<<<<<< HEAD
-=======
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration: 0.3];
     
->>>>>>> 5b44e6bcdf45428ddc78370a9fa7159150a8b498
     CGRect frame = container.frame;
     switch (stepForSwipe) {
         case (1):
@@ -141,13 +138,8 @@
         case (2):
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
             container.frame = frame;
-<<<<<<< HEAD
             stepForSwipe = 1;
-            self.myMapView.userInteractionEnabled = false;
-=======
-            floor = 1;
             self.myMapView.userInteractionEnabled = true;
->>>>>>> 5b44e6bcdf45428ddc78370a9fa7159150a8b498
             break;
         case (3):
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.3;
