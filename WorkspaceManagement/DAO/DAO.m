@@ -95,16 +95,7 @@
     [self saveContext];
 }
 
-
-
-
-
-
-/*
- * * * * * * * * * * * * * * * * * * * *
- * * * * * * * * * LOGS * * * * * * * *
- * * * * * * * * * * * * * * * * * * * *
- */
+// LOGS
 
 + (void) logDate: (NSDate*)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];

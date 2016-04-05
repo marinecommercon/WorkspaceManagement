@@ -10,7 +10,6 @@
 
 @implementation ModelDAO
 
-
 // GET
 
 + (Room*)getRoomById: (NSString*) idMapwize {
@@ -95,7 +94,13 @@
 
 // SET LOCAL JSON
 
-+(void) setRoomsWithReset:(BOOL)needReset{
++ (void)loadDatabase:(BOOL)needReset{
+    
+    // Rooms creation -> Sensors creation -> Pairs
+    [self setRoomsWithReset:needReset];
+}
+
++(void)setRoomsWithReset:(BOOL)needReset{
     
     NSArray   *listRooms = [DAO getObjects:@"Room" withPredicate:nil];
     if(needReset && [listRooms count] != 0){
@@ -107,6 +112,7 @@
             [room setIdMapwize:[dico valueForKey:@"idMapwize"]];
         }
         [DAO saveContext];
+        [self setSensorsWithReset:needReset];
     }
     
     if([listRooms count] == 0){
@@ -117,10 +123,11 @@
             [room setIdMapwize:[dico valueForKey:@"idMapwize"]];
         }
         [DAO saveContext];
+        [self setSensorsWithReset:needReset];
     }
 }
 
-+(void) setSensorsWithReset:(BOOL)needReset{
++(void)setSensorsWithReset:(BOOL)needReset{
     
     NSArray   *listSensors = [DAO getObjects:@"Sensor" withPredicate:nil];
     if(needReset && [listSensors count] != 0){
@@ -149,7 +156,7 @@
     }
 }
 
-+ (void) setRoomSensor{
++ (void)setRoomSensor{
     NSMutableArray *roomSensor = [Utils jsonWithPath:@"roomsensor"];
     
     id lastRoomId;
@@ -175,7 +182,7 @@
 
 // DELETE
 
-+ (void) deletePlanning {
++ (void)deletePlanning {
     [self deleteAllRooms];
     [self deleteAllReservations];
 }

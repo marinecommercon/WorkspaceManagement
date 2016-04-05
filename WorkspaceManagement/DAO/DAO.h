@@ -13,8 +13,6 @@
 
 @interface DAO : NSObject
 
-// GENERIC METHODS
-
 + (NSManagedObjectContext *)getContext;
 
 + (void)saveContext;
@@ -30,7 +28,6 @@
 + (void)deleteObject:(NSManagedObject *)object;
 
 + (void)deleteAllObjects:(NSArray *)managedObjects;
-
 
 // LOGS
 

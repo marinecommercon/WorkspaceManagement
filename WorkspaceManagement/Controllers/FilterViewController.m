@@ -19,47 +19,20 @@ alpha:1.0]
     NSArray *numbers;
 }
 
-@property (nonatomic, strong) NSMutableArray *items;
 
 @end
 
 @implementation FilterViewController
 
 @synthesize carousel;
-@synthesize items;
 @synthesize slider;
 @synthesize viewSlider;
 
 - (void)awakeFromNib
 {
-    self.items = [[NSMutableArray alloc] init];
-    [self.items addObject:@"7:00"];
-    [self.items addObject:@"7:30"];
-    [self.items addObject:@"8:00"];
-    [self.items addObject:@"8:30"];
-    [self.items addObject:@"9:00"];
-    [self.items addObject:@"9:30"];
-    [self.items addObject:@"10:00"];
-    [self.items addObject:@"10:30"];
-    [self.items addObject:@"11:00"];
-    [self.items addObject:@"11:30"];
-    [self.items addObject:@"12:00"];
-    [self.items addObject:@"12:30"];
-    [self.items addObject:@"13:00"];
-    [self.items addObject:@"13:30"];
-    [self.items addObject:@"14:00"];
-    [self.items addObject:@"14:30"];
-    [self.items addObject:@"15:00"];
-    [self.items addObject:@"15:30"];
-    [self.items addObject:@"16:00"];
-    [self.items addObject:@"16:30"];
-    [self.items addObject:@"17:00"];
-    [self.items addObject:@"17:30"];
-    [self.items addObject:@"18:00"];
-    [self.items addObject:@"18:30"];
-    [self.items addObject:@"19:00"];
-    [self.items addObject:@"19:30"];
-    [self.items addObject:@"20:00"];
+    self.schedulesArray = [[NSMutableArray alloc] init];
+    self.schedulesArray = [[Utils generateHoursForCaroussel] objectForKey:@"hours"];
+    [self.carousel reloadData];
 }
 
 - (void)dealloc
@@ -71,9 +44,39 @@ alpha:1.0]
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    carousel.type = iCarouselTypeLinear;
-    [self.carousel scrollToItemAtIndex:4 animated:NO];
     
+    // AsynchTask to update the carousel
+    NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
+    NSTimer *timer = [[NSTimer alloc] initWithFireDate: delay
+                                              interval: 10
+                                                target: self
+                                              selector:@selector(updateCarousel:)
+                                              userInfo:nil repeats:YES];
+    
+    NSRunLoop *runner = [NSRunLoop currentRunLoop];
+    [runner addTimer:timer forMode: NSDefaultRunLoopMode];
+
+    [self initSlider];
+    [self initCarousel];
+    
+    
+}
+
+- (void) updateCarousel:(NSTimer *)timer {
+    self.schedulesArray = [[Utils generateHoursForCaroussel] objectForKey:@"hours"];
+    [self.carousel reloadData];
+}
+
+- (void) initCarousel {
+    carousel.type   = iCarouselTypeLinear;
+    self.carouselPosition = [[[Utils generateHoursForCaroussel] objectForKey:@"position"] intValue];
+    [self.carousel scrollToItemAtIndex:self.carouselPosition animated:NO];
+    UITapGestureRecognizer *tripleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tripleTapped:)];
+    tripleTapGestureRecognizer.numberOfTapsRequired = 3;
+    [self.carousel addGestureRecognizer:tripleTapGestureRecognizer];
+}
+
+- (void) initSlider {
     numbers = @[@(0), @(1), @(2), @(3), @(4)];
     NSInteger numberOfSteps = ((float)[numbers count] - 1);
     
@@ -85,28 +88,21 @@ alpha:1.0]
                action:@selector(valueChanged:)
      forControlEvents:UIControlEventValueChanged];
     
-    UISwipeGestureRecognizer *recognizer;
+    UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sliderTapped:)];
     
-    recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
-    [[self viewSlider] addGestureRecognizer:recognizer];
-    
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sliderTapped:)];
-    [self.viewSlider addGestureRecognizer:tapGestureRecognizer];
-    
+
     UIImage *sliderMinTrackImage = [UIImage imageNamed: @"Maxtrackimage.png"];
     UIImage *sliderMaxTrackImage = [UIImage imageNamed: @"Mintrackimage.png"];
-    
     sliderMinTrackImage = [sliderMinTrackImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 22)];
     sliderMaxTrackImage = [sliderMaxTrackImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 22)];
     
+    [self.viewSlider addGestureRecognizer:recognizer];
+    [self.viewSlider addGestureRecognizer:tapGestureRecognizer];
     [slider setMinimumTrackImage:sliderMinTrackImage forState:UIControlStateNormal];
     [slider setMaximumTrackImage:sliderMaxTrackImage forState:UIControlStateNormal];
-    
-    UITapGestureRecognizer *tripleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tripleTapped:)];
-    tripleTapGestureRecognizer.numberOfTapsRequired = 3;
-    [self.carousel addGestureRecognizer:tripleTapGestureRecognizer];
 }
 
 - (void) tripleTapped:(UIGestureRecognizer *)gestureRecognizer {
@@ -161,7 +157,7 @@ alpha:1.0]
 
 - (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
-    return [items count];
+    return [self.schedulesArray count];
 }
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
@@ -190,7 +186,7 @@ alpha:1.0]
         label = (UILabel *)[view viewWithTag:1];
     }
     
-    label.text = items[index];
+    label.text = self.schedulesArray[index];
     
     if (index == self.carousel.currentItemIndex)
     {
@@ -204,22 +200,20 @@ alpha:1.0]
 
 - (void)carouselWillBeginDragging:(iCarousel *)carousel
 {
-    NSLog(@"Carousel will begin dragging");
 }
 
 - (void)carouselDidEndDragging:(iCarousel *)carousel willDecelerate:(BOOL)decelerate
 {
-    NSLog(@"Carousel did end dragging and %@ decelerate", decelerate? @"will": @"won't");
 }
 
 - (void)carouselWillBeginScrollingAnimation:(iCarousel *)carousel
 {
-    NSLog(@"Carousel will begin scrolling");
+
 }
 
 - (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel
 {
-    NSLog(@"Carousel did end scrolling");
+
 }
 
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel

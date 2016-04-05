@@ -36,6 +36,8 @@
 
 // SET LOCAL JSON
 
++ (void)loadDatabase:(BOOL)needReset;
+
 + (void)setSensorsWithReset:(BOOL)needReset;
 
 + (void)setRoomsWithReset:(BOOL)needReset;

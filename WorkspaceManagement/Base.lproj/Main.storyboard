@@ -153,12 +153,12 @@
                                                     <exclude reference="gKj-3r-7Br"/>
                                                 </mask>
                                                 <mask key="constraints">
+                                                    <exclude reference="V5j-bX-YAt"/>
+                                                    <exclude reference="sCS-0a-hBb"/>
                                                     <exclude reference="7Fz-sa-abI"/>
                                                     <exclude reference="OPh-vc-Ry4"/>
                                                     <exclude reference="NCA-5a-aiB"/>
                                                     <exclude reference="rzk-o6-b8g"/>
-                                                    <exclude reference="V5j-bX-YAt"/>
-                                                    <exclude reference="sCS-0a-hBb"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
@@ -168,12 +168,12 @@
                                                     <include reference="gKj-3r-7Br"/>
                                                 </mask>
                                                 <mask key="constraints">
+                                                    <include reference="V5j-bX-YAt"/>
+                                                    <include reference="sCS-0a-hBb"/>
                                                     <include reference="7Fz-sa-abI"/>
                                                     <include reference="OPh-vc-Ry4"/>
                                                     <include reference="NCA-5a-aiB"/>
                                                     <include reference="rzk-o6-b8g"/>
-                                                    <include reference="V5j-bX-YAt"/>
-                                                    <include reference="sCS-0a-hBb"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
