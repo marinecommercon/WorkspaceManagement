@@ -20,18 +20,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [ModelDAO setRoomsWithReset:false];
     
-    
-    //      Reload database
-    //      [DAO deletePlanning];
-    //      [DAO addRoomsForPlanning];
-    
-    self.schedulesArray = @[@"7h30 - 8h00",@"8h00 - 8h30",@"8h30 - 9h00",@"9h00 - 9h30", @"9h30 - 10h00",@"10h00 - 10h30",@"10h30 - 11h00",@"11h00 - 11h30", @"11h30 - 12h00", @"12h00 - 12h30",@"12h30 - 13h00", @"13h00 - 13h30", @"13h30 - 14h00", @"14h00 - 14h30", @"14h30 - 15h00", @"15h00 - 15h30", @"15h30 - 16h00", @"16h00 - 16h30", @"16h30 - 17h00", @"17h00 - 17h30", @"17h30 - 18h00", @"18h00 - 18h30", @"18h30 - 19h00", @"19h00 - 19h30", @"19h30 - 20h00", @"20h00 - 20h30", @"20h30 - 21h00"];
-    
-    self.beginSchedules = @[@"07:30", @"08:00", @"08:30", @"09:00", @"09:30", @"10:00", @"10:30", @"11:00", @"11:30", @"12:00",@"12:30", @"13:00", @"13:30", @"14:00", @"14:30", @"15:00", @"15:30", @"16:00", @"16:30", @"17:00", @"17:30", @"18:00", @"18:30", @"19:00", @"19:30", @"20:00", @"20:30"];
-    
-    self.endSchedules = @[@"08:00", @"08:30", @"09:00", @"09:30", @"10:00", @"10:30", @"11:00", @"11:30", @"12:00",@"12:30", @"13:00", @"13:30", @"14:00", @"14:30", @"15:00", @"15:30", @"16:00", @"16:30", @"17:00", @"17:30", @"18:00", @"18:30", @"19:00", @"19:30", @"20:00", @"20:30", @"21:00"];
-    
+    self.schedulesArray = @[@"07:30", @"08:00", @"08:30", @"09:00", @"09:30", @"10:00", @"10:30", @"11:00", @"11:30", @"12:00",@"12:30", @"13:00", @"13:30", @"14:00", @"14:30", @"15:00", @"15:30", @"16:00", @"16:30", @"17:00", @"17:30", @"18:00", @"18:30", @"19:00", @"19:30", @"20:00", @"20:30",@"21:00"];
     
     _pickerData  = [DAO getObjects:@"Room" withPredicate:nil];
     roomSelected = [_pickerData objectAtIndex:0];
@@ -93,7 +85,7 @@
 // TABLE VIEW DELEGATE
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.schedulesArray count];
+    return [self.schedulesArray count]-1;
 }
 
 
@@ -103,15 +95,19 @@
     ScheduleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     //Show the title of the hike
-    UILabel  *label  = cell.label;
+    UILabel  *timeUpLabel  = cell.timeUpLabel;
+    UILabel  *timeDownLabel  = cell.timeDownLabel;
     UIButton *button = cell.buttonCell;
     
-    label.text = self.schedulesArray[indexPath.row];
+    timeUpLabel.text = self.schedulesArray[indexPath.row];
+    timeDownLabel.text = self.schedulesArray[indexPath.row+1];
+
+    
     [button setTag:indexPath.row];
     [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    NSString *beginString = [self.beginSchedules objectAtIndex:indexPath.row];
-    NSString *endString   = [self.endSchedules objectAtIndex:indexPath.row];
+    NSString *beginString = [self.schedulesArray objectAtIndex:indexPath.row];
+    NSString *endString   = [self.schedulesArray objectAtIndex:indexPath.row+1];
     
     
     // No changes in changed
@@ -172,7 +168,7 @@
     [ModelDAO deleteReservationsFromRoom:roomSelected];
     for(int i=0; i<[cellDetails count]; i++){
         if ([cellDetails[i][0] isEqualToString:@"busy"]) {
-            NSString *begin = [self.beginSchedules objectAtIndex:i];
+            NSString *begin = [self.schedulesArray objectAtIndex:i];
             [ModelDAO addReservationWithBegin:begin forRoom:roomSelected];
         }
     }
