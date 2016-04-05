@@ -93,7 +93,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1095" y="337.5"/>
+            <point key="canvasLocation" x="1239" y="337.5"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="xsk-NF-UOm">
@@ -283,7 +283,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yrr-Te-azh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1764" y="337.5"/>
+            <point key="canvasLocation" x="453" y="1306"/>
         </scene>
         <!--Popup Detail View Controller-->
         <scene sceneID="fef-VR-jWk">
@@ -692,7 +692,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4q8-Oz-6I0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2407.5" y="342"/>
+            <point key="canvasLocation" x="2113.5" y="313.5"/>
         </scene>
         <!--Data Source-->
         <scene sceneID="EMD-5U-iAn">
@@ -820,7 +820,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T2g-LH-KUj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1095" y="1061.25"/>
+            <point key="canvasLocation" x="1239" y="1040.25"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="huh-Wk-wVX">
@@ -834,7 +834,7 @@
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="eeu-Uj-Q6c"/>
-                        <segue destination="eKT-R3-bwl" kind="push" id="O6c-Uf-3i7"/>
+                        <segue destination="eKT-R3-bwl" kind="show" identifier="DSIViewController" id="O6c-Uf-3i7"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bWc-VI-0nQ" userLabel="First Responder" sceneMemberID="firstResponder"/>

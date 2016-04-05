@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "DAO.h"
+#import "CheckDAO.h"
+#import "ModelDAO.h"
 #import "Room.h"
 #import "Reservation.h"
 #import "AppDelegate.h"

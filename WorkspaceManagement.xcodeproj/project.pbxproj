@@ -36,6 +36,7 @@
 		7810F9281CB3C42F00B259D3 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7810F9221CB3C42F00B259D3 /* FilterViewController.m */; };
 		7810F92D1CB3C44900B259D3 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7810F92C1CB3C44900B259D3 /* MapViewController.m */; };
 		7810F9301CB3C4FB00B259D3 /* PopupDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7810F92F1CB3C4FB00B259D3 /* PopupDetailViewController.m */; };
+		7810F9321CB3D46800B259D3 /* CCMPopup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7810F9311CB3D46800B259D3 /* CCMPopup.framework */; };
 		A8BB2B838BDBD2A955E9D1D6 /* Pods_WorkspaceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73C7F5B83C8488D059645B4E /* Pods_WorkspaceManagement.framework */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 		7810F92C1CB3C44900B259D3 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		7810F92E1CB3C4FB00B259D3 /* PopupDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupDetailViewController.h; sourceTree = "<group>"; };
 		7810F92F1CB3C4FB00B259D3 /* PopupDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupDetailViewController.m; sourceTree = "<group>"; };
+		7810F9311CB3D46800B259D3 /* CCMPopup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CCMPopup.framework; path = "Pods/../build/Debug-iphoneos/CCMPopup.framework"; sourceTree = "<group>"; };
 		992E6CEDB193423AE207F1E4 /* Pods-WorkspaceManagement.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkspaceManagement.release.xcconfig"; path = "Pods/Target Support Files/Pods-WorkspaceManagement/Pods-WorkspaceManagement.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,6 +104,7 @@
 				7810F8DC1CAE936900B259D3 /* CoreGraphics.framework in Frameworks */,
 				7810F8DA1CAE91A200B259D3 /* CoreLocation.framework in Frameworks */,
 				7810F8D81CAE918C00B259D3 /* Mapwize.framework in Frameworks */,
+				7810F9321CB3D46800B259D3 /* CCMPopup.framework in Frameworks */,
 				A8BB2B838BDBD2A955E9D1D6 /* Pods_WorkspaceManagement.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -233,6 +236,7 @@
 		EC82A11E1696FD062DE03708 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7810F9311CB3D46800B259D3 /* CCMPopup.framework */,
 				7810F8E11CAE938800B259D3 /* Foundation.framework */,
 				7810F8DF1CAE938100B259D3 /* CoreFoundation.framework */,
 				7810F8DD1CAE937300B259D3 /* UIKit.framework */,
@@ -507,10 +511,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = WorkspaceManagement/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

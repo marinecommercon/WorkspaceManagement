@@ -116,7 +116,7 @@
     
     // No changes in changed
     if([[cellDetails objectAtIndex:indexPath.row][1] isEqualToString:@"notChanged"]){
-        BOOL available = [DAO checkAvailability:beginString End:endString Room:roomSelected];
+        BOOL available = [CheckDAO checkAvailability:beginString End:endString Room:roomSelected];
         
         if(available){
             cellDetails[indexPath.row] = @[@"free",@"notChanged"];
@@ -169,17 +169,17 @@
 }
 
 - (IBAction)saveButton:(id)sender {
-    [DAO deleteReservationsFromRoom:roomSelected];
+    [ModelDAO deleteReservationsFromRoom:roomSelected];
     for(int i=0; i<[cellDetails count]; i++){
         if ([cellDetails[i][0] isEqualToString:@"busy"]) {
             NSString *begin = [self.beginSchedules objectAtIndex:i];
-            [DAO addReservationWithBegin:begin forRoom:roomSelected];
+            [ModelDAO addReservationWithBegin:begin forRoom:roomSelected];
         }
     }
 }
 
 - (IBAction)resetButton:(id)sender {
-    [DAO deleteAllReservations];
+    [ModelDAO deleteAllReservations];
     [self clearDetails];
     [_tableView reloadData];
 }
