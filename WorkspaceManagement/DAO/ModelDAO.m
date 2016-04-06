@@ -49,6 +49,15 @@
     return roomsName;
 }
 
++ (NSArray*)getAllSensorsId {
+    NSMutableArray *sensorsId = [[NSMutableArray alloc] init];
+    NSArray *sensors = [DAO getObjects:@"Sensor" withPredicate:nil];
+    for (Sensor *sensor in sensors){
+        [sensorsId addObject:sensor.idSensor];
+    }
+    return sensorsId;
+}
+
 // ADD
 
 + (void)addRoomWithName:(NSString*)name IdMapwize:(NSString*)idMapwize {
@@ -79,17 +88,39 @@
 
 // UPDATE
 
-+ (void)updateSensorWithId: (NSString*)idSensor eventDate:(NSDate*)eventDate eventValue:(NSString*)eventValue {
-    Sensor* sensorTemp = [self getSensorById:idSensor];
++ (BOOL)checkSensorWithId: (NSString*)idSensor eventDate:(NSDate*)eventDate eventValue:(NSString*)eventValue {
     
-    if(sensorTemp.eventValue != eventValue){
+    Sensor* sensorTemp = [self getSensorById:idSensor];
+    BOOL updateWasNeeded = false;
+    
+    if(![sensorTemp.eventValue isEqualToString:eventValue]){
         [sensorTemp setEventDate:eventDate];
         [sensorTemp setEventValue:eventValue];
         [DAO saveContext];
-        NSLog(@"Update sensor %@", sensorTemp.idSensor);
+        updateWasNeeded = true;
+        //NSLog(@"Update sensor %@", sensorTemp.idSensor);
     } else {
-        NSLog(@"No need to update sensor %@", sensorTemp.idSensor);
+        
+        //NSLog(@"No need to update sensor %@", sensorTemp.idSensor);
+        //updateWasNeeded = false;
+        
+        // Fake to test changes on Map
+        if([eventValue isEqualToString:@"1"]){
+            //NSLog(@"Fake update sensor 1->0 %@", sensorTemp.idSensor);
+            [sensorTemp setEventDate:eventDate];
+            [sensorTemp setEventValue:@"0"];
+            [DAO saveContext];
+            updateWasNeeded = true;
+        }
+        else {
+             //NSLog(@"Fake update sensor 0->1 %@", sensorTemp.idSensor);
+            [sensorTemp setEventDate:eventDate];
+            [sensorTemp setEventValue:@"1"];
+            [DAO saveContext];
+            updateWasNeeded = true;
+        }
     }
+    return updateWasNeeded;
 }
 
 // SET LOCAL JSON

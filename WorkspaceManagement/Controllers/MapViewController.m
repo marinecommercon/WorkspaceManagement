@@ -15,6 +15,9 @@
 @implementation MapViewController
 {
     int stepForSwipe;
+    BOOL finished;
+    NSTimer *timer;
+    BOOL asynchtaskRunning;
 }
 
 @synthesize container;
@@ -25,28 +28,96 @@
 {
     [super viewDidLoad];
     
-    stepForSwipe = 1;
+    stepForSwipe      = 1;
+    asynchtaskRunning = false;
     
     [self initContainerSwipeGesture];
     [self initMap];
+    
+    // FOR SENSOR UPDATE
+    finished   = true;
+    self.manager = [[Manager alloc]init];
+    self.manager.delegate = self;
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    self.filterViewController = [storyboard instantiateViewControllerWithIdentifier:@"filterViewController"];
+    self.filterViewController.delegate = self;
+    [self addChildViewController:self.filterViewController];
+    self.filterViewController.view.frame = CGRectMake(0, 0, self.container.frame.size.width, self.container.frame.size.height);
+    [self.container addSubview:self.filterViewController.view];
+    [self.filterViewController didMoveToParentViewController:self];
+    
+    [self shouldStartAsynchtask];
+    
 }
 
-- (void) updateMap:timer {
+- (void) viewDidAppear:(BOOL)animated {
+    stepForSwipe      = 1;
+    [self shouldStartAsynchtask];
+}
+
+- (void) shouldStopAsynchtask {
+    if(asynchtaskRunning){
+        [timer invalidate];
+        timer = nil;
+        asynchtaskRunning = false;
+    }
+}
+
+- (void) shouldStartAsynchtask {
+    if(!asynchtaskRunning){
+        NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
+        timer = [[NSTimer alloc] initWithFireDate: delay
+                                         interval: 1
+                                           target: self
+                                         selector:@selector(checkSensors:)
+                                         userInfo:nil repeats:YES];
+        
+        NSRunLoop *runner = [NSRunLoop currentRunLoop];
+        [runner addTimer:timer forMode: NSDefaultRunLoopMode];
+        asynchtaskRunning = true;
+    }
+}
+
+
+
+- (void)checkSensors:timer {
+    if(finished){
+        NSLog(@"Execute WebService");
+        [self.manager checkSensors:[ModelDAO getAllSensorsId]];
+        finished = false;
+    }
+}
+
+- (void)finishCheckWithUpdate:(BOOL)updateNeeded {
+    if(updateNeeded){
+        [self updateMap];
+    }
+    finished = true;
+}
+
+- (void)updateMap {
+    NSLog(@"Map should update cause of sensors");
     
     UIColor *redColor   = [UIColor colorWithRed:255/255.0 green:0/255.0 blue:30/255.0 alpha:0.7];
     UIColor *greenColor = [UIColor colorWithRed:14/255.0 green:238/255.0 blue:55/255.0 alpha:0.7];
-    UIColor *blueColor  = [UIColor colorWithRed:0/255.0 green:174/255.0 blue:231/255.0 alpha:0.7];
-    
+
     MWZPlaceStyle* redStyle = [[MWZPlaceStyle alloc] initWithStrokeColor:redColor strokeWidth:@3 fillColor:redColor labelBackgroundColor:nil markerUrl:nil];
     MWZPlaceStyle* greenStyle = [[MWZPlaceStyle alloc] initWithStrokeColor:greenColor strokeWidth:@3 fillColor:greenColor labelBackgroundColor:nil markerUrl:nil];
-    MWZPlaceStyle* blueStyle = [[MWZPlaceStyle alloc] initWithStrokeColor:blueColor strokeWidth:@3 fillColor:blueColor labelBackgroundColor:nil markerUrl:nil];
+
     
     NSArray *listRooms = [DAO getObjects:@"Room" withPredicate:nil];
     for(Room *room in listRooms){
-        CGFloat moduloResult = (float)((int)timer % 2);
-        [self.myMapView setStyle:greenStyle forPlaceById:room.idMapwize];
-    }
+        if([CheckDAO roomHasSensorOn:room.idMapwize]){
+             [self.myMapView setStyle:redStyle forPlaceById:room.idMapwize];
+        }
+        else {
+            [self.myMapView setStyle:greenStyle forPlaceById:room.idMapwize];
+        }
+    }  
 }
+
+
 
 - (void)initMap
 {
@@ -72,9 +143,8 @@
     [myMapView centerOnCoordinates:@48.82594334079911 longitude:@2.259484827518463 floor:@5 zoom:@19];
 }
 
-- (void) map:(MWZMapView*) map didClick:(MWZLatLon*) latlon {
-        [myMapView access: @"h14aEHT8O6OvxoNo"];
-        [myMapView centerOnCoordinates:@48.82594334079911 longitude:@2.259484827518463 floor:@5 zoom:@19];
+- (void)map:(MWZMapView*) map didClick:(MWZLatLon*) latlon {
+
 }
 
 - (void)initContainerSwipeGesture
@@ -98,26 +168,32 @@
     switch (stepForSwipe)
     {
         case (0):
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
-            container.frame = frame;
-            stepForSwipe = 1;
-            self.myMapView.userInteractionEnabled = true;
-            break;
+        frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
+        container.frame = frame;
+        stepForSwipe = 1;
+        self.myMapView.userInteractionEnabled = true;
+        [self shouldStartAsynchtask];
+        break;
+        
         case (1):
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.3;
-            container.frame = frame;
-            stepForSwipe = 2;
-            self.myMapView.userInteractionEnabled = false;
-            break;
+        frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.3;
+        container.frame = frame;
+        stepForSwipe = 2;
+        self.myMapView.userInteractionEnabled = false;
+        [self shouldStartAsynchtask];
+        break;
+        
         case (2):
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 3;
-            container.frame = frame;
-            stepForSwipe = 3;
-            self.myMapView.userInteractionEnabled = false;
-            break;
+        frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 3;
+        container.frame = frame;
+        stepForSwipe = 3;
+        self.myMapView.userInteractionEnabled = false;
+        [self shouldStopAsynchtask];
+        break;
+        
         default:
-            NSLog(@"Error");
-            break;
+        NSLog(@"Error");
+        break;
     }
     [UIView commitAnimations];
 }
@@ -130,26 +206,32 @@
     CGRect frame = container.frame;
     switch (stepForSwipe) {
         case (1):
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
-            container.frame = frame;
-            stepForSwipe = 0;
-            self.myMapView.userInteractionEnabled = true;
-            break;
+        frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
+        container.frame = frame;
+        stepForSwipe = 0;
+        self.myMapView.userInteractionEnabled = true;
+        [self shouldStartAsynchtask];
+        break;
+        
         case (2):
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
-            container.frame = frame;
-            stepForSwipe = 1;
-            self.myMapView.userInteractionEnabled = true;
-            break;
+        frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
+        container.frame = frame;
+        stepForSwipe = 1;
+        self.myMapView.userInteractionEnabled = true;
+        [self shouldStartAsynchtask];
+        break;
+        
         case (3):
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.3;
-            container.frame = frame;
-            stepForSwipe = 1;
-            self.myMapView.userInteractionEnabled = false;
-            break;
+        frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.3;
+        container.frame = frame;
+        stepForSwipe = 1;
+        self.myMapView.userInteractionEnabled = false;
+        [self shouldStartAsynchtask];
+        break;
+        
         default:
-            NSLog(@"Error");
-            break;
+        NSLog(@"Error");
+        break;
     }
     [UIView commitAnimations];
 }
@@ -157,7 +239,6 @@
 
 
 - (void) map:(MWZMapView*) map didClickOnPlace:(MWZPlace*) place {
-
     UIViewController *presentingController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"PopupDetailController"];
     
     CCMPopupTransitioning *popup = [CCMPopupTransitioning sharedInstance];
@@ -217,5 +298,6 @@
 {
     [super didReceiveMemoryWarning];
 }
+
 
 @end

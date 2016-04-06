@@ -1,6 +1,7 @@
-[{"name":"Espace partagé","idMapwize":"56d5cb01ac5a950b003c89ad"},
-{"name":"Espace de concentration","idMapwize":"56d5ca7fac5a950b003c89a7"},
-{"name":"Salle de réunion","idMapwize":"56d5ca6dac5a950b003c89a5"},
-{"name":"Café de l'Innovation","idMapwize":"56d5ca45ac5a950b003c89a3"},
-{"name":"La fabrique à solutions","idMapwize":"56d5ca97ac5a950b003c89a9"},
-{"name":"Salle pitch","idMapwize":"56d5cae2ac5a950b003c89ab"}]
+[{"name":"Salle de réunion","idMapwize":"56d5ca6dac5a950b003c89a5"},
+ {"name":"Café de l'innovation","idMapwize":"5703d81fb247f50b00a07a23"},
+ {"name":"Often Space","idMapwize":"5703d82fb247f50b00a07a25"},
+ {"name":"La fabrique à solutions","idMapwize":"5703d7d5b247f50b00a07a21"},
+ {"name":"Salle pitch","idMapwize":"5703d86bb247f50b00a07a27"},
+ {"name":"Bureau partagé","idMapwize":"5703d772b247f50b00a07a1f"},
+ {"name":"Table Réunion","idMapwize":"5703d723b247f50b00a07a1d"}]

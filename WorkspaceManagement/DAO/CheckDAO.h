@@ -28,4 +28,6 @@
 
 + (BOOL)getStateForRoom:(NSString*)idMapwize time:(NSString*)time timeInterval:(int)interval;
 
++ (BOOL)roomHasSensorOn:(NSString*)idMapwize;
+
 @end

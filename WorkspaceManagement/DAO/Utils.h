@@ -23,4 +23,6 @@
 
 + (NSMutableArray*)jsonWithPath:(NSString*)name;
 
++ (NSDate *)aleaDate;
+
 @end

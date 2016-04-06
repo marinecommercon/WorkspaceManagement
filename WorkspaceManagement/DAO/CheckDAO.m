@@ -229,5 +229,17 @@
     return available;
 }
 
++ (BOOL)roomHasSensorOn:(NSString*)idMapwize {
+    Room   *room = [ModelDAO getRoomById:idMapwize];
+    NSSet<Sensor *> *sensors = room.sensors;
+    
+    // If at least one sensor has eventValue = 1 return true
+    for(Sensor *sensor in sensors){
+        if([sensor.eventValue isEqualToString:@"1"]){
+            return true;
+        }
+    }
+    return false;
+}
 
 @end

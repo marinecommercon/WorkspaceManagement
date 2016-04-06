@@ -47,7 +47,8 @@
 }
 
 + (NSDictionary*)generateHoursForCaroussel{
-    NSDate   *date        = [NSDate date];
+    //NSDate   *date        = [NSDate date];
+    NSDate   *date        = [self aleaDate];
     NSString *centralTime = [self parseDateToTime:date];
     int       position    = 0;
     
@@ -62,7 +63,7 @@
         NSDate *end   = [self parseTimeToDate:schedules[i+1]];
         
         // If current time is between two schedules (>=)
-        if([date timeIntervalSinceDate:begin] > 0 && [end timeIntervalSinceDate:date] > 0){
+        if([date timeIntervalSinceDate:begin] >= 0 && [end timeIntervalSinceDate:date] >= 0){
             
             // If current time inside two schedules (>)
             if(![centralTime isEqualToString:schedules[i]] && ![centralTime isEqualToString:schedules[i+1]]){
@@ -89,11 +90,23 @@
     return dict;
 }
 
-+ (NSMutableArray *) jsonWithPath:(NSString *)name {
++ (NSMutableArray *)jsonWithPath:(NSString *)name {
     NSError* error;
     NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:path];
     return [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+}
+
++ (NSDate *)aleaDate {
+    NSDate   *date         = [NSDate date];
+    NSString *time         = [self parseDateToTime:date];
+    NSString *hour         = [time substringWithRange:NSMakeRange(0,2)];
+    int lowerBound = 10;
+    int upperBound = 60;
+    int aleaMinute = lowerBound + arc4random() % (upperBound - lowerBound);
+    NSDate   *aleaDate     = [self parseTimeToDate:[NSString stringWithFormat:@"%@:%d",hour,aleaMinute]];
+    
+    return aleaDate;
 }
 
 @end

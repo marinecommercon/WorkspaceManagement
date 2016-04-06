@@ -17,6 +17,8 @@ alpha:1.0]
 @interface FilterViewController ()
 {
     NSArray *numbers;
+    NSTimer *timer;
+    BOOL asynchtaskRunning;
 }
 
 
@@ -45,35 +47,56 @@ alpha:1.0]
 {
     [super viewDidLoad];
     
-    // AsynchTask to update the carousel
-    NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
-    NSTimer *timer = [[NSTimer alloc] initWithFireDate: delay
-                                              interval: 10
-                                                target: self
-                                              selector:@selector(updateCarousel:)
-                                              userInfo:nil repeats:YES];
+    asynchtaskRunning = false;
+    [self shouldStartAsynchtask];
     
-    NSRunLoop *runner = [NSRunLoop currentRunLoop];
-    [runner addTimer:timer forMode: NSDefaultRunLoopMode];
-
     [self initSlider];
     [self initCarousel];
     
-    
 }
 
+- (void) viewDidAppear:(BOOL)animated{
+    [self shouldStartAsynchtask];
+}
+
+- (void) shouldStopAsynchtask {
+    if(asynchtaskRunning){
+        [timer invalidate];
+        timer = nil;
+        asynchtaskRunning = false;
+    }
+}
+
+- (void) shouldStartAsynchtask {
+    if(!asynchtaskRunning){
+        NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
+        timer = [[NSTimer alloc] initWithFireDate: delay
+                                         interval: 1
+                                           target: self
+                                         selector:@selector(updateCarousel:)
+                                         userInfo:nil repeats:YES];
+        
+        NSRunLoop *runner = [NSRunLoop currentRunLoop];
+        [runner addTimer:timer forMode: NSDefaultRunLoopMode];
+        asynchtaskRunning = true;
+    }
+}
+
+
 - (void) updateCarousel:(NSTimer *)timer {
-    self.schedulesArray = [[Utils generateHoursForCaroussel] objectForKey:@"hours"];
+    self.hoursDictionnary = [Utils generateHoursForCaroussel];
+    self.schedulesArray   = [self.hoursDictionnary objectForKey:@"hours"];
+    self.carouselPosition = [[self.hoursDictionnary objectForKey:@"position"] intValue];    
     [self.carousel reloadData];
+    [self.carousel scrollToItemAtIndex:self.carouselPosition animated:NO];
 }
 
 - (void) initCarousel {
     carousel.type   = iCarouselTypeLinear;
-    self.carouselPosition = [[[Utils generateHoursForCaroussel] objectForKey:@"position"] intValue];
-    [self.carousel scrollToItemAtIndex:self.carouselPosition animated:NO];
     UITapGestureRecognizer *tripleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tripleTapped:)];
     tripleTapGestureRecognizer.numberOfTapsRequired = 3;
     [self.carousel addGestureRecognizer:tripleTapGestureRecognizer];
+    //[self updateCarousel:nil];
 }
 
 - (void) initSlider {
@@ -108,6 +131,9 @@ alpha:1.0]
 - (void) tripleTapped:(UIGestureRecognizer *)gestureRecognizer {
     DSIViewController *newView = [self.storyboard instantiateViewControllerWithIdentifier:@"DSIViewController"];
     [self.navigationController pushViewController:newView animated:YES];
+    
+    [self shouldStopAsynchtask];
+    [self.delegate shouldStopAsynchtask];
 }
 
 

@@ -13,12 +13,19 @@
 #import "DSIViewController.h"
 #import "CCMPopup/CCMPopupTransitioning.h"
 #import "PopupDetailViewController.h"
+#import "Manager.h"
 
-@interface MapViewController : UIViewController <MWZMapDelegate>
+@interface MapViewController : UIViewController <MWZMapDelegate, ManagerDelegate, FilterViewControllerDelegate>
+
+@property (strong,nonatomic) FilterViewController *filterViewController;
 
 @property (strong, nonatomic)CLLocationManager* locationManager;
 @property (strong, nonatomic) IBOutlet UIView *container;
 @property (weak, nonatomic) IBOutlet MWZMapView *myMapView;
+@property (nonatomic, strong) Manager *manager;
 
+- (void)checkSensors:timer;
+- (void)finishCheckWithUpdate:(BOOL)updateNeeded;
+- (void)updateMap;
 
 @end

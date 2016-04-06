@@ -37,6 +37,8 @@
 		7810F92D1CB3C44900B259D3 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7810F92C1CB3C44900B259D3 /* MapViewController.m */; };
 		7810F9301CB3C4FB00B259D3 /* PopupDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7810F92F1CB3C4FB00B259D3 /* PopupDetailViewController.m */; };
 		7810F9321CB3D46800B259D3 /* CCMPopup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7810F9311CB3D46800B259D3 /* CCMPopup.framework */; };
+		7887537A1CB5043E0077AA6A /* Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 788753791CB5043E0077AA6A /* Manager.m */; };
+		7887537D1CB504610077AA6A /* WSDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7887537C1CB504610077AA6A /* WSDownloader.m */; };
 		A8BB2B838BDBD2A955E9D1D6 /* Pods_WorkspaceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73C7F5B83C8488D059645B4E /* Pods_WorkspaceManagement.framework */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +92,10 @@
 		7810F92E1CB3C4FB00B259D3 /* PopupDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupDetailViewController.h; sourceTree = "<group>"; };
 		7810F92F1CB3C4FB00B259D3 /* PopupDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupDetailViewController.m; sourceTree = "<group>"; };
 		7810F9311CB3D46800B259D3 /* CCMPopup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CCMPopup.framework; path = "Pods/../build/Debug-iphoneos/CCMPopup.framework"; sourceTree = "<group>"; };
+		788753781CB5043E0077AA6A /* Manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manager.h; sourceTree = "<group>"; };
+		788753791CB5043E0077AA6A /* Manager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Manager.m; sourceTree = "<group>"; };
+		7887537B1CB504610077AA6A /* WSDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSDownloader.h; sourceTree = "<group>"; };
+		7887537C1CB504610077AA6A /* WSDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSDownloader.m; sourceTree = "<group>"; };
 		992E6CEDB193423AE207F1E4 /* Pods-WorkspaceManagement.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkspaceManagement.release.xcconfig"; path = "Pods/Target Support Files/Pods-WorkspaceManagement/Pods-WorkspaceManagement.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -160,6 +166,7 @@
 		301832AB1CAD22A100964F60 /* WorkspaceManagement */ = {
 			isa = PBXGroup;
 			children = (
+				788753741CB4FF640077AA6A /* WebServices */,
 				7810F91E1CB3C42F00B259D3 /* Controllers */,
 				7810F8FF1CB3BD9900B259D3 /* LocalJson */,
 				308094811CAD4C6400B81DF0 /* iCarousel */,
@@ -231,6 +238,17 @@
 				7810F92F1CB3C4FB00B259D3 /* PopupDetailViewController.m */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		788753741CB4FF640077AA6A /* WebServices */ = {
+			isa = PBXGroup;
+			children = (
+				788753781CB5043E0077AA6A /* Manager.h */,
+				788753791CB5043E0077AA6A /* Manager.m */,
+				7887537B1CB504610077AA6A /* WSDownloader.h */,
+				7887537C1CB504610077AA6A /* WSDownloader.m */,
+			);
+			path = WebServices;
 			sourceTree = "<group>";
 		};
 		EC82A11E1696FD062DE03708 /* Frameworks */ = {
@@ -388,7 +406,9 @@
 				7810F9161CB3C1DD00B259D3 /* ModelDAO.m in Sources */,
 				308094841CAD4C6400B81DF0 /* iCarousel.m in Sources */,
 				7810F9301CB3C4FB00B259D3 /* PopupDetailViewController.m in Sources */,
+				7887537D1CB504610077AA6A /* WSDownloader.m in Sources */,
 				7810F8EC1CAEAEB800B259D3 /* Reservation.m in Sources */,
+				7887537A1CB5043E0077AA6A /* Manager.m in Sources */,
 				7810F9171CB3C1DD00B259D3 /* Utils.m in Sources */,
 				7810F91C1CB3C2FE00B259D3 /* CustomNavigationBar.m in Sources */,
 				7810F9281CB3C42F00B259D3 /* FilterViewController.m in Sources */,

@@ -22,6 +22,8 @@
 
 + (NSArray*)getAllRoomsName;
 
++ (NSArray*)getAllSensorsId;
+
 // ADD
 
 + (void)addRoomWithName:(NSString*)name IdMapwize:(NSString*)idMapwize;
@@ -32,7 +34,7 @@
 
 // UPDATE
 
-+ (void)updateSensorWithId: (NSString*)idSensor eventDate:(NSDate*)eventDate eventValue:(NSString*)eventValue;
++ (BOOL)checkSensorWithId: (NSString*)idSensor eventDate:(NSDate*)eventDate eventValue:(NSString*)eventValue;
 
 // SET LOCAL JSON
 
