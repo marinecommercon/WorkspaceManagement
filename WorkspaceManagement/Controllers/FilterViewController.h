@@ -29,16 +29,15 @@
 @property (strong, nonatomic) IBOutlet UIView *viewSlider;
 @property (weak, nonatomic) IBOutlet UIButton *retroButton;
 - (IBAction)retroAction:(id)sender;
-@property (weak, nonatomic) IBOutlet UIButton *ecranButton;
-- (IBAction)ecranAction:(id)sender;
-@property (weak, nonatomic) IBOutlet UIButton *tableauButton;
-- (IBAction)tableauAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *screenButton;
+- (IBAction)screenAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *tableButton;
+- (IBAction)tableAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *dockButton;
 - (IBAction)dockAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIStepper *stepper;
 - (IBAction)stepperAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *peopleLabel;
-
 
 @end
 

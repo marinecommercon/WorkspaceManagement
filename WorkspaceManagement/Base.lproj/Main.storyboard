@@ -902,16 +902,16 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hkq-qR-d1a">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="Ecran"/>
+                                <state key="normal" title="Screen"/>
                                 <connections>
-                                    <action selector="ecranAction:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="fTS-aZ-hWm"/>
+                                    <action selector="screenAction:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="hZt-FX-4QD"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fc-ws-QPR">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="Tableau"/>
+                                <state key="normal" title="Table"/>
                                 <connections>
-                                    <action selector="tableauAction:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="oAS-UE-hzB"/>
+                                    <action selector="tableAction:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="Jec-oS-aJX"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qe1-S1-mis">
@@ -1041,12 +1041,12 @@
                     <connections>
                         <outlet property="carousel" destination="qQS-DY-dqh" id="hrK-H3-MXt"/>
                         <outlet property="dockButton" destination="qe1-S1-mis" id="IQt-ch-fmY"/>
-                        <outlet property="ecranButton" destination="hkq-qR-d1a" id="MG7-qI-JEF"/>
                         <outlet property="peopleLabel" destination="eKB-ry-wrz" id="0zV-cs-yXR"/>
                         <outlet property="retroButton" destination="CGP-tZ-xbG" id="afv-oC-dYK"/>
+                        <outlet property="screenButton" destination="hkq-qR-d1a" id="SWr-k9-Pde"/>
                         <outlet property="slider" destination="TJE-HJ-RDh" id="qd1-eR-cr7"/>
                         <outlet property="stepper" destination="grG-Yr-p7H" id="u4n-Py-1Wx"/>
-                        <outlet property="tableauButton" destination="9fc-ws-QPR" id="eFC-qL-M5Z"/>
+                        <outlet property="tableButton" destination="9fc-ws-QPR" id="kDP-mg-wOl"/>
                         <outlet property="viewSlider" destination="cSp-na-CDK" id="7wp-gF-cm4"/>
                     </connections>
                 </viewController>

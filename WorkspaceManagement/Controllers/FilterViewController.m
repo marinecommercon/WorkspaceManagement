@@ -19,6 +19,11 @@ alpha:1.0]
     NSArray *numbers;
     NSTimer *timer;
     BOOL asynchtaskRunning;
+    
+    BOOL retroSelected;
+    BOOL screenSelected;
+    BOOL tableSelected;
+    BOOL dockSelected;
 }
 
 
@@ -48,6 +53,12 @@ alpha:1.0]
     [super viewDidLoad];
     
     asynchtaskRunning = false;
+    
+    retroSelected     = false;
+    screenSelected     = false;
+    tableSelected     = false;
+    dockSelected     = false;
+    
     [self shouldStartAsynchtask];
     
     [self initSlider];
@@ -68,13 +79,43 @@ alpha:1.0]
     [self.peopleLabel setText:peopleMsg];
 }
 
+
+
 - (IBAction)retroAction:(id)sender {
+    if(!retroSelected){
+        [self.retroButton setBackgroundColor:[self colorFromHexString:@"0acd00"]];
+        retroSelected = true;
+    } else {
+        [self.retroButton setBackgroundColor:nil];
+        retroSelected = false;
+    }
 }
-- (IBAction)ecranAction:(id)sender {
+- (IBAction)screenAction:(id)sender {
+    if(!screenSelected){
+        [self.screenButton setBackgroundColor:[self colorFromHexString:@"0acd00"]];
+        screenSelected = true;
+    } else {
+        [self.screenButton setBackgroundColor:nil];
+        screenSelected = false;
+    }
 }
-- (IBAction)tableauAction:(id)sender {
+- (IBAction)tableAction:(id)sender {
+    if(!tableSelected){
+        [self.tableButton setBackgroundColor:[self colorFromHexString:@"0acd00"]];
+        tableSelected = true;
+    } else {
+        [self.tableButton setBackgroundColor:nil];
+        tableSelected = false;
+    }
 }
 - (IBAction)dockAction:(id)sender {
+    if(!dockSelected){
+        [self.dockButton setBackgroundColor:[self colorFromHexString:@"0acd00"]];
+        dockSelected = true;
+    } else {
+        [self.dockButton setBackgroundColor:nil];
+        dockSelected = false;
+    }
 }
 - (IBAction)stepperAction:(id)sender {
      [self updatePeopleLabel];
@@ -83,15 +124,13 @@ alpha:1.0]
 
 
 
-
-
-
-
-
-
-
-
-
+- (UIColor *)colorFromHexString:(NSString *)hexString {
+    unsigned rgbValue = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:hexString];
+    [scanner setScanLocation:1]; // bypass '#' character
+    [scanner scanHexInt:&rgbValue];
+    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+}
 
 
 
