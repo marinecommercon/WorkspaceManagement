@@ -52,12 +52,48 @@ alpha:1.0]
     
     [self initSlider];
     [self initCarousel];
+    [self updatePeopleLabel];
     
 }
 
 - (void) viewDidAppear:(BOOL)animated{
     [self shouldStartAsynchtask];
 }
+
+
+// Buttons and logic
+
+- (void) updatePeopleLabel {
+    NSString *peopleMsg = [NSString stringWithFormat:@"%d personne(s)", (int)self.stepper.value];
+    [self.peopleLabel setText:peopleMsg];
+}
+
+- (IBAction)retroAction:(id)sender {
+}
+- (IBAction)ecranAction:(id)sender {
+}
+- (IBAction)tableauAction:(id)sender {
+}
+- (IBAction)dockAction:(id)sender {
+}
+- (IBAction)stepperAction:(id)sender {
+     [self updatePeopleLabel];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 - (void) shouldStopAsynchtask {
     if(asynchtaskRunning){
@@ -71,7 +107,7 @@ alpha:1.0]
     if(!asynchtaskRunning){
         NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
         timer = [[NSTimer alloc] initWithFireDate: delay
-                                         interval: 1
+                                         interval: 60
                                            target: self
                                          selector:@selector(updateCarousel:)
                                          userInfo:nil repeats:YES];
@@ -251,5 +287,6 @@ alpha:1.0]
 {
     [super didReceiveMemoryWarning];
 }
+
 
 @end

@@ -58,23 +58,23 @@
 
 - (void) shouldStopAsynchtask {
     if(asynchtaskRunning){
-        [timer invalidate];
-        timer = nil;
+//        [timer invalidate];
+//        timer = nil;
         asynchtaskRunning = false;
     }
 }
 
 - (void) shouldStartAsynchtask {
     if(!asynchtaskRunning){
-        NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
-        timer = [[NSTimer alloc] initWithFireDate: delay
-                                         interval: 1
-                                           target: self
-                                         selector:@selector(checkSensors:)
-                                         userInfo:nil repeats:YES];
-        
-        NSRunLoop *runner = [NSRunLoop currentRunLoop];
-        [runner addTimer:timer forMode: NSDefaultRunLoopMode];
+//        NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
+//        timer = [[NSTimer alloc] initWithFireDate: delay
+//                                         interval: 1
+//                                           target: self
+//                                         selector:@selector(checkSensors:)
+//                                         userInfo:nil repeats:YES];
+//        
+//        NSRunLoop *runner = [NSRunLoop currentRunLoop];
+//        [runner addTimer:timer forMode: NSDefaultRunLoopMode];
         asynchtaskRunning = true;
     }
 }

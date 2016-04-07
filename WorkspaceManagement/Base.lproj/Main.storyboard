@@ -838,7 +838,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Upy-N9-PYd"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="opy-uH-0se">
-                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qQS-DY-dqh" customClass="iCarousel">
@@ -847,9 +847,6 @@
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" keyboardKey="YES"/>
                                 </accessibility>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="400" height="81"/>
-                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="LZh-e3-Bcn" id="mZ9-Km-Hec"/>
                                     <outlet property="delegate" destination="LZh-e3-Bcn" id="6gA-Nv-6Bf"/>
@@ -880,8 +877,7 @@
                                         <exclude reference="dXR-YQ-w5c"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="107" width="400" height="95.5"/>
+                                <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="subviews">
                                         <include reference="TJE-HJ-RDh"/>
                                     </mask>
@@ -892,9 +888,50 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minimumValue="1" maximumValue="16" translatesAutoresizingMaskIntoConstraints="NO" id="grG-Yr-p7H">
+                                <rect key="frame" x="-47" y="-14" width="94" height="29"/>
+                                <connections>
+                                    <action selector="stepperAction:" destination="LZh-e3-Bcn" eventType="valueChanged" id="8JN-Fp-ga8"/>
+                                </connections>
+                            </stepper>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eKB-ry-wrz">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hkq-qR-d1a">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Ecran"/>
+                                <connections>
+                                    <action selector="ecranAction:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="fTS-aZ-hWm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fc-ws-QPR">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Tableau"/>
+                                <connections>
+                                    <action selector="tableauAction:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="oAS-UE-hzB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qe1-S1-mis">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Dock"/>
+                                <connections>
+                                    <action selector="dockAction:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="sSl-sN-VkZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CGP-tZ-xbG">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Retro"/>
+                                <connections>
+                                    <action selector="retroAction:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="xxv-dU-Xp5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="grG-Yr-p7H" secondAttribute="trailing" constant="30" id="2zZ-d1-gBN"/>
                             <constraint firstItem="cSp-na-CDK" firstAttribute="centerY" secondItem="opy-uH-0se" secondAttribute="centerY" multiplier="0.39" id="6cY-o1-dPh">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
@@ -902,11 +939,23 @@
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="qQS-DY-dqh" firstAttribute="centerX" secondItem="opy-uH-0se" secondAttribute="centerX" id="EEm-LV-ub3"/>
+                            <constraint firstItem="hkq-qR-d1a" firstAttribute="centerY" secondItem="opy-uH-0se" secondAttribute="centerY" id="Gdh-UP-4x5"/>
+                            <constraint firstItem="eKB-ry-wrz" firstAttribute="centerX" secondItem="opy-uH-0se" secondAttribute="centerX" id="JL4-Si-8V1"/>
+                            <constraint firstItem="qe1-S1-mis" firstAttribute="centerY" secondItem="opy-uH-0se" secondAttribute="centerY" id="MOP-J5-gHX"/>
+                            <constraint firstItem="CGP-tZ-xbG" firstAttribute="centerY" secondItem="opy-uH-0se" secondAttribute="centerY" id="MQO-Gc-LD2"/>
+                            <constraint firstItem="hkq-qR-d1a" firstAttribute="centerX" secondItem="opy-uH-0se" secondAttribute="centerX" multiplier="0.8" id="QH4-t0-5tg"/>
                             <constraint firstItem="cSp-na-CDK" firstAttribute="leading" secondItem="opy-uH-0se" secondAttribute="leading" id="QUJ-dm-dRu"/>
+                            <constraint firstItem="hkq-qR-d1a" firstAttribute="leading" secondItem="CGP-tZ-xbG" secondAttribute="trailing" constant="35" id="UzO-tY-vIX"/>
+                            <constraint firstItem="qe1-S1-mis" firstAttribute="leading" secondItem="9fc-ws-QPR" secondAttribute="trailing" constant="35" id="YWQ-Il-NYZ"/>
+                            <constraint firstItem="grG-Yr-p7H" firstAttribute="top" secondItem="cSp-na-CDK" secondAttribute="bottom" constant="20" id="Yns-WH-uy0"/>
                             <constraint firstItem="qQS-DY-dqh" firstAttribute="width" secondItem="opy-uH-0se" secondAttribute="width" id="ZgO-OL-yeA">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
+                            <constraint firstItem="9fc-ws-QPR" firstAttribute="centerY" secondItem="opy-uH-0se" secondAttribute="centerY" id="aET-jq-zdf"/>
+                            <constraint firstItem="grG-Yr-p7H" firstAttribute="leading" secondItem="eKB-ry-wrz" secondAttribute="trailing" constant="25.5" id="fTZ-FV-jqA"/>
+                            <constraint firstItem="eKB-ry-wrz" firstAttribute="centerY" secondItem="grG-Yr-p7H" secondAttribute="centerY" id="fVa-Wz-xew"/>
                             <constraint firstItem="cSp-na-CDK" firstAttribute="width" secondItem="opy-uH-0se" secondAttribute="width" id="hTo-ev-mj6"/>
+                            <constraint firstItem="9fc-ws-QPR" firstAttribute="centerX" secondItem="opy-uH-0se" secondAttribute="centerX" multiplier="1.2" id="kIF-QS-vwF"/>
                             <constraint firstItem="qQS-DY-dqh" firstAttribute="centerY" secondItem="opy-uH-0se" secondAttribute="centerY" multiplier="0.1" id="kdW-Vy-0b2"/>
                             <constraint firstItem="cSp-na-CDK" firstAttribute="centerX" secondItem="opy-uH-0se" secondAttribute="centerX" id="kk1-BL-DUa"/>
                             <constraint firstItem="cSp-na-CDK" firstAttribute="height" secondItem="opy-uH-0se" secondAttribute="height" multiplier="0.12" id="sdI-Zu-XmA">
@@ -918,42 +967,86 @@
                             <mask key="subviews">
                                 <exclude reference="qQS-DY-dqh"/>
                                 <exclude reference="cSp-na-CDK"/>
+                                <exclude reference="grG-Yr-p7H"/>
+                                <exclude reference="eKB-ry-wrz"/>
+                                <exclude reference="hkq-qR-d1a"/>
+                                <exclude reference="9fc-ws-QPR"/>
+                                <exclude reference="qe1-S1-mis"/>
+                                <exclude reference="CGP-tZ-xbG"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="Bup-97-suy"/>
+                                <exclude reference="EEm-LV-ub3"/>
+                                <exclude reference="ZgO-OL-yeA"/>
+                                <exclude reference="kdW-Vy-0b2"/>
                                 <exclude reference="6cY-o1-dPh"/>
                                 <exclude reference="QUJ-dm-dRu"/>
                                 <exclude reference="hTo-ev-mj6"/>
                                 <exclude reference="kk1-BL-DUa"/>
                                 <exclude reference="sdI-Zu-XmA"/>
                                 <exclude reference="txI-X5-lxF"/>
-                                <exclude reference="Bup-97-suy"/>
-                                <exclude reference="EEm-LV-ub3"/>
-                                <exclude reference="ZgO-OL-yeA"/>
-                                <exclude reference="kdW-Vy-0b2"/>
+                                <exclude reference="JL4-Si-8V1"/>
+                                <exclude reference="fVa-Wz-xew"/>
+                                <exclude reference="2zZ-d1-gBN"/>
+                                <exclude reference="Yns-WH-uy0"/>
+                                <exclude reference="fTZ-FV-jqA"/>
+                                <exclude reference="MQO-Gc-LD2"/>
+                                <exclude reference="Gdh-UP-4x5"/>
+                                <exclude reference="QH4-t0-5tg"/>
+                                <exclude reference="UzO-tY-vIX"/>
+                                <exclude reference="aET-jq-zdf"/>
+                                <exclude reference="kIF-QS-vwF"/>
+                                <exclude reference="MOP-J5-gHX"/>
+                                <exclude reference="YWQ-Il-NYZ"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="qQS-DY-dqh"/>
                                 <include reference="cSp-na-CDK"/>
+                                <include reference="grG-Yr-p7H"/>
+                                <include reference="eKB-ry-wrz"/>
+                                <include reference="hkq-qR-d1a"/>
+                                <include reference="9fc-ws-QPR"/>
+                                <include reference="qe1-S1-mis"/>
+                                <include reference="CGP-tZ-xbG"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="Bup-97-suy"/>
+                                <include reference="EEm-LV-ub3"/>
+                                <include reference="ZgO-OL-yeA"/>
+                                <include reference="kdW-Vy-0b2"/>
                                 <include reference="6cY-o1-dPh"/>
                                 <include reference="QUJ-dm-dRu"/>
                                 <include reference="hTo-ev-mj6"/>
                                 <include reference="kk1-BL-DUa"/>
                                 <include reference="sdI-Zu-XmA"/>
                                 <include reference="txI-X5-lxF"/>
-                                <include reference="Bup-97-suy"/>
-                                <include reference="EEm-LV-ub3"/>
-                                <include reference="ZgO-OL-yeA"/>
-                                <include reference="kdW-Vy-0b2"/>
+                                <include reference="JL4-Si-8V1"/>
+                                <include reference="fVa-Wz-xew"/>
+                                <include reference="2zZ-d1-gBN"/>
+                                <include reference="Yns-WH-uy0"/>
+                                <include reference="fTZ-FV-jqA"/>
+                                <include reference="MQO-Gc-LD2"/>
+                                <include reference="Gdh-UP-4x5"/>
+                                <include reference="QH4-t0-5tg"/>
+                                <include reference="UzO-tY-vIX"/>
+                                <include reference="aET-jq-zdf"/>
+                                <include reference="kIF-QS-vwF"/>
+                                <include reference="MOP-J5-gHX"/>
+                                <include reference="YWQ-Il-NYZ"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="carousel" destination="qQS-DY-dqh" id="hrK-H3-MXt"/>
+                        <outlet property="dockButton" destination="qe1-S1-mis" id="IQt-ch-fmY"/>
+                        <outlet property="ecranButton" destination="hkq-qR-d1a" id="MG7-qI-JEF"/>
+                        <outlet property="peopleLabel" destination="eKB-ry-wrz" id="0zV-cs-yXR"/>
+                        <outlet property="retroButton" destination="CGP-tZ-xbG" id="afv-oC-dYK"/>
                         <outlet property="slider" destination="TJE-HJ-RDh" id="qd1-eR-cr7"/>
+                        <outlet property="stepper" destination="grG-Yr-p7H" id="u4n-Py-1Wx"/>
+                        <outlet property="tableauButton" destination="9fc-ws-QPR" id="eFC-qL-M5Z"/>
                         <outlet property="viewSlider" destination="cSp-na-CDK" id="7wp-gF-cm4"/>
                     </connections>
                 </viewController>
