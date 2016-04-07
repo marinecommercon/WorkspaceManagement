@@ -14,11 +14,23 @@
 
 @implementation PopupDetailViewController
 
-- (void)viewDidLoad {
+@synthesize ButtonExit;
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.layer.borderWidth = 3;
     self.view.layer.borderColor = [[UIColor colorWithRed:20.0f/255.0f green:176.0f/255.0f blue:111.0f/255.0f alpha:1.0] CGColor];
+    
+    [ButtonExit addTarget:self
+                 action:@selector(setButton)
+       forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)setButton
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
