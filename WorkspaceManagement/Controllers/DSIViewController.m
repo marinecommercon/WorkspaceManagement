@@ -6,12 +6,6 @@
 //  Copyright © 2016 docapost. All rights reserved.
 //
 
-#define UIColorFromRGB(rgbValue) \
-[UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
-green:((float)((rgbValue & 0x00FF00) >>  8))/255.0 \
-blue:((float)((rgbValue & 0x0000FF) >>  0))/255.0 \
-alpha:1.0]
-
 #import "DSIViewController.h"
 
 @interface DSIViewController () {
@@ -35,9 +29,13 @@ alpha:1.0]
     //                                                                   style:UIBarButtonItemStyleDone target:nil action:nil];
     //    self.navigationItem.leftBarButtonItem = leftButton;
     
+    self.blueColor = [Utils colorFromHexString:@"#0086f4"];
+    self.blueColor = [Utils colorFromHexString:@"#7e7a70"];
+    
     self.schedulesArray = @[@"07:30", @"08:00", @"08:30", @"09:00", @"09:30", @"10:00", @"10:30", @"11:00", @"11:30", @"12:00",@"12:30", @"13:00", @"13:30", @"14:00", @"14:30", @"15:00", @"15:30", @"16:00", @"16:30", @"17:00", @"17:30", @"18:00", @"18:30", @"19:00", @"19:30", @"20:00", @"20:30",@"21:00"];
     
-    _pickerData  = [DAO getObjects:@"Room" withPredicate:nil];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type CONTAINS[cd] %@", @"dsi"];
+    _pickerData  = [DAO getObjects:@"Room" withPredicate:predicate];
     roomSelected = [_pickerData objectAtIndex:0];
     
     // Set Picker Delegate
@@ -121,8 +119,7 @@ alpha:1.0]
     label.minimumScaleFactor = 0.5;
     
     UILabel *labelSelected = (UILabel*)[pickerView viewForRow:row forComponent:component];
-    [labelSelected setTextColor:UIColorFromRGB(0x0086f4)];
-    
+    [labelSelected setTextColor:self.blueColor];
     return label;
 }
 
@@ -191,16 +188,16 @@ alpha:1.0]
             [cell setBackgroundColor:[UIColor clearColor]];
             [cell.imageState1 setBackgroundColor:[UIColor clearColor]];
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewLibreImage.png"]];
-            cell.label.textColor = UIColorFromRGB(0x0086f4);
+            cell.label.textColor = self.blueColor;
             //[cell.buttonCell setTitleColor:UIColorFromRGB(0x0086f4) forState:UIControlStateNormal];
         } else {
             cellDetails[indexPath.row] = @[@"busy",@"notChanged"];
             cell.label.text = @"Occupé";
             //[button setBackgroundColor:[UIColor redColor]];
             [cell setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-            [cell.imageState1 setBackgroundColor:UIColorFromRGB(0x0086f4)];
+            [cell.imageState1 setBackgroundColor:self.blueColor];
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewOccupeImage.png"]];
-            cell.label.textColor = UIColorFromRGB(0x7e7a70);
+            cell.label.textColor = self.blueColor;
             //[cell.buttonCell setTitleColor:UIColorFromRGB(0x7e7a70) forState:UIControlStateNormal];
             
         }
@@ -214,7 +211,7 @@ alpha:1.0]
             [cell setBackgroundColor:[UIColor clearColor]];
             [cell.imageState1 setBackgroundColor:[UIColor clearColor]];
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewLibreImage.png"]];
-            cell.label.textColor = UIColorFromRGB(0x0086f4);
+            cell.label.textColor = self.blueColor;
             //[cell.buttonCell setTitleColor:UIColorFromRGB(0x0086f4) forState:UIControlStateNormal];
         }
         
@@ -222,9 +219,9 @@ alpha:1.0]
             cell.label.text = @"Occupé";
             //[button setBackgroundColor:[UIColor redColor]];
             [cell setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-            [cell.imageState1 setBackgroundColor:UIColorFromRGB(0x0086f4)];
+            [cell.imageState1 setBackgroundColor:self.blueColor];
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewOccupeImage.png"]];
-            cell.label.textColor = UIColorFromRGB(0x7e7a70);
+            cell.label.textColor = self.greyColor;
             //[cell.buttonCell setTitleColor:UIColorFromRGB(0x7e7a70) forState:UIControlStateNormal];
         }
         
