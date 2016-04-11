@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pnQ-Qv-nTF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pnQ-Qv-nTF">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -119,7 +119,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="Wxg-sa-8ZJ" firstAttribute="centerX" secondItem="100-rM-U1I" secondAttribute="centerX" id="AGW-sZ-TEv"/>
                                     <constraint firstItem="Wxg-sa-8ZJ" firstAttribute="width" secondItem="100-rM-U1I" secondAttribute="width" multiplier="0.8" id="LvA-xY-Hbb"/>
@@ -162,7 +162,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="R3U-ES-qwR" id="lem-ka-LHt">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="60.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gKj-3r-7Br">
@@ -171,7 +171,7 @@
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Libre" translatesAutoresizingMaskIntoConstraints="NO" id="21l-SD-saq" userLabel="Image State 2">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DSIViewLibreImage" translatesAutoresizingMaskIntoConstraints="NO" id="21l-SD-saq" userLabel="Image State 2">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7:30" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8IP-Jc-Okv">
@@ -191,7 +191,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHQ-rF-52p">
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -257,10 +257,6 @@
                                                     <exclude reference="bfr-J2-Tna"/>
                                                     <exclude reference="dMc-D5-uBA"/>
                                                     <exclude reference="xpL-kl-Yvt"/>
-                                                    <exclude reference="BBq-ra-2te"/>
-                                                    <exclude reference="Zk3-Fx-w06"/>
-                                                    <exclude reference="gZm-9w-nwz"/>
-                                                    <exclude reference="liz-Fl-8eW"/>
                                                     <exclude reference="59e-Pk-dCs"/>
                                                     <exclude reference="Hnf-uP-axk"/>
                                                     <exclude reference="Khr-cp-cnu"/>
@@ -277,6 +273,10 @@
                                                     <exclude reference="Z9h-Ys-vXK"/>
                                                     <exclude reference="hVc-y4-ajB"/>
                                                     <exclude reference="z6y-Tg-5Ou"/>
+                                                    <exclude reference="BBq-ra-2te"/>
+                                                    <exclude reference="Zk3-Fx-w06"/>
+                                                    <exclude reference="gZm-9w-nwz"/>
+                                                    <exclude reference="liz-Fl-8eW"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
@@ -293,10 +293,6 @@
                                                     <include reference="bfr-J2-Tna"/>
                                                     <include reference="dMc-D5-uBA"/>
                                                     <include reference="xpL-kl-Yvt"/>
-                                                    <include reference="BBq-ra-2te"/>
-                                                    <include reference="Zk3-Fx-w06"/>
-                                                    <include reference="gZm-9w-nwz"/>
-                                                    <include reference="liz-Fl-8eW"/>
                                                     <include reference="59e-Pk-dCs"/>
                                                     <include reference="Hnf-uP-axk"/>
                                                     <include reference="Khr-cp-cnu"/>
@@ -313,6 +309,10 @@
                                                     <include reference="Z9h-Ys-vXK"/>
                                                     <include reference="hVc-y4-ajB"/>
                                                     <include reference="z6y-Tg-5Ou"/>
+                                                    <include reference="BBq-ra-2te"/>
+                                                    <include reference="Zk3-Fx-w06"/>
+                                                    <include reference="gZm-9w-nwz"/>
+                                                    <include reference="liz-Fl-8eW"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -328,7 +328,7 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="100-rM-U1I" secondAttribute="trailing" id="Gnz-MX-p4M"/>
                             <constraint firstItem="6ZU-HD-RzN" firstAttribute="top" secondItem="100-rM-U1I" secondAttribute="bottom" id="QtO-9r-h4V"/>
@@ -362,14 +362,14 @@
                                 <exclude reference="d4p-u0-eYD"/>
                                 <exclude reference="k51-SK-rd5"/>
                                 <exclude reference="rto-rb-d5U"/>
-                                <exclude reference="cYm-NN-Ouc"/>
-                                <exclude reference="uL0-h3-QZs"/>
-                                <exclude reference="wUH-k6-6sX"/>
+                                <exclude reference="QtO-9r-h4V"/>
                                 <exclude reference="Gnz-MX-p4M"/>
                                 <exclude reference="TIs-dy-BdE"/>
                                 <exclude reference="W4g-FR-wDk"/>
                                 <exclude reference="eFc-St-bPs"/>
-                                <exclude reference="QtO-9r-h4V"/>
+                                <exclude reference="cYm-NN-Ouc"/>
+                                <exclude reference="uL0-h3-QZs"/>
+                                <exclude reference="wUH-k6-6sX"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -383,14 +383,14 @@
                                 <include reference="d4p-u0-eYD"/>
                                 <include reference="k51-SK-rd5"/>
                                 <include reference="rto-rb-d5U"/>
-                                <include reference="cYm-NN-Ouc"/>
-                                <include reference="uL0-h3-QZs"/>
-                                <include reference="wUH-k6-6sX"/>
+                                <include reference="QtO-9r-h4V"/>
                                 <include reference="Gnz-MX-p4M"/>
                                 <include reference="TIs-dy-BdE"/>
                                 <include reference="W4g-FR-wDk"/>
                                 <include reference="eFc-St-bPs"/>
-                                <include reference="QtO-9r-h4V"/>
+                                <include reference="cYm-NN-Ouc"/>
+                                <include reference="uL0-h3-QZs"/>
+                                <include reference="wUH-k6-6sX"/>
                             </mask>
                         </variation>
                     </view>
@@ -422,9 +422,6 @@
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WSMImagesGeolocGreen" translatesAutoresizingMaskIntoConstraints="NO" id="00F-7x-3dj">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="322" y="222" width="60" height="57"/>
-                                </variation>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KYe-KO-pqv">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -449,13 +446,13 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Capacité 12 personnes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="EsW-cC-vmk">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LA FABRIQUE À SOLUTIONS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jQg-da-LBt">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ecran plat" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="cWd-uW-FqN">
@@ -487,9 +484,6 @@
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WSMImagesBtnOffTable" translatesAutoresizingMaskIntoConstraints="NO" id="ewc-Ce-QKX">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="139" y="523" width="54" height="51"/>
-                                </variation>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WSMImagesBtnOffTable" translatesAutoresizingMaskIntoConstraints="NO" id="v9O-KJ-pYc">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -943,7 +937,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eKB-ry-wrz">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hkq-qR-d1a">
@@ -1121,7 +1115,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Libre" width="77" height="77"/>
+        <image name="DSIViewLibreImage" width="77" height="77"/>
         <image name="WSMImagesBackgroundRoom" width="1074" height="750"/>
         <image name="WSMImagesBtnExit" width="64" height="69"/>
         <image name="WSMImagesBtnOffScreen" width="134" height="134"/>

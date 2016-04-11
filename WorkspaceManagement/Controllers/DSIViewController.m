@@ -81,7 +81,6 @@
 
 - (void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:YES];
-    NSLog(@"initial value %@", [_pickerData objectAtIndex:0].name);
     roomSelected = [_pickerData objectAtIndex:0];
 }
 
@@ -139,7 +138,6 @@
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSLog(@"new value %@", [_pickerData objectAtIndex:row].name);
     [self clearDetails];
     roomSelected = [_pickerData objectAtIndex:row];
     [_tableView reloadData];
