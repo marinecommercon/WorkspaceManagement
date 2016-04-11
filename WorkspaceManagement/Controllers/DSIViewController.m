@@ -27,6 +27,14 @@ alpha:1.0]
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset"
+    //                                                                    style:UIBarButtonItemStyleDone target:nil action:nil];
+    //    self.navigationItem.rightBarButtonItem = rightButton;
+    //
+    //    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Save"
+    //                                                                   style:UIBarButtonItemStyleDone target:nil action:nil];
+    //    self.navigationItem.leftBarButtonItem = leftButton;
+    
     self.schedulesArray = @[@"07:30", @"08:00", @"08:30", @"09:00", @"09:30", @"10:00", @"10:30", @"11:00", @"11:30", @"12:00",@"12:30", @"13:00", @"13:30", @"14:00", @"14:30", @"15:00", @"15:30", @"16:00", @"16:30", @"17:00", @"17:30", @"18:00", @"18:30", @"19:00", @"19:30", @"20:00", @"20:30",@"21:00"];
     
     _pickerData  = [DAO getObjects:@"Room" withPredicate:nil];
@@ -49,15 +57,73 @@ alpha:1.0]
     }
 }
 
+//- (void)styleNavBar {
+//    [self.navigationController setNavigationBarHidden:YES animated:NO];
+//    UINavigationBar *newNavBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 64.0)];
+//    [newNavBar setTintColor:[UIColor whiteColor]];
+//    UINavigationItem *newItem = [[UINavigationItem alloc] init];
+//    newItem.title = @"Paths";
+//
+//    // BackButtonBlack is an image we created and added to the app’s asset catalog
+//    UIImage *backButtonImage = [UIImage imageNamed:@"WSMImagesBtnExit"];
+//
+//    // any buttons in a navigation bar are UIBarButtonItems, not just regular UIButtons. backTapped: is the method we’ll call when this button is tapped
+//    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(backTapped:)];
+//
+//    // the bar button item is actually set on the navigation item, not the navigation bar itself.
+//    newItem.leftBarButtonItem = backBarButtonItem;
+//
+//    [newNavBar setItems:@[newItem]];
+//    [self.view addSubview:newNavBar];
+//}
+
+- (void)backTapped:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:YES];
     NSLog(@"initial value %@", [_pickerData objectAtIndex:0].name);
     roomSelected = [_pickerData objectAtIndex:0];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    __weak id weakSelf = self;
+    self.navigationController.interactivePopGestureRecognizer.delegate = weakSelf;
+}
+
+- (void)launchLeft {
+    [self.navigationController popViewControllerAnimated:YES];
+    NSLog(@"MDr");
+}
+
+- (void)launchRight {
+    [ModelDAO deleteAllReservations];
+    [self clearDetails];
+    [_tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     
+}
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.textColor = [UIColor lightGrayColor];
+    label.text = _pickerData[row].name;
+    label.textAlignment = NSTextAlignmentCenter;
+    label.adjustsFontSizeToFitWidth = YES;
+    label.minimumScaleFactor = 0.5;
+    
+    UILabel *labelSelected = (UILabel*)[pickerView viewForRow:row forComponent:component];
+    [labelSelected setTextColor:UIColorFromRGB(0x0086f4)];
+    
+    return label;
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -105,7 +171,7 @@ alpha:1.0]
     
     timeUpLabel.text = self.schedulesArray[indexPath.row];
     timeDownLabel.text = self.schedulesArray[indexPath.row+1];
-
+    
     
     [button setTag:indexPath.row];
     [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -120,46 +186,50 @@ alpha:1.0]
         
         if(available){
             cellDetails[indexPath.row] = @[@"free",@"notChanged"];
-            [button setTitle:@"Libre" forState:UIControlStateNormal];
+            cell.label.text = @"Libre";
             //[button setBackgroundColor:[UIColor greenColor]];
             [cell setBackgroundColor:[UIColor clearColor]];
             [cell.imageState1 setBackgroundColor:[UIColor clearColor]];
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewLibreImage.png"]];
-            [cell.buttonCell setTitleColor:UIColorFromRGB(0x0086f4) forState:UIControlStateNormal];
+            cell.label.textColor = UIColorFromRGB(0x0086f4);
+            //[cell.buttonCell setTitleColor:UIColorFromRGB(0x0086f4) forState:UIControlStateNormal];
         } else {
             cellDetails[indexPath.row] = @[@"busy",@"notChanged"];
-            [button setTitle:@"Occupé" forState:UIControlStateNormal];
+            cell.label.text = @"Occupé";
             //[button setBackgroundColor:[UIColor redColor]];
-            [cell setBackgroundColor:UIColorFromRGB(0xf5f5f5)];
+            [cell setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
             [cell.imageState1 setBackgroundColor:UIColorFromRGB(0x0086f4)];
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewOccupeImage.png"]];
-            [cell.buttonCell setTitleColor:UIColorFromRGB(0x7e7a70) forState:UIControlStateNormal];
-
+            cell.label.textColor = UIColorFromRGB(0x7e7a70);
+            //[cell.buttonCell setTitleColor:UIColorFromRGB(0x7e7a70) forState:UIControlStateNormal];
+            
         }
     }
     // Changes in changed
     else {
         NSString *state = [cellDetails objectAtIndex:indexPath.row][0];
         if([state isEqualToString:@"free"]){
-            [button setTitle:@"Libre" forState:UIControlStateNormal];
+            cell.label.text = @"Libre";
             //[button setBackgroundColor:[UIColor greenColor]];
             [cell setBackgroundColor:[UIColor clearColor]];
             [cell.imageState1 setBackgroundColor:[UIColor clearColor]];
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewLibreImage.png"]];
-            [cell.buttonCell setTitleColor:UIColorFromRGB(0x0086f4) forState:UIControlStateNormal];
+            cell.label.textColor = UIColorFromRGB(0x0086f4);
+            //[cell.buttonCell setTitleColor:UIColorFromRGB(0x0086f4) forState:UIControlStateNormal];
         }
         
         else if([state isEqualToString:@"busy"]){
-            [button setTitle:@"Occupé" forState:UIControlStateNormal];
+            cell.label.text = @"Occupé";
             //[button setBackgroundColor:[UIColor redColor]];
-            [cell setBackgroundColor:UIColorFromRGB(0xf5f5f5)];
+            [cell setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
             [cell.imageState1 setBackgroundColor:UIColorFromRGB(0x0086f4)];
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewOccupeImage.png"]];
-            [cell.buttonCell setTitleColor:UIColorFromRGB(0x7e7a70) forState:UIControlStateNormal];
+            cell.label.textColor = UIColorFromRGB(0x7e7a70);
+            //[cell.buttonCell setTitleColor:UIColorFromRGB(0x7e7a70) forState:UIControlStateNormal];
         }
         
         else {
-            [button setTitle:@"ERROR" forState:UIControlStateNormal];
+            cell.label.text = @"ERROR";
             //[button setBackgroundColor:[UIColor yellowColor]];
         }
     }
@@ -167,7 +237,8 @@ alpha:1.0]
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *) indexPath{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    //[tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSLog(@"ok");
 }
 
 -(IBAction)buttonClicked:(id)sender {
@@ -183,6 +254,7 @@ alpha:1.0]
         cellDetails[indexPath.row] = @[@"free",@"changed"];
     }
     [_tableView reloadData];
+    
 }
 
 - (IBAction)saveButton:(id)sender {

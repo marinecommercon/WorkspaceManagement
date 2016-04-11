@@ -52,6 +52,10 @@ alpha:1.0]
 {
     [super viewDidLoad];
     
+    self.view.layer.shadowOpacity = 0.5;
+    self.view.layer.shadowOffset = CGSizeMake(0, 0);
+    self.view.layer.shadowRadius = 1;
+    
     asynchtaskRunning = false;
     
     retroSelected     = false;
@@ -118,7 +122,7 @@ alpha:1.0]
     }
 }
 - (IBAction)stepperAction:(id)sender {
-     [self updatePeopleLabel];
+    [self updatePeopleLabel];
 }
 
 
@@ -161,7 +165,7 @@ alpha:1.0]
 - (void) updateCarousel:(NSTimer *)timer {
     self.hoursDictionnary = [Utils generateHoursForCaroussel];
     self.schedulesArray   = [self.hoursDictionnary objectForKey:@"hours"];
-    self.carouselPosition = [[self.hoursDictionnary objectForKey:@"position"] intValue];    
+    self.carouselPosition = [[self.hoursDictionnary objectForKey:@"position"] intValue];
     [self.carousel reloadData];
     [self.carousel scrollToItemAtIndex:self.carouselPosition animated:NO];
 }
@@ -191,7 +195,7 @@ alpha:1.0]
     
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
-
+    
     UIImage *sliderMinTrackImage = [UIImage imageNamed: @"Maxtrackimage.png"];
     UIImage *sliderMaxTrackImage = [UIImage imageNamed: @"Mintrackimage.png"];
     sliderMinTrackImage = [sliderMinTrackImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 22)];
@@ -267,14 +271,19 @@ alpha:1.0]
     
     if (view == nil)
     {
-        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 78.0f, 78.0f)];
+        view = [[UIImageView alloc] initWithFrame:CGRectMake( 0, 0, self.view.frame.size.width / 5, self.view.frame.size.height / 5)];
+        
         ((UIImageView *)view).image = [UIImage imageNamed:@"CarouselitemindexGrey.png"];
+        
         view.contentMode = UIViewContentModeCenter;
         label = [[UILabel alloc] initWithFrame:view.bounds];
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = UIColorFromRGB(0xbbbbbc);
-        label.font = [label.font fontWithSize:15];
+        [label setFont:[UIFont fontWithName:@"DINPro-CondensedBold" size:20]];
+        
+        label.adjustsFontSizeToFitWidth=YES;
+        label.minimumScaleFactor=0.5;
         label.tag = 1;
         [view addSubview:label];
         
@@ -291,8 +300,10 @@ alpha:1.0]
     
     if (index == self.carousel.currentItemIndex)
     {
-        label.font = [label.font fontWithSize:20];
+        [label setFont:[UIFont fontWithName:@"DINPro-CondensedBold" size:30]];
         label.textColor = UIColorFromRGB(0x24b270);
+        label.adjustsFontSizeToFitWidth=YES;
+        label.minimumScaleFactor=0.5;
         ((UIImageView *)view).image = [UIImage imageNamed:@"CarouselitemindexGreen.png"];
     }
     
@@ -309,12 +320,12 @@ alpha:1.0]
 
 - (void)carouselWillBeginScrollingAnimation:(iCarousel *)carousel
 {
-
+    
 }
 
 - (void)carouselDidEndScrollingAnimation:(iCarousel *)carousel
 {
-
+    
 }
 
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel

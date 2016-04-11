@@ -38,5 +38,9 @@
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>DINPro-CondBold.otf</string>
+	</array>
 </dict>
 </plist>

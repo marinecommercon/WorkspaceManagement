@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *buttonCell;
 @property (weak, nonatomic) IBOutlet UIImageView *imageState1;
 @property (weak, nonatomic) IBOutlet UIImageView *imageState2;
+@property (strong, nonatomic) IBOutlet UILabel *label;
 
 @end
