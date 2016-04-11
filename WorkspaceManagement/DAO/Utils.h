@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "Room.h"
 
 @interface Utils : NSObject
@@ -24,5 +25,7 @@
 + (NSMutableArray*)jsonWithPath:(NSString*)name;
 
 + (NSDate *)aleaDate;
+
++ (UIColor*)colorFromHexString:(NSString *)hexString;
 
 @end

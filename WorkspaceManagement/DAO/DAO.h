@@ -39,6 +39,5 @@
 
 + (void)logAllReservations;
 
-
 @end
 

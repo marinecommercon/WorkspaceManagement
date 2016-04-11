@@ -26,6 +26,20 @@
     }
 }
 
++ (Equipment*)getEquipmentByKey:(NSString*)key {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"key == %@", key];
+    NSManagedObject * mo = [DAO getObject:@"Equipment" withPredicate:predicate];
+    
+    if ([[[mo entity]name] isEqualToString:@"Equipment"]) {
+        Equipment *equipmentTemp = (Equipment*)mo;
+        return equipmentTemp;
+    }
+    else{
+        NSLog(@"Equipment with key %@ not found", key);
+        return nil;
+    }
+}
+
 + (Sensor*)getSensorById: (NSString*) idSensor {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"idSensor == %@", idSensor];
     NSManagedObject * mo = [DAO getObject:@"Sensor" withPredicate:predicate];
@@ -141,8 +155,10 @@
             Room* room = (Room*)[DAO getInstance:@"Room"];
             [room setName:[dico valueForKey:@"name"]];
             [room setIdMapwize:[dico valueForKey:@"idMapwize"]];
+            [room setMaxPeople:[dico valueForKey:@"maxPeople"]];
+            [room setType:[dico valueForKey:@"type"]];
+            [DAO saveContext];
         }
-        [DAO saveContext];
         [self setSensorsWithReset:needReset];
     }
     
@@ -152,8 +168,10 @@
             Room* room = (Room*)[DAO getInstance:@"Room"];
             [room setName:[dico valueForKey:@"name"]];
             [room setIdMapwize:[dico valueForKey:@"idMapwize"]];
+            [room setMaxPeople:[dico valueForKey:@"maxPeople"]];
+            [room setType:[dico valueForKey:@"type"]];
+            [DAO saveContext];
         }
-        [DAO saveContext];
         [self setSensorsWithReset:needReset];
     }
 }
@@ -169,9 +187,9 @@
             [sensor setIdSensor:[dico valueForKey:@"idSensor"]];
             [sensor setEventDate:[NSDate date]];
             [sensor setEventValue:[dico valueForKey:@"eventValue"]];
+            [DAO saveContext];
         }
-        [DAO saveContext];
-        [self setRoomSensor];
+        [self setEquipmentWithReset:needReset];
     }
     
     if([listSensors count] == 0){
@@ -181,8 +199,37 @@
             [sensor setIdSensor:[dico valueForKey:@"idSensor"]];
             [sensor setEventDate:[NSDate date]];
             [sensor setEventValue:[dico valueForKey:@"eventValue"]];
+            [DAO saveContext];
         }
-        [DAO saveContext];
+        [self setEquipmentWithReset:needReset];
+    }
+}
+
++ (void)setEquipmentWithReset:(BOOL)needReset {
+    
+    NSArray   *listEquipments = [DAO getObjects:@"Equipment" withPredicate:nil];
+    if(needReset && [listEquipments count] != 0){
+        [self deleteAllEquipments];
+        NSMutableArray *equipments = [Utils jsonWithPath:@"equipments"];
+        for(NSDictionary* dico in equipments){
+            Equipment* equipment = (Equipment*)[DAO getInstance:@"Equipment"];
+            [equipment setKey:[dico valueForKey:@"key"]];
+            [equipment setName:[dico valueForKey:@"name"]];
+            [equipment setFilterState:[dico valueForKey:@"filterState"]];
+            [DAO saveContext];
+        }
+        [self setRoomSensor];
+    }
+    
+    if([listEquipments count] == 0){
+        NSMutableArray *equipments = [Utils jsonWithPath:@"equipments"];
+        for(NSDictionary* dico in equipments){
+            Equipment* equipment = (Equipment*)[DAO getInstance:@"Equipment"];
+            [equipment setKey:[dico valueForKey:@"key"]];
+            [equipment setName:[dico valueForKey:@"name"]];
+            [equipment setFilterState:[dico valueForKey:@"filterState"]];
+            [DAO saveContext];
+        }
         [self setRoomSensor];
     }
 }
@@ -207,6 +254,33 @@
         Sensor *sensor = (Sensor *)[DAO getObject:@"Sensor" withPredicate:predicate];
         
         [currentRoom addSensorsObject:sensor];
+        [DAO saveContext];
+        lastRoomId = valueRoom;
+    }
+    [self setRoomEquipment];
+}
+
++ (void)setRoomEquipment{
+    NSMutableArray *roomEquipment = [Utils jsonWithPath:@"roomequipment"];
+    
+    id lastRoomId;
+    Room *currentRoom = nil;
+    NSDictionary  *pair;
+    
+    for (int i = 0; i < [roomEquipment count]; ++i) {
+        pair = [roomEquipment objectAtIndex:i];
+        id valueRoom      = [pair objectForKey:@"idRoom"];
+        id valueEquipment = [pair objectForKey:@"key"];
+        
+        if (![valueRoom isEqual:lastRoomId]) {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"idMapwize == %@", valueRoom];
+            currentRoom = (Room*)[DAO getObject:@"Room" withPredicate:predicate];
+        }
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"key == %@", valueEquipment];
+        Equipment *equipment = (Equipment *)[DAO getObject:@"Equipment" withPredicate:predicate];
+        
+        [currentRoom addEquipmentsObject:equipment];
+        [DAO saveContext];
         lastRoomId = valueRoom;
     }
 }
@@ -241,6 +315,14 @@
     }
 }
 
++ (void)deleteAllEquipments {
+    NSArray   *listEquipments = [DAO getObjects:@"Equipment" withPredicate:nil];
+    for (Equipment *equipment in listEquipments) {
+        [[DAO getContext] deleteObject:equipment];
+        [DAO saveContext];
+    }
+}
+
 + (void)deleteReservationWithBegin: (NSString*) begin {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"beginTime == %@", [Utils parseTimeToDate:begin]];
     NSManagedObject * objectTemp = [DAO getObject:@"Reservation" withPredicate:predicate];
@@ -253,6 +335,5 @@
     [room removeReservations:reservations];
     [DAO saveContext];
 }
-
 
 @end

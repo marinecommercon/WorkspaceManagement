@@ -22,22 +22,28 @@
 
 @property (nonatomic,strong)  NSMutableArray *schedulesArray;
 @property (nonatomic,strong)  NSDictionary *hoursDictionnary;
-@property int carouselPosition;
+@property NSInteger realTimePosition;
 
 @property (nonatomic, strong) IBOutlet iCarousel *carousel;
 @property (weak, nonatomic) IBOutlet UISlider *slider;
 @property (strong, nonatomic) IBOutlet UIView *viewSlider;
+
 @property (weak, nonatomic) IBOutlet UIButton *retroButton;
-- (IBAction)retroAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *screenButton;
-- (IBAction)screenAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *tableButton;
-- (IBAction)tableAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *dockButton;
-- (IBAction)dockAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIStepper *stepper;
+
+- (IBAction)retroAction:(id)sender;
+- (IBAction)screenAction:(id)sender;
+- (IBAction)tableAction:(id)sender;
+- (IBAction)dockAction:(id)sender;
+
 - (IBAction)stepperAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *peopleLabel;
+
+@property BOOL realTime;
+@property int  numberOfPeople;
 
 @end
 

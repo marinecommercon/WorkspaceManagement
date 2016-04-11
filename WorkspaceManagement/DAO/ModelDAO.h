@@ -18,6 +18,8 @@
 
 + (Room*)getRoomById:(NSString*)idMapwize;
 
++ (Equipment*)getEquipmentByKey:(NSString*)key;
+
 + (Sensor*)getSensorById:(NSString*)idSensor;
 
 + (NSArray*)getAllRoomsName;
@@ -44,7 +46,11 @@
 
 + (void)setRoomsWithReset:(BOOL)needReset;
 
++ (void)setEquipmentWithReset:(BOOL)needReset;
+
 + (void)setRoomSensor;
+
++ (void)setRoomEquipment;
 
 // DELETE
 
@@ -53,6 +59,8 @@
 + (void)deleteAllRooms;
 
 + (void)deleteAllReservations;
+
++ (void)deleteAllEquipments;
 
 + (void)deleteAllSensors;
 

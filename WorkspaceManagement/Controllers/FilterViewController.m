@@ -6,12 +6,6 @@
 //  Copyright © 2016 docapost. All rights reserved.
 //
 
-#define UIColorFromRGB(rgbValue) \
-[UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
-green:((float)((rgbValue & 0x00FF00) >>  8))/255.0 \
-blue:((float)((rgbValue & 0x0000FF) >>  0))/255.0 \
-alpha:1.0]
-
 #import "FilterViewController.h"
 
 @interface FilterViewController ()
@@ -19,11 +13,6 @@ alpha:1.0]
     NSArray *numbers;
     NSTimer *timer;
     BOOL asynchtaskRunning;
-    
-    BOOL retroSelected;
-    BOOL screenSelected;
-    BOOL tableSelected;
-    BOOL dockSelected;
 }
 
 
@@ -40,6 +29,7 @@ alpha:1.0]
     self.schedulesArray = [[NSMutableArray alloc] init];
     self.schedulesArray = [[Utils generateHoursForCaroussel] objectForKey:@"hours"];
     [self.carousel reloadData];
+    [self checkBeforeNextRound];
 }
 
 - (void)dealloc
@@ -52,21 +42,16 @@ alpha:1.0]
 {
     [super viewDidLoad];
     
-    self.view.layer.shadowOpacity = 0.5;
-    self.view.layer.shadowOffset = CGSizeMake(0, 0);
-    self.view.layer.shadowRadius = 1;
-    
     asynchtaskRunning = false;
     
-    retroSelected     = false;
-    screenSelected     = false;
-    tableSelected     = false;
-    dockSelected     = false;
+    // INIT STATE = 1 = NOT SELECTED
+    self.numberOfPeople = 1;
     
     [self shouldStartAsynchtask];
-    
     [self initSlider];
     [self initCarousel];
+    
+    // Init the filters
     [self updatePeopleLabel];
     
 }
@@ -79,64 +64,170 @@ alpha:1.0]
 // Buttons and logic
 
 - (void) updatePeopleLabel {
-    NSString *peopleMsg = [NSString stringWithFormat:@"%d personne(s)", (int)self.stepper.value];
+    NSString *peopleMsg = [NSString stringWithFormat:@"%d personne(s)", self.numberOfPeople];
     [self.peopleLabel setText:peopleMsg];
 }
 
-
-
 - (IBAction)retroAction:(id)sender {
-    if(!retroSelected){
-        [self.retroButton setBackgroundColor:[self colorFromHexString:@"0acd00"]];
-        retroSelected = true;
-    } else {
-        [self.retroButton setBackgroundColor:nil];
-        retroSelected = false;
+    Equipment *retro = [ModelDAO getEquipmentByKey:@"retro"];
+    if([retro.filterState  isEqual: @(1)]){
+        [retro setFilterState:@(2)];
+        [self.retroButton setBackgroundColor:[Utils colorFromHexString:@"#0acd00"]];
     }
+    else if([retro.filterState  isEqual: @(2)]){
+        [retro setFilterState:@(1)];
+        [self.retroButton setBackgroundColor:nil];
+    }
+    [self checkBeforeNextRound];
 }
 - (IBAction)screenAction:(id)sender {
-    if(!screenSelected){
-        [self.screenButton setBackgroundColor:[self colorFromHexString:@"0acd00"]];
-        screenSelected = true;
-    } else {
-        [self.screenButton setBackgroundColor:nil];
-        screenSelected = false;
+    Equipment *screen = [ModelDAO getEquipmentByKey:@"screen"];
+    if([screen.filterState  isEqual: @(1)]){
+        [screen setFilterState:@(2)];
+        [self.screenButton setBackgroundColor:[Utils colorFromHexString:@"#0acd00"]];
     }
+    else if([screen.filterState  isEqual: @(2)]){
+        [screen setFilterState:@(1)];
+        [self.screenButton setBackgroundColor:nil];
+    }
+    [self checkBeforeNextRound];
 }
 - (IBAction)tableAction:(id)sender {
-    if(!tableSelected){
-        [self.tableButton setBackgroundColor:[self colorFromHexString:@"0acd00"]];
-        tableSelected = true;
-    } else {
-        [self.tableButton setBackgroundColor:nil];
-        tableSelected = false;
+    Equipment *table = [ModelDAO getEquipmentByKey:@"table"];
+    if([table.filterState  isEqual: @(1)]){
+        [table setFilterState:@(2)];
+        [self.tableButton setBackgroundColor:[Utils colorFromHexString:@"#0acd00"]];
     }
+    else if([table.filterState  isEqual: @(2)]){
+        [table setFilterState:@(1)];
+        [self.tableButton setBackgroundColor:nil];
+    }
+    [self checkBeforeNextRound];
 }
 - (IBAction)dockAction:(id)sender {
-    if(!dockSelected){
-        [self.dockButton setBackgroundColor:[self colorFromHexString:@"0acd00"]];
-        dockSelected = true;
-    } else {
-        [self.dockButton setBackgroundColor:nil];
-        dockSelected = false;
+    Equipment *dock = [ModelDAO getEquipmentByKey:@"dock"];
+    if([dock.filterState  isEqual: @(1)]){
+        [dock setFilterState:@(2)];
+        [self.dockButton setBackgroundColor:[Utils colorFromHexString:@"#0acd00"]];
     }
+    else if([dock.filterState  isEqual: @(2)]){
+        [dock setFilterState:@(1)];
+        [self.dockButton setBackgroundColor:nil];
+    }
+    [self checkBeforeNextRound];
 }
+
 - (IBAction)stepperAction:(id)sender {
+    self.numberOfPeople = self.stepper.value;
+    [self checkBeforeNextRound];
     [self updatePeopleLabel];
 }
 
-
-
-
-- (UIColor *)colorFromHexString:(NSString *)hexString {
-    unsigned rgbValue = 0;
-    NSScanner *scanner = [NSScanner scannerWithString:hexString];
-    [scanner setScanLocation:1]; // bypass '#' character
-    [scanner scanHexInt:&rgbValue];
-    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+- (void) checkBeforeNextRound {
+    NSArray *equipments = [DAO getObjects:@"Equipment" withPredicate:nil];
+    for (Equipment *equipment in equipments){
+        if(![equipment.filterState isEqualToNumber:@(2)]){
+            [self checkForEach:equipment];
+        }
+    }
+    [self checkStepper];
 }
 
+- (void) checkStepper {
+    self.numberOfPeople = self.stepper.value+1;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"filterState == %@", @(2)];
+    NSMutableArray *equipmentList = (NSMutableArray *)[DAO getObjects:@"Equipment" withPredicate:predicate];
+    
+    if(![self atLeastOneRoomFor:equipmentList]){
+        self.stepper.maximumValue = self.stepper.value;
+    } else { self.stepper.maximumValue = 16;}
+    self.numberOfPeople = self.stepper.value;
+}
 
+// For each equipment
+// Turn button into transparent if combinaison would be possible
+// Turn button into grey if combinaison wouldn't be possible
+
+- (BOOL) checkForEach:(Equipment*)equipment {
+    
+    // Suppose this equipment is selected in the next round
+    [equipment setFilterState:@(2)];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"filterState == %@", @(2)];
+    NSMutableArray *equipmentList = (NSMutableArray *)[DAO getObjects:@"Equipment" withPredicate:predicate];
+    
+    // Check if the new selection of selected equipment (state = 2) would find a room
+    if([self atLeastOneRoomFor:equipmentList]){
+        [equipment setFilterState:@(1)];
+        
+        if([equipment.key isEqualToString:@"retro"]){
+            [self.retroButton setBackgroundColor:nil];
+        }
+        if([equipment.key isEqualToString:@"screen"]){
+            [self.screenButton setBackgroundColor:nil];
+        }
+        if([equipment.key isEqualToString:@"table"]){
+            [self.tableButton setBackgroundColor:nil];
+        }
+        if([equipment.key isEqualToString:@"dock"]){
+            [self.dockButton setBackgroundColor:nil];
+        }
+        return true;
+        
+    } else {
+        
+        // Turn some equipments to grey
+        [equipment setFilterState:@(0)];
+        
+        if([equipment.key isEqualToString:@"retro"]){
+            [self.retroButton setBackgroundColor:[Utils colorFromHexString:@"#a3a3a3"]];
+        }
+        if([equipment.key isEqualToString:@"screen"]){
+            [self.screenButton setBackgroundColor:[Utils colorFromHexString:@"#a3a3a3"]];
+        }
+        if([equipment.key isEqualToString:@"table"]){
+            [self.tableButton setBackgroundColor:[Utils colorFromHexString:@"#a3a3a3"]];
+        }
+        if([equipment.key isEqualToString:@"dock"]){
+            [self.dockButton setBackgroundColor:[Utils colorFromHexString:@"#a3a3a3"]];
+        }
+        
+        return false;
+    }
+}
+
+- (BOOL) atLeastOneRoomFor:(NSArray*)equipmentList {
+    // At least one room is OK
+    NSPredicate *predicate;
+    if(self.realTime == false){
+        predicate = [NSPredicate predicateWithFormat:@"type != %@", @"free"];
+    } else {
+        predicate = nil;
+    }
+    
+    NSArray *rooms = [DAO getObjects:@"Room" withPredicate:predicate];
+    for (Room *room in rooms){
+        if([self room:room isOkFor:equipmentList]){
+            return true;
+        }
+    }
+    return  false;
+}
+
+- (BOOL)room:(Room*)room isOkFor:(NSArray*)equipmentList {
+    for(Equipment *equipment in equipmentList){
+        if(![room.equipments containsObject:equipment]){
+            return false;
+        }
+    }
+    
+    if([room.maxPeople intValue] >= (int)self.numberOfPeople){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// HANDLE ASYNCHTASK
 
 - (void) shouldStopAsynchtask {
     if(asynchtaskRunning){
@@ -152,7 +243,7 @@ alpha:1.0]
         timer = [[NSTimer alloc] initWithFireDate: delay
                                          interval: 60
                                            target: self
-                                         selector:@selector(updateCarousel:)
+                                         selector:@selector(updateCarousel:andPosition:)
                                          userInfo:nil repeats:YES];
         
         NSRunLoop *runner = [NSRunLoop currentRunLoop];
@@ -161,22 +252,7 @@ alpha:1.0]
     }
 }
 
-
-- (void) updateCarousel:(NSTimer *)timer {
-    self.hoursDictionnary = [Utils generateHoursForCaroussel];
-    self.schedulesArray   = [self.hoursDictionnary objectForKey:@"hours"];
-    self.carouselPosition = [[self.hoursDictionnary objectForKey:@"position"] intValue];
-    [self.carousel reloadData];
-    [self.carousel scrollToItemAtIndex:self.carouselPosition animated:NO];
-}
-
-- (void) initCarousel {
-    carousel.type   = iCarouselTypeLinear;
-    UITapGestureRecognizer *tripleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tripleTapped:)];
-    tripleTapGestureRecognizer.numberOfTapsRequired = 3;
-    [self.carousel addGestureRecognizer:tripleTapGestureRecognizer];
-    //[self updateCarousel:nil];
-}
+// HANDLE SLIDER
 
 - (void) initSlider {
     numbers = @[@(0), @(1), @(2), @(3), @(4)];
@@ -206,15 +282,6 @@ alpha:1.0]
     [slider setMinimumTrackImage:sliderMinTrackImage forState:UIControlStateNormal];
     [slider setMaximumTrackImage:sliderMaxTrackImage forState:UIControlStateNormal];
 }
-
-- (void) tripleTapped:(UIGestureRecognizer *)gestureRecognizer {
-    DSIViewController *newView = [self.storyboard instantiateViewControllerWithIdentifier:@"DSIViewController"];
-    [self.navigationController pushViewController:newView animated:YES];
-    
-    [self shouldStopAsynchtask];
-    [self.delegate shouldStopAsynchtask];
-}
-
 
 - (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer
 {
@@ -249,20 +316,25 @@ alpha:1.0]
     NSLog(@"Number: %@", number);
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    self.carousel = nil;
+// HANDLE CAROUSEL
+
+- (void) updateCarousel:(NSTimer *)timer andPosition:(BOOL)updatePosition {
+    self.hoursDictionnary = [Utils generateHoursForCaroussel];
+    self.schedulesArray   = [self.hoursDictionnary objectForKey:@"hours"];
+    self.realTimePosition = [[self.hoursDictionnary objectForKey:@"position"] intValue];
+    [self.carousel reloadData];
+    
+    if(updatePosition){
+        [self.carousel scrollToItemAtIndex:self.realTimePosition animated:NO];
+    }
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
-}
-
-- (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
-{
-    return [self.schedulesArray count];
+- (void) initCarousel {
+    carousel.type   = iCarouselTypeLinear;
+    UITapGestureRecognizer *tripleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tripleTapped:)];
+    tripleTapGestureRecognizer.numberOfTapsRequired = 3;
+    [self.carousel addGestureRecognizer:tripleTapGestureRecognizer];
+    [self updateCarousel:nil andPosition:YES];
 }
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view
@@ -271,19 +343,14 @@ alpha:1.0]
     
     if (view == nil)
     {
-        view = [[UIImageView alloc] initWithFrame:CGRectMake( 0, 0, self.view.frame.size.width / 5, self.view.frame.size.height / 5)];
-        
+        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 78.0f, 78.0f)];
         ((UIImageView *)view).image = [UIImage imageNamed:@"CarouselitemindexGrey.png"];
-        
         view.contentMode = UIViewContentModeCenter;
         label = [[UILabel alloc] initWithFrame:view.bounds];
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = UIColorFromRGB(0xbbbbbc);
-        [label setFont:[UIFont fontWithName:@"DINPro-CondensedBold" size:20]];
-        
-        label.adjustsFontSizeToFitWidth=YES;
-        label.minimumScaleFactor=0.5;
+        label.textColor = [Utils colorFromHexString:@"#bbbbbc"];
+        label.font = [label.font fontWithSize:15];
         label.tag = 1;
         [view addSubview:label];
         
@@ -300,14 +367,17 @@ alpha:1.0]
     
     if (index == self.carousel.currentItemIndex)
     {
-        [label setFont:[UIFont fontWithName:@"DINPro-CondensedBold" size:30]];
-        label.textColor = UIColorFromRGB(0x24b270);
-        label.adjustsFontSizeToFitWidth=YES;
-        label.minimumScaleFactor=0.5;
+        label.font = [label.font fontWithSize:20];
+        label.textColor = [Utils colorFromHexString:@"24b270"];
         ((UIImageView *)view).image = [UIImage imageNamed:@"CarouselitemindexGreen.png"];
     }
     
     return view;
+}
+
+- (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel
+{
+    return [self.schedulesArray count];
 }
 
 - (void)carouselWillBeginDragging:(iCarousel *)carousel
@@ -331,12 +401,77 @@ alpha:1.0]
 - (void)carouselCurrentItemIndexDidChange:(iCarousel *)carousel
 {
     [self.carousel reloadData];
+    
+    // REAL TIME
+    if(self.realTimePosition == self.carousel.currentItemIndex){
+        self.realTime = true;
+        [self checkBeforeNextRound];
+    }
+    
+    // FUTURE
+    else if(self.realTimePosition < self.carousel.currentItemIndex){
+        Equipment *dock = [ModelDAO getEquipmentByKey:@"dock"];
+        if([dock.filterState isEqual:@(2)]){
+            UIAlertController * alert=   [UIAlertController
+                                          alertControllerWithTitle:@"attention"
+                                          message:@"Vous risquez de perdre votre sélection en cours. Souhaitez-vous poursuivre ?"
+                                          preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* yesButton = [UIAlertAction
+                                        actionWithTitle:@"Oui"
+                                        style:UIAlertActionStyleDefault
+                                        handler:^(UIAlertAction * action)
+                                        {
+                                            [dock setFilterState:@(1)];
+                                            self.realTime = false;
+                                            [self checkBeforeNextRound];
+                                        }];
+            UIAlertAction* noButton = [UIAlertAction
+                                       actionWithTitle:@"Non"
+                                       style:UIAlertActionStyleDefault
+                                       handler:^(UIAlertAction * action)
+                                       {
+                                           [self.carousel scrollToItemAtIndex:self.realTimePosition animated:NO];
+                                       }];
+            
+            [alert addAction:yesButton];
+            [alert addAction:noButton];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+    }
+    
+    // PAST TIME
+    else {
+        // Goes back to real Time
+        [self.carousel scrollToItemAtIndex:self.realTimePosition animated:NO];
+        self.realTime = true;
+    }
+}
+
+// HANDLE OTHER
+
+- (void) tripleTapped:(UIGestureRecognizer *)gestureRecognizer {
+    DSIViewController *newView = [self.storyboard instantiateViewControllerWithIdentifier:@"DSIViewController"];
+    [self.navigationController pushViewController:newView animated:YES];
+    
+    [self shouldStopAsynchtask];
+    [self.delegate shouldStopAsynchtask];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    self.carousel = nil;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
-
 
 @end
