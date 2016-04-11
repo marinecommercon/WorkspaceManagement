@@ -37,6 +37,9 @@
 		7810F92D1CB3C44900B259D3 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7810F92C1CB3C44900B259D3 /* MapViewController.m */; };
 		7810F9301CB3C4FB00B259D3 /* PopupDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7810F92F1CB3C4FB00B259D3 /* PopupDetailViewController.m */; };
 		7810F9321CB3D46800B259D3 /* CCMPopup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7810F9311CB3D46800B259D3 /* CCMPopup.framework */; };
+		782F418D1CBBF75F00AB2B58 /* equipments.json in Resources */ = {isa = PBXBuildFile; fileRef = 782F418C1CBBF75F00AB2B58 /* equipments.json */; };
+		782F418F1CBBF77A00AB2B58 /* roomequipment.json in Resources */ = {isa = PBXBuildFile; fileRef = 782F418E1CBBF77A00AB2B58 /* roomequipment.json */; };
+		782F41941CBBF8E600AB2B58 /* Equipment.m in Sources */ = {isa = PBXBuildFile; fileRef = 782F41931CBBF8E600AB2B58 /* Equipment.m */; };
 		7887537A1CB5043E0077AA6A /* Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 788753791CB5043E0077AA6A /* Manager.m */; };
 		7887537D1CB504610077AA6A /* WSDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7887537C1CB504610077AA6A /* WSDownloader.m */; };
 		A8BB2B838BDBD2A955E9D1D6 /* Pods_WorkspaceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73C7F5B83C8488D059645B4E /* Pods_WorkspaceManagement.framework */; };
@@ -91,6 +94,10 @@
 		7810F92E1CB3C4FB00B259D3 /* PopupDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopupDetailViewController.h; sourceTree = "<group>"; };
 		7810F92F1CB3C4FB00B259D3 /* PopupDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopupDetailViewController.m; sourceTree = "<group>"; };
 		7810F9311CB3D46800B259D3 /* CCMPopup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CCMPopup.framework; path = "Pods/../build/Debug-iphoneos/CCMPopup.framework"; sourceTree = "<group>"; };
+		782F418C1CBBF75F00AB2B58 /* equipments.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = equipments.json; sourceTree = "<group>"; };
+		782F418E1CBBF77A00AB2B58 /* roomequipment.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = roomequipment.json; sourceTree = "<group>"; };
+		782F41921CBBF8E600AB2B58 /* Equipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Equipment.h; sourceTree = "<group>"; };
+		782F41931CBBF8E600AB2B58 /* Equipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Equipment.m; sourceTree = "<group>"; };
 		788753781CB5043E0077AA6A /* Manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manager.h; sourceTree = "<group>"; };
 		788753791CB5043E0077AA6A /* Manager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Manager.m; sourceTree = "<group>"; };
 		7887537B1CB504610077AA6A /* WSDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSDownloader.h; sourceTree = "<group>"; };
@@ -209,6 +216,8 @@
 				7810F8E81CAEAEA700B259D3 /* Sensor.m */,
 				7810F8EA1CAEAEB800B259D3 /* Reservation.h */,
 				7810F8EB1CAEAEB800B259D3 /* Reservation.m */,
+				782F41921CBBF8E600AB2B58 /* Equipment.h */,
+				782F41931CBBF8E600AB2B58 /* Equipment.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -219,6 +228,8 @@
 				7810F9001CB3BDF500B259D3 /* rooms.json */,
 				7810F9011CB3BDF500B259D3 /* roomsensor.json */,
 				7810F9021CB3BDF500B259D3 /* sensors.json */,
+				782F418E1CBBF77A00AB2B58 /* roomequipment.json */,
+				782F418C1CBBF75F00AB2B58 /* equipments.json */,
 			);
 			path = LocalJson;
 			sourceTree = "<group>";
@@ -335,10 +346,12 @@
 			files = (
 				3076423B1CBBE51A00503B40 /* DINPro-CondBold.otf in Resources */,
 				301832BF1CAD22A100964F60 /* LaunchScreen.storyboard in Resources */,
+				782F418D1CBBF75F00AB2B58 /* equipments.json in Resources */,
 				301832BC1CAD22A100964F60 /* Assets.xcassets in Resources */,
 				7810F9031CB3BDF500B259D3 /* rooms.json in Resources */,
 				7810F9051CB3BDF500B259D3 /* sensors.json in Resources */,
 				301832B71CAD22A100964F60 /* Main.storyboard in Resources */,
+				782F418F1CBBF77A00AB2B58 /* roomequipment.json in Resources */,
 				7810F9041CB3BDF500B259D3 /* roomsensor.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -400,6 +413,7 @@
 			files = (
 				301832BA1CAD22A100964F60 /* Workspace_Management.xcdatamodeld in Sources */,
 				7810F8E91CAEAEA700B259D3 /* Sensor.m in Sources */,
+				782F41941CBBF8E600AB2B58 /* Equipment.m in Sources */,
 				7810F92D1CB3C44900B259D3 /* MapViewController.m in Sources */,
 				7810F9271CB3C42F00B259D3 /* DSIViewController.m in Sources */,
 				7810F9161CB3C1DD00B259D3 /* ModelDAO.m in Sources */,

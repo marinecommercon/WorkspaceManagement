@@ -12,7 +12,10 @@
 
 @dynamic name;
 @dynamic idMapwize;
+@dynamic maxPeople;
+@dynamic type;
 @dynamic reservations;
 @dynamic sensors;
+@dynamic equipments;
 
 @end
