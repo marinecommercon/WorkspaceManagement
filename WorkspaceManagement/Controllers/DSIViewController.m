@@ -155,13 +155,11 @@
     return [self.schedulesArray count]-1;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString  *CellIdentifier = @"ScheduleCellIdentifier";
     ScheduleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    //Show the title of the hike
     UILabel  *timeUpLabel  = cell.timeUpLabel;
     UILabel  *timeDownLabel  = cell.timeDownLabel;
     UIButton *button = cell.buttonCell;
@@ -169,15 +167,13 @@
     timeUpLabel.text = self.schedulesArray[indexPath.row];
     timeDownLabel.text = self.schedulesArray[indexPath.row+1];
     
-    
     [button setTag:indexPath.row];
     [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     NSString *beginString = [self.schedulesArray objectAtIndex:indexPath.row];
     NSString *endString   = [self.schedulesArray objectAtIndex:indexPath.row+1];
     
-    
-    // No changes in changed
+    // No changes detected
     if([[cellDetails objectAtIndex:indexPath.row][1] isEqualToString:@"notChanged"]){
         BOOL available = [CheckDAO checkAvailability:beginString End:endString Room:roomSelected];
         
@@ -202,7 +198,7 @@
             
         }
     }
-    // Changes in changed
+    // Changes detected
     else {
         NSString *state = [cellDetails objectAtIndex:indexPath.row][0];
         if([state isEqualToString:@"free"]){
