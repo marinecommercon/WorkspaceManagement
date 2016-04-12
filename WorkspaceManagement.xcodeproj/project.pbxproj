@@ -40,7 +40,7 @@
 		782F418F1CBBF77A00AB2B58 /* roomequipment.json in Resources */ = {isa = PBXBuildFile; fileRef = 782F418E1CBBF77A00AB2B58 /* roomequipment.json */; };
 		782F41941CBBF8E600AB2B58 /* Equipment.m in Sources */ = {isa = PBXBuildFile; fileRef = 782F41931CBBF8E600AB2B58 /* Equipment.m */; };
 		782F41981CBD22B800AB2B58 /* UIColor+AppAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 782F41971CBD22B800AB2B58 /* UIColor+AppAdditions.m */; };
-		782F419B1CBD237600AB2B58 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 782F419A1CBD237600AB2B58 /* Utils.m */; };
+		782F419E1CBD3CD400AB2B58 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 782F419D1CBD3CD400AB2B58 /* Utils.m */; };
 		7887537A1CB5043E0077AA6A /* Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 788753791CB5043E0077AA6A /* Manager.m */; };
 		7887537D1CB504610077AA6A /* WSDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7887537C1CB504610077AA6A /* WSDownloader.m */; };
 		A8BB2B838BDBD2A955E9D1D6 /* Pods_WorkspaceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73C7F5B83C8488D059645B4E /* Pods_WorkspaceManagement.framework */; };
@@ -99,8 +99,8 @@
 		782F41931CBBF8E600AB2B58 /* Equipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Equipment.m; sourceTree = "<group>"; };
 		782F41961CBD22B800AB2B58 /* UIColor+AppAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppAdditions.h"; sourceTree = "<group>"; };
 		782F41971CBD22B800AB2B58 /* UIColor+AppAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AppAdditions.m"; sourceTree = "<group>"; };
-		782F41991CBD237600AB2B58 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
-		782F419A1CBD237600AB2B58 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		782F419C1CBD3CD400AB2B58 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		782F419D1CBD3CD400AB2B58 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		788753781CB5043E0077AA6A /* Manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manager.h; sourceTree = "<group>"; };
 		788753791CB5043E0077AA6A /* Manager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Manager.m; sourceTree = "<group>"; };
 		7887537B1CB504610077AA6A /* WSDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSDownloader.h; sourceTree = "<group>"; };
@@ -254,8 +254,8 @@
 		782F41951CBD229100AB2B58 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				782F41991CBD237600AB2B58 /* Utils.h */,
-				782F419A1CBD237600AB2B58 /* Utils.m */,
+				782F419C1CBD3CD400AB2B58 /* Utils.h */,
+				782F419D1CBD3CD400AB2B58 /* Utils.m */,
 				782F41961CBD22B800AB2B58 /* UIColor+AppAdditions.h */,
 				782F41971CBD22B800AB2B58 /* UIColor+AppAdditions.m */,
 			);
@@ -435,7 +435,7 @@
 				7887537D1CB504610077AA6A /* WSDownloader.m in Sources */,
 				7810F8EC1CAEAEB800B259D3 /* Reservation.m in Sources */,
 				7887537A1CB5043E0077AA6A /* Manager.m in Sources */,
-				782F419B1CBD237600AB2B58 /* Utils.m in Sources */,
+				782F419E1CBD3CD400AB2B58 /* Utils.m in Sources */,
 				7810F9281CB3C42F00B259D3 /* FilterViewController.m in Sources */,
 				782F41981CBD22B800AB2B58 /* UIColor+AppAdditions.m in Sources */,
 				7810F9151CB3C1DD00B259D3 /* DAO.m in Sources */,
