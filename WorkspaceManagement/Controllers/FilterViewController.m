@@ -72,7 +72,7 @@
     Equipment *retro = [ModelDAO getEquipmentByKey:@"retro"];
     if([retro.filterState  isEqual: @(1)]){
         [retro setFilterState:@(2)];
-        [self.retroButton setBackgroundColor:[Utils colorFromHexString:@"#0acd00"]];
+        [self.retroButton setBackgroundColor:[UIColor bnpGreen]];
     }
     else if([retro.filterState  isEqual: @(2)]){
         [retro setFilterState:@(1)];
@@ -84,7 +84,7 @@
     Equipment *screen = [ModelDAO getEquipmentByKey:@"screen"];
     if([screen.filterState  isEqual: @(1)]){
         [screen setFilterState:@(2)];
-        [self.screenButton setBackgroundColor:[Utils colorFromHexString:@"#0acd00"]];
+        [self.screenButton setBackgroundColor:[UIColor bnpGreen]];
     }
     else if([screen.filterState  isEqual: @(2)]){
         [screen setFilterState:@(1)];
@@ -96,7 +96,7 @@
     Equipment *table = [ModelDAO getEquipmentByKey:@"table"];
     if([table.filterState  isEqual: @(1)]){
         [table setFilterState:@(2)];
-        [self.tableButton setBackgroundColor:[Utils colorFromHexString:@"#0acd00"]];
+        [self.tableButton setBackgroundColor:[UIColor bnpGreen]];
     }
     else if([table.filterState  isEqual: @(2)]){
         [table setFilterState:@(1)];
@@ -108,7 +108,7 @@
     Equipment *dock = [ModelDAO getEquipmentByKey:@"dock"];
     if([dock.filterState  isEqual: @(1)]){
         [dock setFilterState:@(2)];
-        [self.dockButton setBackgroundColor:[Utils colorFromHexString:@"#0acd00"]];
+        [self.dockButton setBackgroundColor:[UIColor bnpGreen]];
     }
     else if([dock.filterState  isEqual: @(2)]){
         [dock setFilterState:@(1)];
@@ -178,16 +178,16 @@
         [equipment setFilterState:@(0)];
         
         if([equipment.key isEqualToString:@"retro"]){
-            [self.retroButton setBackgroundColor:[Utils colorFromHexString:@"#a3a3a3"]];
+            [self.retroButton setBackgroundColor:[UIColor bnpGrey]];
         }
         if([equipment.key isEqualToString:@"screen"]){
-            [self.screenButton setBackgroundColor:[Utils colorFromHexString:@"#a3a3a3"]];
+            [self.screenButton setBackgroundColor:[UIColor bnpGrey]];
         }
         if([equipment.key isEqualToString:@"table"]){
-            [self.tableButton setBackgroundColor:[Utils colorFromHexString:@"#a3a3a3"]];
+            [self.tableButton setBackgroundColor:[UIColor bnpGrey]];
         }
         if([equipment.key isEqualToString:@"dock"]){
-            [self.dockButton setBackgroundColor:[Utils colorFromHexString:@"#a3a3a3"]];
+            [self.dockButton setBackgroundColor:[UIColor bnpGrey]];
         }
         return false;
     }
@@ -347,7 +347,7 @@
         label = [[UILabel alloc] initWithFrame:view.bounds];
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [Utils colorFromHexString:@"#bbbbbc"];
+        label.textColor = [UIColor bnpGrey];
         label.font = [label.font fontWithSize:15];
         label.tag = 1;
         [view addSubview:label];
@@ -366,7 +366,7 @@
     if (index == self.carousel.currentItemIndex)
     {
         label.font = [label.font fontWithSize:20];
-        label.textColor = [Utils colorFromHexString:@"24b270"];
+        label.textColor = [UIColor bnpGreen];
         ((UIImageView *)view).image = [UIImage imageNamed:@"CarouselitemindexGreen.png"];
     }
     

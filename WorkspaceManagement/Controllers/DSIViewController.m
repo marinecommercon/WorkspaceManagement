@@ -29,9 +29,6 @@
     //                                                                   style:UIBarButtonItemStyleDone target:nil action:nil];
     //    self.navigationItem.leftBarButtonItem = leftButton;
     
-    self.blueColor = [Utils colorFromHexString:@"#0086f4"];
-    self.blueColor = [Utils colorFromHexString:@"#7e7a70"];
-    
     self.schedulesArray = @[@"07:30", @"08:00", @"08:30", @"09:00", @"09:30", @"10:00", @"10:30", @"11:00", @"11:30", @"12:00",@"12:30", @"13:00", @"13:30", @"14:00", @"14:30", @"15:00", @"15:30", @"16:00", @"16:30", @"17:00", @"17:30", @"18:00", @"18:30", @"19:00", @"19:30", @"20:00", @"20:30",@"21:00"];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type CONTAINS[cd] %@", @"dsi"];
@@ -118,7 +115,7 @@
     label.minimumScaleFactor = 0.5;
     
     UILabel *labelSelected = (UILabel*)[pickerView viewForRow:row forComponent:component];
-    [labelSelected setTextColor:self.blueColor];
+    [labelSelected setTextColor:[UIColor bnpBlue]];
     return label;
 }
 
@@ -178,21 +175,17 @@
         if(available){
             cellDetails[indexPath.row] = @[@"free",@"notChanged"];
             cell.label.text = @"Libre";
-            //[button setBackgroundColor:[UIColor greenColor]];
             [cell setBackgroundColor:[UIColor clearColor]];
             [cell.imageState1 setBackgroundColor:[UIColor clearColor]];
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewLibreImage.png"]];
-            cell.label.textColor = self.blueColor;
-            //[cell.buttonCell setTitleColor:UIColorFromRGB(0x0086f4) forState:UIControlStateNormal];
+            cell.label.textColor = [UIColor bnpBlue];
         } else {
             cellDetails[indexPath.row] = @[@"busy",@"notChanged"];
             cell.label.text = @"Occupé";
-            //[button setBackgroundColor:[UIColor redColor]];
             [cell setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-            [cell.imageState1 setBackgroundColor:self.blueColor];
+            [cell.imageState1 setBackgroundColor:[UIColor bnpBlue]];
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewOccupeImage.png"]];
-            cell.label.textColor = self.blueColor;
-            //[cell.buttonCell setTitleColor:UIColorFromRGB(0x7e7a70) forState:UIControlStateNormal];
+            cell.label.textColor = [UIColor bnpBlue];
             
         }
     }
@@ -201,34 +194,28 @@
         NSString *state = [cellDetails objectAtIndex:indexPath.row][0];
         if([state isEqualToString:@"free"]){
             cell.label.text = @"Libre";
-            //[button setBackgroundColor:[UIColor greenColor]];
             [cell setBackgroundColor:[UIColor clearColor]];
             [cell.imageState1 setBackgroundColor:[UIColor clearColor]];
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewLibreImage.png"]];
-            cell.label.textColor = self.blueColor;
-            //[cell.buttonCell setTitleColor:UIColorFromRGB(0x0086f4) forState:UIControlStateNormal];
+            cell.label.textColor = [UIColor bnpBlue];
         }
         
         else if([state isEqualToString:@"busy"]){
             cell.label.text = @"Occupé";
-            //[button setBackgroundColor:[UIColor redColor]];
             [cell setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-            [cell.imageState1 setBackgroundColor:self.blueColor];
+            [cell.imageState1 setBackgroundColor:[UIColor bnpBlue]];
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewOccupeImage.png"]];
-            cell.label.textColor = self.greyColor;
-            //[cell.buttonCell setTitleColor:UIColorFromRGB(0x7e7a70) forState:UIControlStateNormal];
+            cell.label.textColor = [UIColor bnpGrey];
         }
         
         else {
             cell.label.text = @"ERROR";
-            //[button setBackgroundColor:[UIColor yellowColor]];
         }
     }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *) indexPath{
-    //[tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSLog(@"ok");
 }
 

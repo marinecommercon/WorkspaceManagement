@@ -14,6 +14,9 @@
 @dynamic idMapwize;
 @dynamic maxPeople;
 @dynamic type;
+@dynamic infoRoom;
+@dynamic mapState;
+
 @dynamic reservations;
 @dynamic sensors;
 @dynamic equipments;

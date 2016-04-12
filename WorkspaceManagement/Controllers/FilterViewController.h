@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "iCarousel.h"
 #import "DSIViewController.h"
-#import "Utils.h"
+#import "UIColor+AppAdditions.h"
 
 @protocol FilterViewControllerDelegate
 - (void)shouldStartAsynchtask;

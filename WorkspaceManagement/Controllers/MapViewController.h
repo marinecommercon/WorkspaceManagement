@@ -14,6 +14,7 @@
 #import "CCMPopup/CCMPopupTransitioning.h"
 #import "PopupDetailViewController.h"
 #import "Manager.h"
+#import "UIColor+AppAdditions.h"
 
 @interface MapViewController : UIViewController <MWZMapDelegate, ManagerDelegate, FilterViewControllerDelegate>
 

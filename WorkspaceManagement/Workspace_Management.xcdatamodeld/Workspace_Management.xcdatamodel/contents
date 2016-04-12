@@ -13,6 +13,8 @@
     </entity>
     <entity name="Room" representedClassName="Room" syncable="YES">
         <attribute name="idMapwize" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="infoRoom" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mapState" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="maxPeople" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
@@ -27,9 +29,9 @@
         <relationship name="room" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Room" inverseName="sensors" inverseEntity="Room" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Reservation" positionX="-65" positionY="-171" width="128" height="90"/>
-        <element name="Room" positionX="-281" positionY="-297" width="128" height="148"/>
-        <element name="Sensor" positionX="-245" positionY="-45" width="128" height="103"/>
         <element name="Equipment" positionX="-450" positionY="-132" width="128" height="103"/>
+        <element name="Reservation" positionX="-65" positionY="-171" width="128" height="90"/>
+        <element name="Room" positionX="-281" positionY="-297" width="128" height="180"/>
+        <element name="Sensor" positionX="-245" positionY="-45" width="128" height="103"/>
     </elements>
 </model>

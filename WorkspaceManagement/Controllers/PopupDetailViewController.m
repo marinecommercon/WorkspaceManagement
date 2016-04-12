@@ -19,13 +19,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.view.layer.borderWidth = 3;
-    self.view.layer.borderColor = [[UIColor colorWithRed:20.0f/255.0f green:176.0f/255.0f blue:111.0f/255.0f alpha:1.0] CGColor];
-    
-    [ButtonExit addTarget:self
-                 action:@selector(setButton)
-       forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)setButton
@@ -43,7 +36,6 @@
     
     // Do any additional setup after loading the view.
     self.view.layer.borderWidth = 3;
-    self.view.layer.borderColor = [[UIColor colorWithRed:20.0f/255.0f green:176.0f/255.0f blue:111.0f/255.0f alpha:1.0] CGColor];
     
     [ButtonExit addTarget:self
                    action:@selector(setButton)
@@ -51,23 +43,29 @@
     
     [self.PopupRoomNameTitleLabel setText:room.name];
     [self.PopupRoomCapacityLabel setText:[NSString stringWithFormat:@"Capacité %@ personnes",room.maxPeople]];
+    [self.PopupRoomDescriptionLabel setText:room.infoRoom];
     
+    [self setImages:room];
+    [self setStateInfos:room];
+    
+}
+
+- (void) setImages:(Room*)room {
     if([room.equipments containsObject:[ModelDAO getEquipmentByKey:@"retro"]]){
-        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOnRetro"] withLabel:@"Vidéo-projecteur"];
+        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOffRetro"] withLabel:@"Vidéo-projecteur"];
     }
     if([room.equipments containsObject:[ModelDAO getEquipmentByKey:@"screen"]]){
-        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOnScreen"] withLabel:@"Ecran"];
+        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOffScreen"] withLabel:@"Ecran"];
     }
     if([room.equipments containsObject:[ModelDAO getEquipmentByKey:@"table"]]){
-        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOnTable"] withLabel:@"Tableau"];
+        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOffTable"] withLabel:@"Tableau"];
     }
     if([room.equipments containsObject:[ModelDAO getEquipmentByKey:@"dock"]]){
-        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOnDock"] withLabel:@"Dock"];
+        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOffDock"] withLabel:@"Dock"];
     }
 }
 
 - (void) setImage:(UIImage*)image withLabel:(NSString*)text {
-
     if([self.Popup1ItemsLabel.text isEqualToString:@""]){
         [self.Popup1ItemsLabel setText:text];
         [self.Popup1ItemsImage setImage:image];
@@ -84,7 +82,44 @@
         [self.Popup4ItemsLabel setText:text];
         [self.Popup4ItemsImage setImage:image];
     }
-
 }
+
+- (void) setStateInfos:(Room*)room {
+    if([room.mapState isEqualToString:@"green_free"]){
+        [self.PopupImagesGeoloc setImage:[UIImage imageNamed:@"WSMImagesGeolocGreen"]];
+        self.view.layer.borderColor = [[UIColor bnpGreen] CGColor];
+        [self.PopupRoomBookButton setHidden:true];
+        [self.PopupRoomStateLabel setHidden:false];
+        [self.PopupRoomStateLabel setText:@"Salle en accès libre"];
+    }
+    else if([room.mapState isEqualToString:@"green_book_ok"]){
+        [self.PopupImagesGeoloc setImage:[UIImage imageNamed:@"WSMImagesGeolocGreen"]];
+        self.view.layer.borderColor = [[UIColor bnpGreen] CGColor];
+        [self.PopupRoomBookButton setHidden:false];
+        [self.PopupRoomStateLabel setHidden:true];
+    }
+    else if([room.mapState isEqualToString:@"green_book_ko"]){
+        [self.PopupImagesGeoloc setImage:[UIImage imageNamed:@"WSMImagesGeolocGreen"]];
+        self.view.layer.borderColor = [[UIColor bnpGreen] CGColor];
+        [self.PopupRoomBookButton setHidden:true];
+        [self.PopupRoomStateLabel setHidden:false];
+        [self.PopupRoomStateLabel setText:@"Réservation indisponible"];
+    }
+    else if([room.mapState isEqualToString:@"blue"]){
+        [self.PopupImagesGeoloc setImage:[UIImage imageNamed:@"WSMImagesGeolocBlue"]];
+        self.view.layer.borderColor = [[UIColor bnpBlue] CGColor];
+        [self.PopupRoomBookButton setHidden:true];
+        [self.PopupRoomStateLabel setHidden:false];
+        [self.PopupRoomStateLabel setText:@"Votre réservation"];
+    }
+    else if([room.mapState isEqualToString:@"red"]){
+        [self.PopupImagesGeoloc setImage:[UIImage imageNamed:@"WSMImagesGeolocRed"]];
+        self.view.layer.borderColor = [[UIColor bnpRed] CGColor];
+        [self.PopupRoomBookButton setHidden:true];
+        [self.PopupRoomStateLabel setHidden:false];
+        [self.PopupRoomStateLabel setText:@"Salle occupée"];
+    }
+}
+
 
 @end

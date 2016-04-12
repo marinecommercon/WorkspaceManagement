@@ -155,6 +155,8 @@
             [room setIdMapwize:[dico valueForKey:@"idMapwize"]];
             [room setMaxPeople:[dico valueForKey:@"maxPeople"]];
             [room setType:[dico valueForKey:@"type"]];
+            [room setInfoRoom:[dico valueForKey:@"infoRoom"]];
+            [room setMapState:[dico valueForKey:@"mapState"]];
             [DAO saveContext];
         }
         [self setSensorsWithReset:needReset];
@@ -168,6 +170,8 @@
             [room setIdMapwize:[dico valueForKey:@"idMapwize"]];
             [room setMaxPeople:[dico valueForKey:@"maxPeople"]];
             [room setType:[dico valueForKey:@"type"]];
+            [room setInfoRoom:[dico valueForKey:@"infoRoom"]];
+            [room setMapState:[dico valueForKey:@"mapState"]];
             [DAO saveContext];
         }
         [self setSensorsWithReset:needReset];

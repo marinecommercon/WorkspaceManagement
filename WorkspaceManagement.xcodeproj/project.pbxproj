@@ -30,7 +30,6 @@
 		7810F9141CB3C1DD00B259D3 /* CheckDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 7810F90D1CB3C1DD00B259D3 /* CheckDAO.m */; };
 		7810F9151CB3C1DD00B259D3 /* DAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 7810F90F1CB3C1DD00B259D3 /* DAO.m */; };
 		7810F9161CB3C1DD00B259D3 /* ModelDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 7810F9111CB3C1DD00B259D3 /* ModelDAO.m */; };
-		7810F9171CB3C1DD00B259D3 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7810F9131CB3C1DD00B259D3 /* Utils.m */; };
 		7810F91D1CB3C2FE00B259D3 /* ScheduleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7810F91B1CB3C2FE00B259D3 /* ScheduleTableViewCell.m */; };
 		7810F9271CB3C42F00B259D3 /* DSIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7810F9201CB3C42F00B259D3 /* DSIViewController.m */; };
 		7810F9281CB3C42F00B259D3 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7810F9221CB3C42F00B259D3 /* FilterViewController.m */; };
@@ -40,6 +39,8 @@
 		782F418D1CBBF75F00AB2B58 /* equipments.json in Resources */ = {isa = PBXBuildFile; fileRef = 782F418C1CBBF75F00AB2B58 /* equipments.json */; };
 		782F418F1CBBF77A00AB2B58 /* roomequipment.json in Resources */ = {isa = PBXBuildFile; fileRef = 782F418E1CBBF77A00AB2B58 /* roomequipment.json */; };
 		782F41941CBBF8E600AB2B58 /* Equipment.m in Sources */ = {isa = PBXBuildFile; fileRef = 782F41931CBBF8E600AB2B58 /* Equipment.m */; };
+		782F41981CBD22B800AB2B58 /* UIColor+AppAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 782F41971CBD22B800AB2B58 /* UIColor+AppAdditions.m */; };
+		782F419B1CBD237600AB2B58 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 782F419A1CBD237600AB2B58 /* Utils.m */; };
 		7887537A1CB5043E0077AA6A /* Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 788753791CB5043E0077AA6A /* Manager.m */; };
 		7887537D1CB504610077AA6A /* WSDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7887537C1CB504610077AA6A /* WSDownloader.m */; };
 		A8BB2B838BDBD2A955E9D1D6 /* Pods_WorkspaceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73C7F5B83C8488D059645B4E /* Pods_WorkspaceManagement.framework */; };
@@ -81,8 +82,6 @@
 		7810F90F1CB3C1DD00B259D3 /* DAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DAO.m; path = WorkspaceManagement/DAO/DAO.m; sourceTree = "<group>"; };
 		7810F9101CB3C1DD00B259D3 /* ModelDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModelDAO.h; path = WorkspaceManagement/DAO/ModelDAO.h; sourceTree = "<group>"; };
 		7810F9111CB3C1DD00B259D3 /* ModelDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModelDAO.m; path = WorkspaceManagement/DAO/ModelDAO.m; sourceTree = "<group>"; };
-		7810F9121CB3C1DD00B259D3 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = WorkspaceManagement/DAO/Utils.h; sourceTree = "<group>"; };
-		7810F9131CB3C1DD00B259D3 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utils.m; path = WorkspaceManagement/DAO/Utils.m; sourceTree = "<group>"; };
 		7810F91A1CB3C2FE00B259D3 /* ScheduleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScheduleTableViewCell.h; path = CustomViews/ScheduleTableViewCell.h; sourceTree = "<group>"; };
 		7810F91B1CB3C2FE00B259D3 /* ScheduleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScheduleTableViewCell.m; path = CustomViews/ScheduleTableViewCell.m; sourceTree = "<group>"; };
 		7810F91F1CB3C42F00B259D3 /* DSIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSIViewController.h; sourceTree = "<group>"; };
@@ -98,6 +97,10 @@
 		782F418E1CBBF77A00AB2B58 /* roomequipment.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = roomequipment.json; sourceTree = "<group>"; };
 		782F41921CBBF8E600AB2B58 /* Equipment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Equipment.h; sourceTree = "<group>"; };
 		782F41931CBBF8E600AB2B58 /* Equipment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Equipment.m; sourceTree = "<group>"; };
+		782F41961CBD22B800AB2B58 /* UIColor+AppAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AppAdditions.h"; sourceTree = "<group>"; };
+		782F41971CBD22B800AB2B58 /* UIColor+AppAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AppAdditions.m"; sourceTree = "<group>"; };
+		782F41991CBD237600AB2B58 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		782F419A1CBD237600AB2B58 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		788753781CB5043E0077AA6A /* Manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manager.h; sourceTree = "<group>"; };
 		788753791CB5043E0077AA6A /* Manager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Manager.m; sourceTree = "<group>"; };
 		7887537B1CB504610077AA6A /* WSDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSDownloader.h; sourceTree = "<group>"; };
@@ -133,8 +136,6 @@
 				7810F90F1CB3C1DD00B259D3 /* DAO.m */,
 				7810F9101CB3C1DD00B259D3 /* ModelDAO.h */,
 				7810F9111CB3C1DD00B259D3 /* ModelDAO.m */,
-				7810F9121CB3C1DD00B259D3 /* Utils.h */,
-				7810F9131CB3C1DD00B259D3 /* Utils.m */,
 			);
 			name = DAO;
 			path = ..;
@@ -177,6 +178,7 @@
 				308094811CAD4C6400B81DF0 /* iCarousel */,
 				3008DAA41CB3B31300B7875F /* Custom Views */,
 				7810F8E31CAEAD4C00B259D3 /* Model */,
+				782F41951CBD229100AB2B58 /* Utils */,
 				3008DAA31CB3B2EE00B7875F /* DAO */,
 				301832AF1CAD22A100964F60 /* AppDelegate.h */,
 				301832B01CAD22A100964F60 /* AppDelegate.m */,
@@ -247,6 +249,17 @@
 				7810F92F1CB3C4FB00B259D3 /* PopupDetailViewController.m */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		782F41951CBD229100AB2B58 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				782F41991CBD237600AB2B58 /* Utils.h */,
+				782F419A1CBD237600AB2B58 /* Utils.m */,
+				782F41961CBD22B800AB2B58 /* UIColor+AppAdditions.h */,
+				782F41971CBD22B800AB2B58 /* UIColor+AppAdditions.m */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		788753741CB4FF640077AA6A /* WebServices */ = {
@@ -422,8 +435,9 @@
 				7887537D1CB504610077AA6A /* WSDownloader.m in Sources */,
 				7810F8EC1CAEAEB800B259D3 /* Reservation.m in Sources */,
 				7887537A1CB5043E0077AA6A /* Manager.m in Sources */,
-				7810F9171CB3C1DD00B259D3 /* Utils.m in Sources */,
+				782F419B1CBD237600AB2B58 /* Utils.m in Sources */,
 				7810F9281CB3C42F00B259D3 /* FilterViewController.m in Sources */,
+				782F41981CBD22B800AB2B58 /* UIColor+AppAdditions.m in Sources */,
 				7810F9151CB3C1DD00B259D3 /* DAO.m in Sources */,
 				7810F91D1CB3C2FE00B259D3 /* ScheduleTableViewCell.m in Sources */,
 				301832B11CAD22A100964F60 /* AppDelegate.m in Sources */,

@@ -46,14 +46,13 @@
     self.filterViewController.view.frame = CGRectMake(0, 0, self.container.frame.size.width, self.container.frame.size.height);
     [self.container addSubview:self.filterViewController.view];
     [self.filterViewController didMoveToParentViewController:self];
-    
-    [self shouldStartAsynchtask];
-    
+
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     stepForSwipe      = 1;
     [self shouldStartAsynchtask];
+    [self updateMap];
 }
 
 - (void) shouldStopAsynchtask {
@@ -65,18 +64,18 @@
 }
 
 - (void) shouldStartAsynchtask {
-    if(!asynchtaskRunning){
-        NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
-        timer = [[NSTimer alloc] initWithFireDate: delay
-                                         interval: 60
-                                           target: self
-                                         selector:@selector(checkSensors:)
-                                         userInfo:nil repeats:YES];
-        
-        NSRunLoop *runner = [NSRunLoop currentRunLoop];
-        [runner addTimer:timer forMode: NSDefaultRunLoopMode];
-        asynchtaskRunning = true;
-    }
+//    if(!asynchtaskRunning){
+//        NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
+//        timer = [[NSTimer alloc] initWithFireDate: delay
+//                                         interval: 60
+//                                           target: self
+//                                         selector:@selector(checkSensors:)
+//                                         userInfo:nil repeats:YES];
+//        
+//        NSRunLoop *runner = [NSRunLoop currentRunLoop];
+//        [runner addTimer:timer forMode: NSDefaultRunLoopMode];
+//        asynchtaskRunning = true;
+//    }
 }
 
 - (void)checkSensors:timer {
@@ -89,29 +88,45 @@
 
 - (void)finishCheckWithUpdate:(BOOL)updateNeeded {
     if(updateNeeded){
-        [self updateMap];
+        // Do something when sensors are updated
     }
     finished = true;
 }
 
-- (void)updateMap {
-    NSLog(@"Map should update cause of sensors");
-    UIColor *redColor   = [UIColor colorWithRed:255/255.0 green:0/255.0 blue:30/255.0 alpha:0.7];
-    UIColor *greenColor = [UIColor colorWithRed:14/255.0 green:238/255.0 blue:55/255.0 alpha:0.7];
 
-    MWZPlaceStyle* redStyle = [[MWZPlaceStyle alloc] initWithStrokeColor:redColor strokeWidth:@3 fillColor:redColor labelBackgroundColor:nil markerUrl:nil];
-    MWZPlaceStyle* greenStyle = [[MWZPlaceStyle alloc] initWithStrokeColor:greenColor strokeWidth:@3 fillColor:greenColor labelBackgroundColor:nil markerUrl:nil];
 
+- (void) updateMap {
+    MWZPlaceStyle* redStyle = [[MWZPlaceStyle alloc] initWithStrokeColor:[UIColor bnpRed] strokeWidth:@1 fillColor:[UIColor bnpRedLight] labelBackgroundColor:nil markerUrl:nil];
+    
+    MWZPlaceStyle* greyStyle = [[MWZPlaceStyle alloc] initWithStrokeColor:[UIColor bnpGrey] strokeWidth:@1 fillColor:[UIColor bnpGrey] labelBackgroundColor:nil markerUrl:nil];
+    
+    MWZPlaceStyle* blueStyle = [[MWZPlaceStyle alloc] initWithStrokeColor:[UIColor bnpBlue] strokeWidth:@1 fillColor:[UIColor bnpBlueLight] labelBackgroundColor:nil markerUrl:nil];
+    
+    MWZPlaceStyle* greenStyle = [[MWZPlaceStyle alloc] initWithStrokeColor:[UIColor bnpGreen] strokeWidth:@1 fillColor:[UIColor bnpGreenLight] labelBackgroundColor:nil markerUrl:nil];
     
     NSArray *listRooms = [DAO getObjects:@"Room" withPredicate:nil];
     for(Room *room in listRooms){
-        if([CheckDAO roomHasSensorOn:room.idMapwize]){
-             [self.myMapView setStyle:redStyle forPlaceById:room.idMapwize];
+   
+        if([room.mapState isEqualToString:@"grey"]){
+            [self.myMapView setStyle:greyStyle forPlaceById:room.idMapwize];
         }
-        else {
+        else if([room.mapState isEqualToString:@"green_free"] || [room.mapState isEqualToString:@"green_book_ok"] || [room.mapState isEqualToString:@"green_book_ko"]){
             [self.myMapView setStyle:greenStyle forPlaceById:room.idMapwize];
         }
-    }  
+        else if([room.mapState isEqualToString:@"blue"]){
+            [self.myMapView setStyle:blueStyle forPlaceById:room.idMapwize];
+        }
+        else if([room.mapState isEqualToString:@"red"]){
+            [self.myMapView setStyle:redStyle forPlaceById:room.idMapwize];
+        }
+                
+//        if([CheckDAO roomHasSensorOn:room.idMapwize]){
+//            [self.myMapView setStyle:redStyle forPlaceById:room.idMapwize];
+//        }
+//        else {
+//            [self.myMapView setStyle:greenStyle forPlaceById:room.idMapwize];
+//        }
+    }
 }
 
 
@@ -144,113 +159,25 @@
 
 }
 
-- (void)initContainerSwipeGesture
-{
-    UISwipeGestureRecognizer *swipeUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeUp:)];
-    UISwipeGestureRecognizer *swipeDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeDown:)];
-    
-    [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
-    [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
-    
-    [container addGestureRecognizer:swipeUp];
-    [container addGestureRecognizer:swipeDown];
-}
-
-- (void)swipeUp:(UIGestureRecognizer *)swipe
-{
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration: 0.3];
-    
-    CGRect frame = container.frame;
-    switch (stepForSwipe)
-    {
-        case (0):
-        frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
-        container.frame = frame;
-        stepForSwipe = 1;
-        self.myMapView.userInteractionEnabled = true;
-        [self shouldStartAsynchtask];
-        break;
-        
-        case (1):
-        frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.3;
-        container.frame = frame;
-        stepForSwipe = 2;
-        self.myMapView.userInteractionEnabled = false;
-        [self shouldStartAsynchtask];
-        break;
-        
-        case (2):
-        frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 3;
-        container.frame = frame;
-        stepForSwipe = 3;
-        self.myMapView.userInteractionEnabled = false;
-        [self shouldStopAsynchtask];
-        break;
-        
-        default:
-        NSLog(@"Error");
-        break;
-    }
-    [UIView commitAnimations];
-}
-
-- (void)swipeDown:(UIGestureRecognizer *)swipe
-{
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration: 0.3];
-    
-    CGRect frame = container.frame;
-    switch (stepForSwipe) {
-        case (1):
-        frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
-        container.frame = frame;
-        stepForSwipe = 0;
-        self.myMapView.userInteractionEnabled = true;
-        [self shouldStartAsynchtask];
-        break;
-        
-        case (2):
-        frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
-        container.frame = frame;
-        stepForSwipe = 1;
-        self.myMapView.userInteractionEnabled = true;
-        [self shouldStartAsynchtask];
-        break;
-        
-        case (3):
-        frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.3;
-        container.frame = frame;
-        stepForSwipe = 1;
-        self.myMapView.userInteractionEnabled = false;
-        [self shouldStartAsynchtask];
-        break;
-        
-        default:
-        NSLog(@"Error");
-        break;
-    }
-    [UIView commitAnimations];
-}
-
-
-
 - (void) map:(MWZMapView*) map didClickOnPlace:(MWZPlace*) place {
-    
-    self.popupDetailViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"PopupDetailController"];
     Room *room = [ModelDAO getRoomById:place.identifier];
-    [self.popupDetailViewController setInfos:room];
     
-    CCMPopupTransitioning *popup = [CCMPopupTransitioning sharedInstance];
-    popup.destinationBounds = CGRectMake(0, 0, self.view.frame.size.width / 1.19, self.view.frame.size.height / 1.2);
-    popup.presentedController = self.popupDetailViewController;
-    popup.presentingController = self;
-    popup.dismissableByTouchingBackground = YES;
-    popup.backgroundBlurRadius = 0;
-    popup.backgroundViewAlpha = 0.7;
-    popup.backgroundViewColor = [UIColor blackColor];
-    
-    [self presentViewController:self.popupDetailViewController animated:YES completion:nil];
+    // Only if room is not grey
+    if(![room.mapState isEqualToString:@"grey"]){
+        self.popupDetailViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"PopupDetailController"];
+        [self.popupDetailViewController setInfos:room];
+        
+        CCMPopupTransitioning *popup = [CCMPopupTransitioning sharedInstance];
+        popup.destinationBounds = CGRectMake(0, 0, self.view.frame.size.width / 1.19, self.view.frame.size.height / 1.2);
+        popup.presentedController = self.popupDetailViewController;
+        popup.presentingController = self;
+        popup.dismissableByTouchingBackground = YES;
+        popup.backgroundBlurRadius = 0;
+        popup.backgroundViewAlpha = 0.7;
+        popup.backgroundViewColor = [UIColor blackColor];
+        
+        [self presentViewController:self.popupDetailViewController animated:YES completion:nil];
+    }
 }
 
 - (void) map:(MWZMapView*) map didClickOnVenue:(MWZVenue*) venue {
@@ -293,6 +220,93 @@
 }
 
 - (void )map:(MWZMapView*) map didStopDirections: (NSString*) infos {
+}
+
+// HANDLE SWIPE GESTURE
+
+- (void)initContainerSwipeGesture
+{
+    UISwipeGestureRecognizer *swipeUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeUp:)];
+    UISwipeGestureRecognizer *swipeDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeDown:)];
+    
+    [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
+    [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
+    
+    [container addGestureRecognizer:swipeUp];
+    [container addGestureRecognizer:swipeDown];
+}
+
+- (void)swipeUp:(UIGestureRecognizer *)swipe
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration: 0.3];
+    
+    CGRect frame = container.frame;
+    switch (stepForSwipe)
+    {
+        case (0):
+            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
+            container.frame = frame;
+            stepForSwipe = 1;
+            [self shouldStartAsynchtask];
+            break;
+            
+        case (1):
+            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.3;
+            container.frame = frame;
+            stepForSwipe = 2;
+            [self shouldStartAsynchtask];
+            break;
+            
+        case (2):
+            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 3;
+            container.frame = frame;
+            stepForSwipe = 3;
+            self.myMapView.userInteractionEnabled = false;
+            [self shouldStopAsynchtask];
+            break;
+            
+        default:
+            NSLog(@"Error");
+            break;
+    }
+    [UIView commitAnimations];
+}
+
+- (void)swipeDown:(UIGestureRecognizer *)swipe
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration: 0.3];
+    
+    CGRect frame = container.frame;
+    switch (stepForSwipe) {
+        case (1):
+            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
+            container.frame = frame;
+            stepForSwipe = 0;
+            [self shouldStartAsynchtask];
+            break;
+            
+        case (2):
+            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
+            container.frame = frame;
+            stepForSwipe = 1;
+            [self shouldStartAsynchtask];
+            break;
+            
+        case (3):
+            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.3;
+            container.frame = frame;
+            stepForSwipe = 1;
+            self.myMapView.userInteractionEnabled = true;
+            [self shouldStartAsynchtask];
+            break;
+            
+        default:
+            NSLog(@"Error");
+            break;
+    }
+    [UIView commitAnimations];
 }
 
 - (void)didReceiveMemoryWarning
