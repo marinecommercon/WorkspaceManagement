@@ -30,7 +30,6 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="p0z-Df-AK2" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.75" id="2ri-YN-fiJ"/>
                             <constraint firstItem="adK-Xe-Euz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="3Cm-Gl-rHK"/>
                             <constraint firstAttribute="trailing" secondItem="adK-Xe-Euz" secondAttribute="trailing" id="4i3-ix-k1Y"/>
                             <constraint firstItem="adK-Xe-Euz" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1.02" id="84I-z8-M5i">
@@ -38,6 +37,7 @@
                             </constraint>
                             <constraint firstItem="p0z-Df-AK2" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="GZd-qB-dVx"/>
                             <constraint firstItem="p0z-Df-AK2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Mxe-zv-LxK"/>
+                            <constraint firstItem="adK-Xe-Euz" firstAttribute="top" secondItem="p0z-Df-AK2" secondAttribute="bottom" id="cDG-rH-uvV"/>
                             <constraint firstItem="adK-Xe-Euz" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="dMl-9B-X3r"/>
                             <constraint firstItem="adK-Xe-Euz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="2.79" constant="1" id="ibF-1m-5Nx">
                                 <variation key="heightClass=regular-widthClass=compact" constant="-33"/>
@@ -51,16 +51,16 @@
                                 <exclude reference="adK-Xe-Euz"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="3Cm-Gl-rHK"/>
-                                <exclude reference="4i3-ix-k1Y"/>
-                                <exclude reference="84I-z8-M5i"/>
-                                <exclude reference="dMl-9B-X3r"/>
-                                <exclude reference="ibF-1m-5Nx"/>
-                                <exclude reference="kkt-k6-JIb"/>
-                                <exclude reference="2ri-YN-fiJ"/>
                                 <exclude reference="GZd-qB-dVx"/>
                                 <exclude reference="Mxe-zv-LxK"/>
                                 <exclude reference="xqY-wH-MnY"/>
+                                <exclude reference="3Cm-Gl-rHK"/>
+                                <exclude reference="4i3-ix-k1Y"/>
+                                <exclude reference="84I-z8-M5i"/>
+                                <exclude reference="cDG-rH-uvV"/>
+                                <exclude reference="dMl-9B-X3r"/>
+                                <exclude reference="ibF-1m-5Nx"/>
+                                <exclude reference="kkt-k6-JIb"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -69,16 +69,16 @@
                                 <include reference="adK-Xe-Euz"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="3Cm-Gl-rHK"/>
-                                <include reference="4i3-ix-k1Y"/>
-                                <include reference="84I-z8-M5i"/>
-                                <include reference="dMl-9B-X3r"/>
-                                <include reference="ibF-1m-5Nx"/>
-                                <include reference="kkt-k6-JIb"/>
-                                <include reference="2ri-YN-fiJ"/>
                                 <include reference="GZd-qB-dVx"/>
                                 <include reference="Mxe-zv-LxK"/>
                                 <include reference="xqY-wH-MnY"/>
+                                <include reference="3Cm-Gl-rHK"/>
+                                <include reference="4i3-ix-k1Y"/>
+                                <include reference="84I-z8-M5i"/>
+                                <include reference="cDG-rH-uvV"/>
+                                <include reference="dMl-9B-X3r"/>
+                                <include reference="ibF-1m-5Nx"/>
+                                <include reference="kkt-k6-JIb"/>
                             </mask>
                         </variation>
                     </view>
@@ -171,7 +171,7 @@
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="26.5" y="30.5" width="24" height="18"/>
+                                                        <rect key="frame" x="26.5" y="30" width="24" height="18"/>
                                                     </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DSIViewLibreImage" translatesAutoresizingMaskIntoConstraints="NO" id="21l-SD-saq" userLabel="Image State 2">

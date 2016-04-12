@@ -245,7 +245,7 @@
     switch (stepForSwipe)
     {
         case (0):
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
+            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.133;
             container.frame = frame;
             stepForSwipe = 1;
             [self shouldStartAsynchtask];
@@ -281,14 +281,14 @@
     CGRect frame = container.frame;
     switch (stepForSwipe) {
         case (1):
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
+            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.133;
             container.frame = frame;
             stepForSwipe = 0;
             [self shouldStartAsynchtask];
             break;
             
         case (2):
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.13;
+            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.133;
             container.frame = frame;
             stepForSwipe = 1;
             [self shouldStartAsynchtask];
