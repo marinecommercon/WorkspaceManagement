@@ -58,28 +58,26 @@
 
 - (void) shouldStopAsynchtask {
     if(asynchtaskRunning){
-//        [timer invalidate];
-//        timer = nil;
+        [timer invalidate];
+        timer = nil;
         asynchtaskRunning = false;
     }
 }
 
 - (void) shouldStartAsynchtask {
     if(!asynchtaskRunning){
-//        NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
-//        timer = [[NSTimer alloc] initWithFireDate: delay
-//                                         interval: 1
-//                                           target: self
-//                                         selector:@selector(checkSensors:)
-//                                         userInfo:nil repeats:YES];
-//        
-//        NSRunLoop *runner = [NSRunLoop currentRunLoop];
-//        [runner addTimer:timer forMode: NSDefaultRunLoopMode];
+        NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
+        timer = [[NSTimer alloc] initWithFireDate: delay
+                                         interval: 60
+                                           target: self
+                                         selector:@selector(checkSensors:)
+                                         userInfo:nil repeats:YES];
+        
+        NSRunLoop *runner = [NSRunLoop currentRunLoop];
+        [runner addTimer:timer forMode: NSDefaultRunLoopMode];
         asynchtaskRunning = true;
     }
 }
-
-
 
 - (void)checkSensors:timer {
     if(finished){
@@ -98,7 +96,6 @@
 
 - (void)updateMap {
     NSLog(@"Map should update cause of sensors");
-    
     UIColor *redColor   = [UIColor colorWithRed:255/255.0 green:0/255.0 blue:30/255.0 alpha:0.7];
     UIColor *greenColor = [UIColor colorWithRed:14/255.0 green:238/255.0 blue:55/255.0 alpha:0.7];
 
@@ -239,17 +236,21 @@
 
 
 - (void) map:(MWZMapView*) map didClickOnPlace:(MWZPlace*) place {
-    UIViewController *presentingController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"PopupDetailController"];
+    
+    self.popupDetailViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"PopupDetailController"];
+    Room *room = [ModelDAO getRoomById:place.identifier];
+    [self.popupDetailViewController setInfos:room];
     
     CCMPopupTransitioning *popup = [CCMPopupTransitioning sharedInstance];
     popup.destinationBounds = CGRectMake(0, 0, self.view.frame.size.width / 1.19, self.view.frame.size.height / 1.2);
-    popup.presentedController = presentingController;
+    popup.presentedController = self.popupDetailViewController;
     popup.presentingController = self;
     popup.dismissableByTouchingBackground = YES;
     popup.backgroundBlurRadius = 0;
     popup.backgroundViewAlpha = 0.7;
     popup.backgroundViewColor = [UIColor blackColor];
-    [self presentViewController:presentingController animated:YES completion:nil];
+    
+    [self presentViewController:self.popupDetailViewController animated:YES completion:nil];
 }
 
 - (void) map:(MWZMapView*) map didClickOnVenue:(MWZVenue*) venue {

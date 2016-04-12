@@ -17,6 +17,7 @@
 
 @interface MapViewController : UIViewController <MWZMapDelegate, ManagerDelegate, FilterViewControllerDelegate>
 
+@property (strong, nonatomic) PopupDetailViewController *popupDetailViewController;
 @property (strong,nonatomic) FilterViewController *filterViewController;
 
 @property (strong, nonatomic)CLLocationManager* locationManager;

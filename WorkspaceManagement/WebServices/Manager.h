@@ -22,7 +22,5 @@
 @property (nonatomic,strong)  NSArray *deviceList;
 
 - (void) checkSensors:(NSArray*)deviceList;
-- (void) didSuccessUpdate;
-- (void) startUpdate:(NSString *)idSensor withData:(NSData *)data;
 
 @end

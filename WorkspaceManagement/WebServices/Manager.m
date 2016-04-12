@@ -23,7 +23,7 @@
     self.deviceList  = deviceList;
     
     NSDate *now              = [NSDate date];
-    NSDate *sevenDaysAgo     = [now dateByAddingTimeInterval:-7*24*60*60];
+    NSDate *sevenDaysAgo     = [now dateByAddingTimeInterval:-14*24*60*60];
     NSDateFormatter *dformat = [[NSDateFormatter alloc]init];
     [dformat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     startDate = [dformat  stringFromDate:sevenDaysAgo];

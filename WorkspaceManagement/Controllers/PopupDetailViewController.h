@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Room.h"
+#import "ModelDAO.h"
 
 @interface PopupDetailViewController : UIViewController
+
+- (void) setInfos:(Room*)room;
 
 @property (strong, nonatomic) IBOutlet UIImageView *PopupImagesBackgroundRoom;
 

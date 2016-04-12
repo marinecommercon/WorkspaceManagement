@@ -124,21 +124,20 @@
 }
 
 - (void) checkBeforeNextRound {
-    NSArray *equipments = [DAO getObjects:@"Equipment" withPredicate:nil];
-    for (Equipment *equipment in equipments){
-        if(![equipment.filterState isEqualToNumber:@(2)]){
-            [self checkForEach:equipment];
-        }
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"filterState != %@", @(2)];
+    NSArray *equipmentList = [DAO getObjects:@"Equipment" withPredicate:predicate];
+    for (Equipment *equipment in equipmentList){
+        [self simulateSelectionForEquipment:equipment];
     }
     [self checkStepper];
 }
 
 - (void) checkStepper {
     self.numberOfPeople = self.stepper.value+1;
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"filterState == %@", @(2)];
+    NSPredicate    *predicate = [NSPredicate predicateWithFormat:@"filterState == %@", @(2)];
     NSMutableArray *equipmentList = (NSMutableArray *)[DAO getObjects:@"Equipment" withPredicate:predicate];
     
-    if(![self atLeastOneRoomFor:equipmentList]){
+    if(![self atLeastOneRoomHasEquipments:equipmentList]){
         self.stepper.maximumValue = self.stepper.value;
     } else { self.stepper.maximumValue = 16;}
     self.numberOfPeople = self.stepper.value;
@@ -148,15 +147,15 @@
 // Turn button into transparent if combinaison would be possible
 // Turn button into grey if combinaison wouldn't be possible
 
-- (BOOL) checkForEach:(Equipment*)equipment {
+- (BOOL) simulateSelectionForEquipment:(Equipment*)equipment {
     
     // Suppose this equipment is selected in the next round
     [equipment setFilterState:@(2)];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"filterState == %@", @(2)];
-    NSMutableArray *equipmentList = (NSMutableArray *)[DAO getObjects:@"Equipment" withPredicate:predicate];
+    NSPredicate    *predicate = [NSPredicate predicateWithFormat:@"filterState == %@", @(2)];
+    NSMutableArray *newEquipmentList = (NSMutableArray *)[DAO getObjects:@"Equipment" withPredicate:predicate];
     
     // Check if the new selection of selected equipment (state = 2) would find a room
-    if([self atLeastOneRoomFor:equipmentList]){
+    if([self atLeastOneRoomHasEquipments:newEquipmentList]){
         [equipment setFilterState:@(1)];
         
         if([equipment.key isEqualToString:@"retro"]){
@@ -190,12 +189,11 @@
         if([equipment.key isEqualToString:@"dock"]){
             [self.dockButton setBackgroundColor:[Utils colorFromHexString:@"#a3a3a3"]];
         }
-        
         return false;
     }
 }
 
-- (BOOL) atLeastOneRoomFor:(NSArray*)equipmentList {
+- (BOOL) atLeastOneRoomHasEquipments:(NSArray*)equipmentList {
     // At least one room is OK
     NSPredicate *predicate;
     if(self.realTime == false){
@@ -206,14 +204,14 @@
     
     NSArray *rooms = [DAO getObjects:@"Room" withPredicate:predicate];
     for (Room *room in rooms){
-        if([self room:room isOkFor:equipmentList]){
+        if([self room:room hasEquipments:equipmentList]){
             return true;
         }
     }
     return  false;
 }
 
-- (BOOL)room:(Room*)room isOkFor:(NSArray*)equipmentList {
+- (BOOL)room:(Room*)room hasEquipments:(NSArray*)equipmentList {
     for(Equipment *equipment in equipmentList){
         if(![room.equipments containsObject:equipment]){
             return false;
@@ -408,7 +406,7 @@
         [self checkBeforeNextRound];
     }
     
-    // FUTURE
+    // FUTURE + DOCK SELECTED
     else if(self.realTimePosition < self.carousel.currentItemIndex){
         Equipment *dock = [ModelDAO getEquipmentByKey:@"dock"];
         if([dock.filterState isEqual:@(2)]){
@@ -437,6 +435,12 @@
             [alert addAction:yesButton];
             [alert addAction:noButton];
             [self presentViewController:alert animated:YES completion:nil];
+        }
+        
+        // FUTURE
+        else {
+            self.realTime = false;
+            [self checkBeforeNextRound];
         }
     }
     

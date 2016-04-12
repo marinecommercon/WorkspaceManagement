@@ -116,23 +116,21 @@
     } else {
         
         //NSLog(@"No need to update sensor %@", sensorTemp.idSensor);
-        //updateWasNeeded = false;
-        
+        updateWasNeeded = false;
         // Fake to test changes on Map
-        if([eventValue isEqualToString:@"1"]){
-            //NSLog(@"Fake update sensor 1->0 %@", sensorTemp.idSensor);
-            [sensorTemp setEventDate:eventDate];
-            [sensorTemp setEventValue:@"0"];
-            [DAO saveContext];
-            updateWasNeeded = true;
-        }
-        else {
-             //NSLog(@"Fake update sensor 0->1 %@", sensorTemp.idSensor);
-            [sensorTemp setEventDate:eventDate];
-            [sensorTemp setEventValue:@"1"];
-            [DAO saveContext];
-            updateWasNeeded = true;
-        }
+        
+//        if([eventValue isEqualToString:@"1"]){
+//            [sensorTemp setEventDate:eventDate];
+//            [sensorTemp setEventValue:@"0"];
+//            [DAO saveContext];
+//            updateWasNeeded = true;
+//        }
+//        else {
+//            [sensorTemp setEventDate:eventDate];
+//            [sensorTemp setEventValue:@"1"];
+//            [DAO saveContext];
+//            updateWasNeeded = true;
+//        }
     }
     return updateWasNeeded;
 }
