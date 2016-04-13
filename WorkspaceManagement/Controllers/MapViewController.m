@@ -32,7 +32,7 @@
     asynchtaskRunning = false;
     
     [self initContainerSwipeGesture];
-    [self initMap];
+    [self initMapWize];
     
     // FOR SENSOR UPDATE
     finished   = true;
@@ -51,40 +51,24 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     stepForSwipe      = 1;
-    [self shouldStartAsynchtask];
+    //[self shouldStartAsynchtaskSensors];
+    [self getMapStates];
+}
+
+
+
+- (void) getMapStates {
+
     [self updateMap];
 }
 
-- (void) shouldStopAsynchtask {
-    if(asynchtaskRunning){
-        [timer invalidate];
-        timer = nil;
-        asynchtaskRunning = false;
-    }
+// FILTER DELEGATE
+
+- (void) didChangeCarousel:(NSString *)hour realTime:(BOOL)realTime {
+    NSLog(@" %@ realtime %d", hour,realTime);
 }
 
-- (void) shouldStartAsynchtask {
-//    if(!asynchtaskRunning){
-//        NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
-//        timer = [[NSTimer alloc] initWithFireDate: delay
-//                                         interval: 60
-//                                           target: self
-//                                         selector:@selector(checkSensors:)
-//                                         userInfo:nil repeats:YES];
-//        
-//        NSRunLoop *runner = [NSRunLoop currentRunLoop];
-//        [runner addTimer:timer forMode: NSDefaultRunLoopMode];
-//        asynchtaskRunning = true;
-//    }
-}
-
-- (void)checkSensors:timer {
-    if(finished){
-        NSLog(@"Execute WebService");
-        [self.manager checkSensors:[ModelDAO getAllSensorsId]];
-        finished = false;
-    }
-}
+// MANAGER DELEGATE
 
 - (void)finishCheckWithUpdate:(BOOL)updateNeeded {
     if(updateNeeded){
@@ -93,7 +77,7 @@
     finished = true;
 }
 
-
+// HANDLE MAP
 
 - (void) updateMap {
     MWZPlaceStyle* redStyle = [[MWZPlaceStyle alloc] initWithStrokeColor:[UIColor bnpRed] strokeWidth:@1 fillColor:[UIColor bnpRedLight] labelBackgroundColor:nil markerUrl:nil];
@@ -119,19 +103,10 @@
         else if([room.mapState isEqualToString:@"red"]){
             [self.myMapView setStyle:redStyle forPlaceById:room.idMapwize];
         }
-                
-//        if([CheckDAO roomHasSensorOn:room.idMapwize]){
-//            [self.myMapView setStyle:redStyle forPlaceById:room.idMapwize];
-//        }
-//        else {
-//            [self.myMapView setStyle:greenStyle forPlaceById:room.idMapwize];
-//        }
     }
 }
 
-
-
-- (void)initMap
+- (void)initMapWize
 {
     locationManager = [[CLLocationManager alloc] init];
     CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
@@ -181,27 +156,21 @@
 }
 
 - (void) map:(MWZMapView*) map didClickOnVenue:(MWZVenue*) venue {
-    
 }
 
 - (void) map:(MWZMapView*) map didClickOnMarker:(MWZPosition *)marker {
-    
 }
 
 - (void) map:(MWZMapView*) map didChangeFloor:(NSNumber*) floor {
-    
 }
 
 - (void) map:(MWZMapView*) map didChangeFloors:(NSArray*) floors {
-    
 }
 
 - (void) map:(MWZMapView *)map didMove:(MWZLatLon *)center {
-    
 }
 
 - (void) map:(MWZMapView*) map didFailWithError: (NSError *)error {
-    
 }
 
 - (void) map:(MWZMapView*) map didChangeFollowUserMode:(BOOL)followUserMode {
@@ -248,14 +217,14 @@
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.133;
             container.frame = frame;
             stepForSwipe = 1;
-            [self shouldStartAsynchtask];
+            [self shouldStartAsynchtaskSensors];
             break;
             
         case (1):
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.3;
             container.frame = frame;
             stepForSwipe = 2;
-            [self shouldStartAsynchtask];
+            [self shouldStartAsynchtaskSensors];
             break;
             
         case (2):
@@ -263,7 +232,7 @@
             container.frame = frame;
             stepForSwipe = 3;
             self.myMapView.userInteractionEnabled = false;
-            [self shouldStopAsynchtask];
+            [self shouldStopAsynchtaskSensors];
             break;
             
         default:
@@ -284,14 +253,12 @@
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.133;
             container.frame = frame;
             stepForSwipe = 0;
-            [self shouldStartAsynchtask];
             break;
             
         case (2):
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.133;
             container.frame = frame;
             stepForSwipe = 1;
-            [self shouldStartAsynchtask];
             break;
             
         case (3):
@@ -299,7 +266,6 @@
             container.frame = frame;
             stepForSwipe = 1;
             self.myMapView.userInteractionEnabled = true;
-            [self shouldStartAsynchtask];
             break;
             
         default:
@@ -307,7 +273,43 @@
             break;
     }
     [UIView commitAnimations];
+    [self shouldStartAsynchtaskSensors];
 }
+
+// HANDLE SENSORS
+
+- (void) shouldStartAsynchtaskSensors {
+        if(!asynchtaskRunning){
+            NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
+            timer = [[NSTimer alloc] initWithFireDate: delay
+                                             interval: 60
+                                               target: self
+                                             selector:@selector(checkSensors:)
+                                             userInfo:nil repeats:YES];
+    
+            NSRunLoop *runner = [NSRunLoop currentRunLoop];
+            [runner addTimer:timer forMode: NSDefaultRunLoopMode];
+            asynchtaskRunning = true;
+        }
+}
+
+- (void) shouldStopAsynchtaskSensors {
+    if(asynchtaskRunning){
+        [timer invalidate];
+        timer = nil;
+        asynchtaskRunning = false;
+    }
+}
+
+- (void)checkSensors:timer {
+    if(finished){
+        NSLog(@"Execute WebService");
+        [self.manager checkSensors:[ModelDAO getAllSensorsId]];
+        finished = false;
+    }
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {

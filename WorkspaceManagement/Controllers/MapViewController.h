@@ -26,8 +26,4 @@
 @property (weak, nonatomic) IBOutlet MWZMapView *myMapView;
 @property (nonatomic, strong) Manager *manager;
 
-- (void)checkSensors:timer;
-- (void)finishCheckWithUpdate:(BOOL)updateNeeded;
-- (void)updateMap;
-
 @end

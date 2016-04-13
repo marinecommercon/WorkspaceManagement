@@ -12,8 +12,7 @@
 #import "UIColor+AppAdditions.h"
 
 @protocol FilterViewControllerDelegate
-- (void)shouldStartAsynchtask;
-- (void)shouldStopAsynchtask;
+- (void)didChangeCarousel:(NSString*)hour realTime:(BOOL)realTime;
 @end
 
 @interface FilterViewController : UIViewController <iCarouselDataSource, iCarouselDelegate>

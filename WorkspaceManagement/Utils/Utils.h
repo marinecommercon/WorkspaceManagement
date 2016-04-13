@@ -20,7 +20,7 @@
 
 + (NSArray*)sortReservationsOfRoom:(Room*)room;
 
-+ (NSDictionary*)generateHoursForCaroussel;
++ (NSDictionary*)generateHoursForCaroussel:(NSString*)currentTime;
 
 + (NSMutableArray*)jsonWithPath:(NSString*)name;
 
