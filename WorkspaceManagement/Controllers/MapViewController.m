@@ -13,12 +13,6 @@
 @end
 
 @implementation MapViewController
-{
-    int stepForSwipe;
-    BOOL finished;
-    NSTimer *timer;
-    BOOL asynchtaskRunning;
-}
 
 @synthesize container;
 @synthesize myMapView;
@@ -27,15 +21,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.asynchtaskRunning = false;
+    self.stepForSwipe = 1;
     
-    stepForSwipe      = 1;
-    asynchtaskRunning = false;
+    // INIT PARAMS FOR DECISION
+    self.realTime    = true;
+    self.filtersON   = false;
+    self.sliderValue = 1;
     
-    [self initContainerSwipeGesture];
     [self initMapWize];
+    [self initContainerSwipeGesture];
     
     // FOR SENSOR UPDATE
-    finished   = true;
+    self.finishedSensorUpdate = true;
     self.manager = [[Manager alloc]init];
     self.manager.delegate = self;
     
@@ -50,31 +49,47 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
-    stepForSwipe      = 1;
-    //[self shouldStartAsynchtaskSensors];
+    [self shouldStartAsynchtaskSensors];
     [self getMapStates];
 }
 
-
-
 - (void) getMapStates {
-
     [self updateMap];
 }
 
 // FILTER DELEGATE
 
-- (void) didChangeCarousel:(NSString *)hour realTime:(BOOL)realTime {
-    NSLog(@" %@ realtime %d", hour,realTime);
+- (void) didChangeCarousel:(NSString *)time realTime:(BOOL)realTime {
+    self.realTime = realTime;
+    self.time     = time;
+    [self decide:[NSString stringWithFormat:@"time is : %@ realTime ? : %d", self.time,self.realTime]];
+}
+
+- (void) didChangeSlider:(int)sliderValue {
+    self.sliderValue = sliderValue;
+    [self decide:[NSString stringWithFormat:@"slider : %d ", self.sliderValue]];
+}
+
+- (void) decide:(NSString*)keyword{
+    
+    // If main map view
+    if(self.stepForSwipe != 2){
+        NSLog(@"DECIDE %@",keyword);
+    }
+    
+    // If filter view is above
+    else{
+       // Should decide for nothing, maybe sensors only
+    }
 }
 
 // MANAGER DELEGATE
 
 - (void)finishCheckWithUpdate:(BOOL)updateNeeded {
     if(updateNeeded){
-        // Do something when sensors are updated
+        [self decide:@"sensors"];
     }
-    finished = true;
+    self.finishedSensorUpdate = true;
 }
 
 // HANDLE MAP
@@ -183,6 +198,11 @@
 }
 
 - (void )map:(MWZMapView*) map didClickLong: (MWZLatLon*) latlon {
+    if(self.filtersON){
+        self.filtersON = false;
+        [self decide:[NSString stringWithFormat:@"filtersOn ? : %d", self.filtersON]];
+        [self.filterViewController initState];
+    }
 }
 
 - (void) map:(MWZMapView*) map didStartDirections: (NSString*) infos {
@@ -211,32 +231,25 @@
     [UIView setAnimationDuration: 0.3];
     
     CGRect frame = container.frame;
-    switch (stepForSwipe)
+    switch (self.stepForSwipe)
     {
-        case (0):
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.133;
-            container.frame = frame;
-            stepForSwipe = 1;
-            [self shouldStartAsynchtaskSensors];
-            break;
-            
         case (1):
+            // CAROUSEL -> CAROUSEL + DURATION
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.3;
             container.frame = frame;
-            stepForSwipe = 2;
-            [self shouldStartAsynchtaskSensors];
+            self.stepForSwipe = 2;
             break;
             
         case (2):
+            // CAROUSEL + DURATION -> FILTERS
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 3;
             container.frame = frame;
-            stepForSwipe = 3;
+            self.stepForSwipe = 3;
             self.myMapView.userInteractionEnabled = false;
             [self shouldStopAsynchtaskSensors];
             break;
             
         default:
-            NSLog(@"Error");
             break;
     }
     [UIView commitAnimations];
@@ -248,68 +261,63 @@
     [UIView setAnimationDuration: 0.3];
     
     CGRect frame = container.frame;
-    switch (stepForSwipe) {
-        case (1):
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.133;
-            container.frame = frame;
-            stepForSwipe = 0;
-            break;
-            
+    switch (self.stepForSwipe) {
         case (2):
+            // CAROUSEL + DURATION -> CAROUSEL
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.133;
             container.frame = frame;
-            stepForSwipe = 1;
+            self.stepForSwipe = 1;
             break;
             
         case (3):
+            // FILTERS -> CAROUSEL + DURATION
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.3;
             container.frame = frame;
-            stepForSwipe = 1;
+            self.stepForSwipe = 2;
             self.myMapView.userInteractionEnabled = true;
+            self.filtersON = [self.filterViewController filtersChanged];
+            [self decide:[NSString stringWithFormat:@"filtersOn ? : %d", self.filtersON]];
+            [self shouldStartAsynchtaskSensors];
             break;
             
         default:
-            NSLog(@"Error");
             break;
     }
     [UIView commitAnimations];
-    [self shouldStartAsynchtaskSensors];
 }
 
 // HANDLE SENSORS
 
 - (void) shouldStartAsynchtaskSensors {
-        if(!asynchtaskRunning){
+        if(!self.asynchtaskRunning){
             NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
-            timer = [[NSTimer alloc] initWithFireDate: delay
+            self.timer = [[NSTimer alloc] initWithFireDate: delay
                                              interval: 60
                                                target: self
                                              selector:@selector(checkSensors:)
                                              userInfo:nil repeats:YES];
     
             NSRunLoop *runner = [NSRunLoop currentRunLoop];
-            [runner addTimer:timer forMode: NSDefaultRunLoopMode];
-            asynchtaskRunning = true;
+            [runner addTimer:self.timer forMode: NSDefaultRunLoopMode];
+            self.asynchtaskRunning = true;
         }
 }
 
 - (void) shouldStopAsynchtaskSensors {
-    if(asynchtaskRunning){
-        [timer invalidate];
-        timer = nil;
-        asynchtaskRunning = false;
+    if(self.asynchtaskRunning){
+        [self.timer invalidate];
+        self.timer = nil;
+        self.asynchtaskRunning = false;
     }
 }
 
 - (void)checkSensors:timer {
-    if(finished){
+    if(self.finishedSensorUpdate){
         NSLog(@"Execute WebService");
         [self.manager checkSensors:[ModelDAO getAllSensorsId]];
-        finished = false;
+        self.finishedSensorUpdate = false;
     }
 }
-
-
 
 - (void)didReceiveMemoryWarning
 {

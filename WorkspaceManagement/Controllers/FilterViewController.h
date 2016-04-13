@@ -13,6 +13,7 @@
 
 @protocol FilterViewControllerDelegate
 - (void)didChangeCarousel:(NSString*)hour realTime:(BOOL)realTime;
+- (void)didChangeSlider:(int)sliderValue;
 @end
 
 @interface FilterViewController : UIViewController <iCarouselDataSource, iCarouselDelegate>
@@ -37,12 +38,15 @@
 - (IBAction)screenAction:(id)sender;
 - (IBAction)tableAction:(id)sender;
 - (IBAction)dockAction:(id)sender;
-
 - (IBAction)stepperAction:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UILabel *peopleLabel;
 
 @property BOOL realTime;
 @property int  numberOfPeople;
+
+- (BOOL) filtersChanged;
+- (void) initState;
 
 @end
 

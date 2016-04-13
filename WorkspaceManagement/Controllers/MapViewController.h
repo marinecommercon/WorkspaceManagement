@@ -26,4 +26,17 @@
 @property (weak, nonatomic) IBOutlet MWZMapView *myMapView;
 @property (nonatomic, strong) Manager *manager;
 
+// Params to handle MapViewController
+@property int  stepForSwipe;
+@property BOOL asynchtaskRunning;
+@property BOOL finishedSensorUpdate;
+@property (nonatomic, strong) NSTimer *timer;
+
+// Params to make decision (states of rooms)
+@property BOOL filtersON;
+@property (nonatomic,strong)  NSString *time;
+@property BOOL realTime;
+@property int sliderValue;
+
+
 @end

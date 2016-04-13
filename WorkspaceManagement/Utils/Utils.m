@@ -49,7 +49,7 @@
 + (NSDictionary*)generateHoursForCaroussel:(NSString*)currentTime {
     NSDate   *date     = [NSDate date];
     //NSDate   *date     = [self aleaDate];
-    //NSDate   *date       = [self testDate:currentTime];
+    //NSDate   *date     = [self testDate:currentTime];
     NSString *newTime    = [self parseDateToTime:date];
     int       position   = 0;
     
@@ -60,30 +60,41 @@
         NSArray *schedules = @[@"07:30", @"08:00", @"08:30", @"09:00", @"09:30", @"10:00", @"10:30", @"11:00", @"11:30", @"12:00",@"12:30", @"13:00", @"13:30", @"14:00", @"14:30", @"15:00", @"15:30", @"16:00", @"16:30", @"17:00", @"17:30", @"18:00", @"18:30", @"19:00", @"19:30", @"20:00", @"20:30",@"21:00"];
         
         NSMutableArray *newSchedules = [[NSMutableArray alloc] init];
+        
+        // First we add "07h30"
+        // Then always the upper boundary
         [newSchedules addObject:schedules[0]];
         
         int i = 0;
         while(i<[schedules count]-1){
-            NSDate *begin = [self parseTimeToDate:schedules[i]];
+            NSDate *beginPlusOne = [[self parseTimeToDate:schedules[i]] dateByAddingTimeInterval:60];
             NSDate *end   = [self parseTimeToDate:schedules[i+1]];
             
-            // If current time is between two schedules (>=)
-            if([date timeIntervalSinceDate:begin] > 0 && [end timeIntervalSinceDate:date] >= 0){
+            // Date is between [BEGIN+1 ; END[
+            // "BeginPlusOne" and "end" are Simulated dates
+            // Real date = Simulated date + X milliseconds
+            
+            if([date timeIntervalSinceDate:beginPlusOne] >= 0 && [end timeIntervalSinceDate:date] > 0){
                 
-                // If current time inside two schedules (>)
-                if(![newTime isEqualToString:schedules[i]] && ![newTime isEqualToString:schedules[i+1]]){
-                    [newSchedules addObject:newTime];
-                    [newSchedules addObject:schedules[i+1]];
-                    position = i+1;
-                }
-                
-                // If current time is one schedule (=)
-                else {
-                    [newSchedules addObject:schedules[i+1]];
-                    position = i+1;
-                }
+                // Lower boundary is at position i
+                // So our realTime is at position i+1
+                // We add the upper boundary
+                [newSchedules addObject:newTime];
+                [newSchedules addObject:schedules[i+1]];
+                position = i+1;
             }
+            
+            // If current time = lower boundary
+            // Position is the lower boundary
+            // We add the upper boundary
+            else if([newTime isEqualToString:schedules[i]]){
+                [newSchedules addObject:schedules[i+1]];
+                position = i;
+            }
+            
             // If current time is not inside two schedules
+            // No position to save
+            // We add the upper boundary
             else {
                 [newSchedules addObject:schedules[i+1]];
             }
@@ -117,7 +128,7 @@
 
 + (NSDate *)testDate:(NSString*)currentTime {
     NSString *newTime;
-    NSString *time = @"14:28";
+    NSString *time = @"13:40";
     
     // Init time
     if(currentTime == nil){

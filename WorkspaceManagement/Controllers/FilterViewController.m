@@ -221,7 +221,7 @@
     }
 }
 
-// HANDLE ASYNCHTASK
+// HANDLE ASYNCHTASK CAROUSEL
 
 - (void) shouldStopAsynchtaskCarousel {
     if(asynchtaskRunning){
@@ -249,9 +249,7 @@
 // HANDLE SLIDER
 
 - (void) initSlider {
-    numbers = @[@(0), @(1), @(2), @(3), @(4)];
-    NSInteger numberOfSteps = ((float)[numbers count] - 1);
-    
+    NSInteger numberOfSteps = 8;
     slider.maximumValue = numberOfSteps;
     slider.minimumValue = 0;
     slider.continuous = YES;
@@ -266,15 +264,16 @@
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
     
-    UIImage *sliderMinTrackImage = [UIImage imageNamed: @"Maxtrackimage.png"];
-    UIImage *sliderMaxTrackImage = [UIImage imageNamed: @"Mintrackimage.png"];
-    sliderMinTrackImage = [sliderMinTrackImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 22)];
-    sliderMaxTrackImage = [sliderMaxTrackImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 22)];
+//    UIImage *sliderMinTrackImage = [UIImage imageNamed: @"Maxtrackimage.png"];
+//    UIImage *sliderMaxTrackImage = [UIImage imageNamed: @"Mintrackimage.png"];
+//    sliderMinTrackImage = [sliderMinTrackImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 22)];
+//    sliderMaxTrackImage = [sliderMaxTrackImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 22)];
+//    [slider setMinimumTrackImage:sliderMinTrackImage forState:UIControlStateNormal];
+//    [slider setMaximumTrackImage:sliderMaxTrackImage forState:UIControlStateNormal];
     
     [self.viewSlider addGestureRecognizer:recognizer];
     [self.viewSlider addGestureRecognizer:tapGestureRecognizer];
-    [slider setMinimumTrackImage:sliderMinTrackImage forState:UIControlStateNormal];
-    [slider setMaximumTrackImage:sliderMaxTrackImage forState:UIControlStateNormal];
+    
 }
 
 - (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer
@@ -286,6 +285,7 @@
     float newValue = ((pointTaped.x - positionOfSlider.x) * slider.maximumValue) / widthOfSlider;
     int closedPoint = (int)roundf(newValue);
     [slider setValue:closedPoint];
+    [self.delegate didChangeSlider:closedPoint];
 }
 
 -(void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer
@@ -303,11 +303,8 @@
 
 - (void)valueChanged:(UISlider *)sender
 {
-    NSUInteger index = (NSUInteger)(slider.value + 0.5);
+    int index = (int)(slider.value + 0.5);
     [slider setValue:index animated:NO];
-    NSNumber *number = numbers[index];
-    NSLog(@"Index: %i", (int)index);
-    NSLog(@"Number: %@", number);
 }
 
 // HANDLE CAROUSEL
@@ -497,6 +494,35 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+// CHECK IF FILTERS CHANGED
+- (BOOL) filtersChanged {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"filterState == %@", @(2)];
+    NSArray *equipmentList = [DAO getObjects:@"Equipment" withPredicate:predicate];
+
+    // This is the initial state
+    if(self.numberOfPeople == 1 && [equipmentList count] == 0){
+        return false;
+    }
+    // Changes have been detected
+    else {
+        return true;
+    }
+}
+
+- (void) initState {
+    self.numberOfPeople = 1;
+    [self updatePeopleLabel];
+    self.slider.value   = 1;
+    NSArray *equipmentList = [DAO getObjects:@"Equipment" withPredicate:nil];
+    for(Equipment *equipment in equipmentList){
+        [equipment setFilterState:0];
+    }
+    [self.retroButton setBackgroundColor:nil];
+    [self.screenButton setBackgroundColor:nil];
+    [self.tableButton setBackgroundColor:nil];
+    [self.dockButton setBackgroundColor:nil];
 }
 
 @end
