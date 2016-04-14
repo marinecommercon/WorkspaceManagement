@@ -21,7 +21,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     self.asynchtaskRunning = false;
     
     // INIT PARAMS FOR DECISION
@@ -54,21 +54,6 @@
     [self initNavbar];
 }
 
-- (void)initNavbar {
-    UIImage *right = [UIImage imageNamed:@"WSMImagesBtnHelp"];
-    UIImage *left = [UIImage imageNamed:@"WSMImagesBtnReload"];
-    NavBarInstance *custom = [NavBarInstance sharedInstance];
-    [custom styleNavBar:self setTitle:@"SÉLECTIONNER UN ESPACE" setLeftButton:left setRightButton:right];
-}
-
-- (void)navbarLeftButton {
-    NSLog(@"Left");
-}
-
-- (void)navbarRightButton {
-    NSLog(@"Right");
-}
-
 - (void) getMapStates {
     [self updateMap];
 }
@@ -77,10 +62,24 @@
 
 - (void)didChangeCarousel:(NSArray*)schedulesArray position:(NSInteger)position realTime:(BOOL)realTime {
     self.realTime   = realTime;
-    self.timeIndex1 = [schedulesArray objectAtIndex:position];
-    self.timeIndex2 = [schedulesArray objectAtIndex:position+1];
-    self.timeIndex3 = [schedulesArray objectAtIndex:position+2];
-    [self decide:[NSString stringWithFormat:@"time is : %@ realTime ? : %d", self.timeIndex1,self.realTime]];
+    
+    switch ([schedulesArray count]-position) {
+        case 1:
+            self.timeIndex1 = [schedulesArray objectAtIndex:position];
+            break;
+        case 2:
+            self.timeIndex1 = [schedulesArray objectAtIndex:position];
+            self.timeIndex2 = [schedulesArray objectAtIndex:position+1];
+            break;
+            
+        default:
+            self.timeIndex1 = [schedulesArray objectAtIndex:position];
+            self.timeIndex2 = [schedulesArray objectAtIndex:position+1];
+            self.timeIndex3 = [schedulesArray objectAtIndex:position+2];
+            break;
+    }
+    
+    [self decide:@"caroussel"];
 }
 
 - (void) didChangeSlider:(int)sliderValue {
@@ -105,7 +104,7 @@
                     
                     // SENSOR = 1
                     if([CheckDAO roomHasSensorOn:room]){
-                     [room setMapState:@"red"];
+                        [room setMapState:@"red"];
                     }
                     // SENSOR = 0
                     else{
@@ -119,15 +118,17 @@
                 if(self.realTime){
                     
                     
-                    // AVAILABLE ??
+                    // AVAILABLE ?? CHECK CURRENT
                     NSString *reservationType = [CheckDAO checkCurrentReservationType:self.timeIndex1 room:room];
+                    
                     if([reservationType isEqualToString:@"dsi"]){
                         [room setMapState:@"red"];
                     }
                     else if([reservationType isEqualToString:@"app"]) {
                         [room setMapState:@"grey"];
                     }
-                    else if(reservationType == nil){
+                    else if([reservationType isEqualToString:@"noreservation"]){
+                        
                         NSString *nextReservationType = [CheckDAO checkNextReservationType:self.timeIndex2 room:room];
                         if(nextReservationType != nil){
                             [room setMapState:@"green_book_ko"];
@@ -137,6 +138,10 @@
                         }
                         NSLog(@"room: %@ available : %@",room.name, nextReservationType);
                     }
+                    else {
+                        [room setMapState:@"grey"];
+                    }
+                    
                     
                 }
             }
@@ -154,7 +159,7 @@
         default:
             break;
     }
-   
+    
     
     [self updateMap];
 }
@@ -181,7 +186,7 @@
     
     NSArray *listRooms = [DAO getObjects:@"Room" withPredicate:nil];
     for(Room *room in listRooms){
-   
+        
         if([room.mapState isEqualToString:@"grey"]){
             [self.myMapView setStyle:greyStyle forPlaceById:room.idMapwize];
         }
@@ -222,7 +227,7 @@
 }
 
 - (void)map:(MWZMapView*) map didClick:(MWZLatLon*) latlon {
-
+    
 }
 
 - (void) map:(MWZMapView*) map didClickOnPlace:(MWZPlace*) place {
@@ -301,16 +306,6 @@
     [container addGestureRecognizer:swipeDown];
 }
 
-- (void) changeTitle {
-    NavBarInstance *test = [NavBarInstance sharedInstance];
-    [test setNavBarTitle:@"SÉLECTIONNER UN ESPACE"];
-}
-
-- (void) changeTitle2 {
-    NavBarInstance *test = [NavBarInstance sharedInstance];
-    [test setNavBarTitle:@"CHOIX DES CRITÈRES"];
-}
-
 - (void)swipeUp:(UIGestureRecognizer *)swipe
 {
     [UIView beginAnimations:nil context:NULL];
@@ -322,7 +317,6 @@
         case (1):
             // CAROUSEL -> CAROUSEL + DURATION
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.465;
-            [self changeTitle2];
             container.frame = frame;
             self.stepForSwipe = 2;
             break;
@@ -352,7 +346,6 @@
         case (2):
             // CAROUSEL + DURATION -> CAROUSEL
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.22;
-            [self changeTitle];
             container.frame = frame;
             self.stepForSwipe = 1;
             break;
@@ -377,18 +370,18 @@
 // HANDLE SENSORS
 
 - (void) shouldStartAsynchtaskSensors {
-        if(!self.asynchtaskRunning){
-            NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
-            self.timer = [[NSTimer alloc] initWithFireDate: delay
-                                             interval: 60
-                                               target: self
-                                             selector:@selector(checkSensors:)
-                                             userInfo:nil repeats:YES];
-    
-            NSRunLoop *runner = [NSRunLoop currentRunLoop];
-            [runner addTimer:self.timer forMode: NSDefaultRunLoopMode];
-            self.asynchtaskRunning = true;
-        }
+    if(!self.asynchtaskRunning){
+        NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
+        self.timer = [[NSTimer alloc] initWithFireDate: delay
+                                              interval: 60
+                                                target: self
+                                              selector:@selector(checkSensors:)
+                                              userInfo:nil repeats:YES];
+        
+        NSRunLoop *runner = [NSRunLoop currentRunLoop];
+        [runner addTimer:self.timer forMode: NSDefaultRunLoopMode];
+        self.asynchtaskRunning = true;
+    }
 }
 
 - (void) shouldStopAsynchtaskSensors {
@@ -407,10 +400,30 @@
     }
 }
 
+// HANDLE NAVBAR
+
+- (void)initNavbar {
+    UIImage *right = [UIImage imageNamed:@"WSMImagesBtnHelp"];
+    UIImage *left = [UIImage imageNamed:@"WSMImagesBtnReload"];
+    NavBarInstance *custom = [NavBarInstance sharedInstance];
+    [custom styleNavBar:self setTitle:@"SÉLECTIONNER UN ESPACE" setLeftButton:left setRightButton:right];
+}
+
+- (void)navbarLeftButton {
+    NSLog(@"Left");
+}
+
+- (void)navbarRightButton {
+    NSLog(@"Right");
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
 
-
 @end
+
+
+
+

@@ -48,22 +48,26 @@
 
 + (NSDictionary*)generateHoursForCaroussel:(NSString*)currentTime {
     NSDate   *date     = [NSDate date];
-    //NSDate   *date     = [self aleaDate];
-    //NSDate   *date     = [self testDate:currentTime];
-    NSString *newTime    = [self parseDateToTime:date];
-    int       position   = 0;
+    //NSDate   *date   = [self aleaDate];
+    //NSDate   *date   = [self testDate:currentTime];
+    NSString *myTime   = [self parseDateToTime:date];
+    int       position = 0;
     
-    if([newTime isEqualToString:currentTime]){
+    if([myTime isEqualToString:currentTime]){
         return nil;
     }
     else {
         NSArray *schedules = @[@"07:30", @"08:00", @"08:30", @"09:00", @"09:30", @"10:00", @"10:30", @"11:00", @"11:30", @"12:00",@"12:30", @"13:00", @"13:30", @"14:00", @"14:30", @"15:00", @"15:30", @"16:00", @"16:30", @"17:00", @"17:30", @"18:00", @"18:30", @"19:00", @"19:30", @"20:00", @"20:30",@"21:00"];
-        
         NSMutableArray *newSchedules = [[NSMutableArray alloc] init];
         
-        // First we add "07h30"
-        // Then always the upper boundary
-        [newSchedules addObject:schedules[0]];
+        
+        if([[self parseTimeToDate:@"07:30"] timeIntervalSinceDate:date] > 0){
+            [newSchedules addObject:myTime];
+            [newSchedules addObject:schedules[0]];
+        }
+        else {
+            [newSchedules addObject:schedules[0]];
+        }
         
         int i = 0;
         while(i<[schedules count]-1){
@@ -79,7 +83,7 @@
                 // Lower boundary is at position i
                 // So our realTime is at position i+1
                 // We add the upper boundary
-                [newSchedules addObject:newTime];
+                [newSchedules addObject:myTime];
                 [newSchedules addObject:schedules[i+1]];
                 position = i+1;
             }
@@ -87,19 +91,35 @@
             // If current time = lower boundary
             // Position is the lower boundary
             // We add the upper boundary
-            else if([newTime isEqualToString:schedules[i]]){
+            else if([myTime isEqualToString:schedules[i]]){
                 [newSchedules addObject:schedules[i+1]];
                 position = i;
             }
             
             // If current time is not inside two schedules
-            // No position to save
-            // We add the upper boundary
             else {
-                [newSchedules addObject:schedules[i+1]];
+                
+                // Case realTime = 21:00
+                if([myTime isEqualToString:schedules[i+1]]){
+                    [newSchedules addObject:schedules[i+1]];
+                    position = i+1;
+                }
+                
+                // Not inside, set upper boundary
+                else {
+                    [newSchedules addObject:schedules[i+1]];
+                }
+                
+                // Case realtime after 21:00
+                if(i==[schedules count]-2 &&
+                   [date timeIntervalSinceDate:[self parseTimeToDate:@"21:01"]] > 0){
+                    [newSchedules addObject:myTime];
+                    position = i+2;
+                }
             }
             i++;
         }
+        
         NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                               newSchedules, @"hours",
                               @(position), @"position", nil];
