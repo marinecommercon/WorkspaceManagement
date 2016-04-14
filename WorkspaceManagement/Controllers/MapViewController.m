@@ -23,7 +23,6 @@
     [super viewDidLoad];
 
     self.asynchtaskRunning = false;
-    self.stepForSwipe = 1;
     
     // INIT PARAMS FOR DECISION
     self.realTime    = true;
@@ -49,6 +48,7 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
+    self.stepForSwipe = 1;
     [self shouldStartAsynchtaskSensors];
     [self getMapStates];
 }
@@ -235,14 +235,14 @@
     {
         case (1):
             // CAROUSEL -> CAROUSEL + DURATION
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.3;
+            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.465;
             container.frame = frame;
             self.stepForSwipe = 2;
             break;
             
         case (2):
             // CAROUSEL + DURATION -> FILTERS
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 3;
+            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 6.35;
             container.frame = frame;
             self.stepForSwipe = 3;
             self.myMapView.userInteractionEnabled = false;
@@ -264,14 +264,14 @@
     switch (self.stepForSwipe) {
         case (2):
             // CAROUSEL + DURATION -> CAROUSEL
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.133;
+            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.22;
             container.frame = frame;
             self.stepForSwipe = 1;
             break;
             
         case (3):
             // FILTERS -> CAROUSEL + DURATION
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.3;
+            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.465;
             container.frame = frame;
             self.stepForSwipe = 2;
             self.myMapView.userInteractionEnabled = true;

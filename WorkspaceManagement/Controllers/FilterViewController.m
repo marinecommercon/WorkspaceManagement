@@ -22,6 +22,11 @@
 @synthesize carousel;
 @synthesize slider;
 @synthesize viewSlider;
+@synthesize viewDate;
+@synthesize viewNbrPeople;
+@synthesize viewRoomItems;
+@synthesize viewSearch;
+@synthesize textFieldSearch;
 
 - (void)awakeFromNib
 {
@@ -38,6 +43,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initSeparatorShadow];
     
     asynchtaskRunning = false;
     
@@ -56,11 +62,39 @@
     [self shouldStartAsynchtaskCarousel];
 }
 
+- (void) initSeparatorShadow {
+    
+    self.view.layer.shadowOpacity = 0.5;
+    self.view.layer.shadowOffset = CGSizeMake(0, 0);
+    self.view.layer.shadowRadius = 1;
+    
+    self.viewSlider.layer.shadowOpacity = 0.5;
+    self.viewSlider.layer.shadowOffset = CGSizeMake(0, 0);
+    self.viewSlider.layer.shadowRadius = 1;
+    
+    self.viewDate.layer.shadowOpacity = 0.5;
+    self.viewDate.layer.shadowOffset = CGSizeMake(0, 0);
+    self.viewDate.layer.shadowRadius = 1;
+    
+    self.viewNbrPeople.layer.shadowOpacity = 0.5;
+    self.viewNbrPeople.layer.shadowOffset = CGSizeMake(0, 0);
+    self.viewNbrPeople.layer.shadowRadius = 1;
+    
+    self.viewRoomItems.layer.shadowOpacity = 0.5;
+    self.viewRoomItems.layer.shadowOffset = CGSizeMake(0, 0);
+    self.viewRoomItems.layer.shadowRadius = 1;
+    
+    self.viewSearch.layer.shadowOpacity = 0.5;
+    self.viewSearch.layer.shadowOffset = CGSizeMake(0, 0);
+    self.viewSearch.layer.shadowRadius = 1;
+    
+}
+
 
 // Buttons and logic
 
 - (void) updatePeopleLabel {
-    NSString *peopleMsg = [NSString stringWithFormat:@"%d personne(s)", self.numberOfPeople];
+    NSString *peopleMsg = [NSString stringWithFormat:@"%d", self.numberOfPeople];
     [self.peopleLabel setText:peopleMsg];
 }
 

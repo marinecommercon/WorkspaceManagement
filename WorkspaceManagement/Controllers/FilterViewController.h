@@ -27,12 +27,18 @@
 @property (nonatomic, strong) IBOutlet iCarousel *carousel;
 @property (weak, nonatomic) IBOutlet UISlider *slider;
 @property (strong, nonatomic) IBOutlet UIView *viewSlider;
+@property (strong, nonatomic) IBOutlet UIView *viewDate;
+@property (strong, nonatomic) IBOutlet UIView *viewNbrPeople;
+@property (strong, nonatomic) IBOutlet UIView *viewRoomItems;
+@property (strong, nonatomic) IBOutlet UIView *viewSearch;
 
 @property (weak, nonatomic) IBOutlet UIButton *retroButton;
 @property (weak, nonatomic) IBOutlet UIButton *screenButton;
 @property (weak, nonatomic) IBOutlet UIButton *tableButton;
 @property (weak, nonatomic) IBOutlet UIButton *dockButton;
 @property (weak, nonatomic) IBOutlet UIStepper *stepper;
+
+@property (strong, nonatomic) IBOutlet UITextField *textFieldSearch;
 
 - (IBAction)retroAction:(id)sender;
 - (IBAction)screenAction:(id)sender;
