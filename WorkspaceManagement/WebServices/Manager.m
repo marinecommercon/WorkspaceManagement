@@ -69,7 +69,7 @@
     if(mySensor != nil){
         if([ModelDAO checkSensorWithId:idSensor eventDate:eventDate eventValue:eventValue]){
             updateWasNeeded = true;
-        }
+        } 
     }
     
     // Compare until the end of the list
