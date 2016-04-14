@@ -72,15 +72,39 @@
 
 - (void) decide:(NSString*)keyword{
     
-    // If main map view
-    if(self.stepForSwipe != 2){
-        NSLog(@"DECIDE %@",keyword);
-    }
+    NSPredicate *predicateAppDsi = [NSPredicate predicateWithFormat:@"type != %@", @"free"];
+    NSArray *roomsAppDsi = [DAO getObjects:@"Room" withPredicate:predicateAppDsi];
+    NSPredicate *predicateFree = [NSPredicate predicateWithFormat:@"type == %@", @"free"];
+    NSArray *roomsFree = [DAO getObjects:@"Room" withPredicate:predicateFree];
     
-    // If filter view is above
-    else{
-       // Should decide for nothing, maybe sensors only
+    // If main map view
+    switch (self.stepForSwipe) {
+        case 1:
+            
+            for(Room *room in roomsFree){
+                if(self.realTime){
+                    if([CheckDAO roomHasSensorOn:room]){
+                     
+                    }
+                    else{
+                        [room setMapState:@"free"];
+                    }
+                }
+            }
+            break;
+        case 2:
+            
+            break;
+        case 3:
+            
+            break;
+            
+        default:
+            break;
     }
+   
+    
+
 }
 
 // MANAGER DELEGATE
