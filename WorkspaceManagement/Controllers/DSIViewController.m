@@ -20,15 +20,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    //    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset"
-    //                                                                    style:UIBarButtonItemStyleDone target:nil action:nil];
-    //    self.navigationItem.rightBarButtonItem = rightButton;
-    //
-    //    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Save"
-    //                                                                   style:UIBarButtonItemStyleDone target:nil action:nil];
-    //    self.navigationItem.leftBarButtonItem = leftButton;
-    
+    [self initNavbar];
+
     self.schedulesArray = @[@"07:30", @"08:00", @"08:30", @"09:00", @"09:30", @"10:00", @"10:30", @"11:00", @"11:30", @"12:00",@"12:30", @"13:00", @"13:30", @"14:00", @"14:30", @"15:00", @"15:30", @"16:00", @"16:30", @"17:00", @"17:30", @"18:00", @"18:30", @"19:00", @"19:30", @"20:00", @"20:30",@"21:00"];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type CONTAINS[cd] %@", @"dsi"];
@@ -56,28 +49,22 @@
     }
 }
 
-//- (void)styleNavBar {
-//    [self.navigationController setNavigationBarHidden:YES animated:NO];
-//    UINavigationBar *newNavBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 64.0)];
-//    [newNavBar setTintColor:[UIColor whiteColor]];
-//    UINavigationItem *newItem = [[UINavigationItem alloc] init];
-//    newItem.title = @"Paths";
-//
-//    // BackButtonBlack is an image we created and added to the app’s asset catalog
-//    UIImage *backButtonImage = [UIImage imageNamed:@"WSMImagesBtnExit"];
-//
-//    // any buttons in a navigation bar are UIBarButtonItems, not just regular UIButtons. backTapped: is the method we’ll call when this button is tapped
-//    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(backTapped:)];
-//
-//    // the bar button item is actually set on the navigation item, not the navigation bar itself.
-//    newItem.leftBarButtonItem = backBarButtonItem;
-//
-//    [newNavBar setItems:@[newItem]];
-//    [self.view addSubview:newNavBar];
-//}
+-(void) initNavbar {
+    UIImage *left = [UIImage imageNamed:@"WSMImagesBtnExit"];
+    UIImage *right = [UIImage imageNamed:@"DSIViewLibreImage"];
+    NavBarInstance *custom = [NavBarInstance sharedInstance];
+    [custom styleNavBar:self setTitle:@"PLANNING DSI" setLeftButton:left setRightButton:right];
 
-- (void)backTapped:(id)sender {
+}
+
+- (void)navbarLeftButton {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)navbarRightButton {
+    [ModelDAO deleteAllReservations];
+    [self clearDetails];
+    [_tableView reloadData];
 }
 
 - (void) viewDidAppear:(BOOL)animated{
@@ -91,17 +78,6 @@
     
     __weak id weakSelf = self;
     self.navigationController.interactivePopGestureRecognizer.delegate = weakSelf;
-}
-
-- (void)launchLeft {
-    [self.navigationController popViewControllerAnimated:YES];
-    NSLog(@"MDr");
-}
-
-- (void)launchRight {
-    [ModelDAO deleteAllReservations];
-    [self clearDetails];
-    [_tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

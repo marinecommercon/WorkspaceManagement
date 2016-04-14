@@ -11,14 +11,12 @@
 
 @interface ReservationViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UIButton *buttonValidationReservation;
-
 @property (weak, nonatomic) IBOutlet UISlider *slider;
-
 @property (strong, nonatomic) IBOutlet UIView *viewSlider;
 
 @property (strong, nonatomic) IBOutlet UITextField *TextFieldNom;
-
 @property (strong, nonatomic) IBOutlet UITextField *TextFieldNameReunion;
+
+- (IBAction)validate:(id)sender;
 
 @end

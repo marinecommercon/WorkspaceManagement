@@ -14,6 +14,7 @@
 #import "Reservation.h"
 #import "ScheduleTableViewCell.h"
 #import "UIColor+AppAdditions.h"
+#import "NavBarInstance.h"
 
 @interface DSIViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource>
 

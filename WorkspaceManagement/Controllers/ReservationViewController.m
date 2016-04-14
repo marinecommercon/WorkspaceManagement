@@ -15,39 +15,41 @@
 
 @implementation ReservationViewController
 
-@synthesize buttonValidationReservation;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [buttonValidationReservation addTarget:self
-                            action:@selector(buttonValiderReservation)
-                  forControlEvents:UIControlEventTouchUpInside];
-    // Do any additional setup after loading the view.
 }
 
-- (void)buttonValiderReservation
-{
-    NSLog(@"Validation Reservation");
-    
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:NO];
+    [self initNavbar];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+- (IBAction)validate:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     ValidationReservationViewController *viewController = (ValidationReservationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ValidationReservationViewController"];
     [self presentViewController:viewController animated:NO completion:nil];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+// HANDLE NAVBAR
+
+- (void) initNavbar
+{
+    UIImage *left = [UIImage imageNamed:@"WSMImagesBtnExit"];
+    NavBarInstance *custom = [NavBarInstance sharedInstance];
+    [custom styleNavBar:self setTitle:@"EMPLACEMENT DE L'ESPACE" setLeftButton:left setRightButton:nil];
+    
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)navbarLeftButton {
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
-*/
+
+- (void)navbarRightButton {
+    
+}
 
 @end

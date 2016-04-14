@@ -16,6 +16,7 @@
 #import "Manager.h"
 #import "UIColor+AppAdditions.h"
 #import "CheckDAO.H"
+#import "NavBarInstance.h"
 
 @interface MapViewController : UIViewController <MWZMapDelegate, ManagerDelegate, FilterViewControllerDelegate>
 

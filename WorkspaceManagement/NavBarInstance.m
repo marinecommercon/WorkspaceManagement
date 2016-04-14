@@ -21,7 +21,7 @@ alpha:1.0]
 
 static NavBarInstance *_sharedInstance;
 
-- (void)styleNavBar:(UIViewController *) view setTitle:(NSString *)title setLeftButton:(UIImage *)leftButton setRightButton:(UIImage *)rightButton {
+- (void)styleNavBar:(UIViewController *) view setTitle:(NSString *)title setLeftButton:(UIImage *)left setRightButton:(UIImage *)right {
     [view.navigationController setNavigationBarHidden:YES animated:NO];
     
     _myNavBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.view.bounds), view.view.frame.size.width / 5)];
@@ -48,27 +48,32 @@ static NavBarInstance *_sharedInstance;
       [UIFont fontWithName:@"DINPro-CondensedBold" size:24.0],NSFontAttributeName,
       nil]];
     
-    UIImage *imageErase = leftButton;
-    CGRect frame1 = CGRectMake(0, 0, imageErase.size.width / 3.5, imageErase.size.height / 3.5);
-    UIButton *Button1 = [[UIButton alloc] initWithFrame:frame1];
-    [Button1 setBackgroundImage:imageErase forState:UIControlStateNormal];
-    [Button1 addTarget:view action:@selector(launchLeft)
+    
+    // LEFT
+    UIImage *leftImage = left;
+    CGRect leftFrame = CGRectMake(0, 0, leftImage.size.width / 3.5, leftImage.size.height / 3.5);
+    
+    UIButton *buttonLeft = [[UIButton alloc] initWithFrame:leftFrame];
+    [buttonLeft setBackgroundImage:leftImage forState:UIControlStateNormal];
+    [buttonLeft addTarget:view action:@selector(navbarLeftButton)
       forControlEvents:UIControlEventTouchUpInside];
-    [Button1 setShowsTouchWhenHighlighted:NO];
+    [buttonLeft setShowsTouchWhenHighlighted:NO];
     
-    UIBarButtonItem *EraseButton =[[UIBarButtonItem alloc] initWithCustomView:Button1];
-    _navItem.leftBarButtonItem = EraseButton;
+    UIBarButtonItem *leftBarButton =[[UIBarButtonItem alloc] initWithCustomView:buttonLeft];
+    _navItem.leftBarButtonItem  = leftBarButton;
     
-    UIImage *imageHelp = rightButton;
-    CGRect frame2 = CGRectMake(0, 0, imageHelp.size.width / 3.5, imageHelp.size.height / 3.5);
-    UIButton *Button2 = [[UIButton alloc] initWithFrame:frame2];
-    [Button2 setBackgroundImage:imageHelp forState:UIControlStateNormal];
-    [Button2 addTarget:view action:@selector(launchRight)
+    // RIGHT
+    UIImage *rightImage = right;
+    CGRect rightFrame = CGRectMake(0, 0, rightImage.size.width / 3.5, rightImage.size.height / 3.5);
+    UIButton *buttonRight = [[UIButton alloc] initWithFrame:rightFrame];
+    
+    [buttonRight setBackgroundImage:rightImage forState:UIControlStateNormal];
+    [buttonRight addTarget:view action:@selector(navbarRightButton)
       forControlEvents:UIControlEventTouchUpInside];
-    [Button2 setShowsTouchWhenHighlighted:NO];
+    [buttonRight setShowsTouchWhenHighlighted:NO];
     
-    UIBarButtonItem *HelpButton =[[UIBarButtonItem alloc] initWithCustomView:Button2];
-    _navItem.rightBarButtonItem = HelpButton;
+    UIBarButtonItem *rightBarButton =[[UIBarButtonItem alloc] initWithCustomView:buttonRight];
+    _navItem.rightBarButtonItem = rightBarButton;
     
     [view.view addSubview:_myNavBar];
 }

@@ -16,46 +16,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+    }
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    [self updateNavBar];
+    [self initNavbar];
 }
 
-- (void) updateNavBar
+
+// HANDLE NAVBAR
+
+- (void) initNavbar
 {
     UIImage *left = [UIImage imageNamed:@"WSMImagesBtnExit"];
-    
     NavBarInstance *custom = [NavBarInstance sharedInstance];
     [custom styleNavBar:self setTitle:@"EMPLACEMENT DE L'ESPACE" setLeftButton:left setRightButton:nil];
     
 }
 
-- (void)launchLeft {
-    NSLog(@"Left");
+- (void)navbarLeftButton {
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
-- (void)launchRight {
-    
-    NSLog(@"Right");
-}
+- (void)navbarRightButton {
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+}
 
 @end

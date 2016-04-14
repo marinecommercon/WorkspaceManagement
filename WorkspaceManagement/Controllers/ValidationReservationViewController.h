@@ -12,6 +12,6 @@
 
 @interface ValidationReservationViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UIButton *buttonFindRoom;
+- (IBAction)findRoom:(id)sender;
 
 @end

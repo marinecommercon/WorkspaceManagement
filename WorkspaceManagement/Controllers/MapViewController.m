@@ -7,7 +7,6 @@
 //
 
 #import "MapViewController.h"
-#import "NavBarInstance.h"
 
 @interface MapViewController ()
 
@@ -42,7 +41,6 @@
     self.stepForSwipe = 1;
     [self shouldStartAsynchtaskSensors];
     [self getMapStates];
-    [self updateNavBar];
     
     if(self.filterViewController == nil){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
@@ -53,24 +51,22 @@
         [self.container addSubview:self.filterViewController.view];
         [self.filterViewController didMoveToParentViewController:self];
     }
+    [self initNavbar];
 }
 
-- (void) updateNavBar {
-    
-    
+- (void)initNavbar {
     UIImage *right = [UIImage imageNamed:@"WSMImagesBtnHelp"];
-    
+    UIImage *left = [UIImage imageNamed:@"WSMImagesBtnReload"];
     NavBarInstance *custom = [NavBarInstance sharedInstance];
-    [custom styleNavBar:self setTitle:@"SÉLECTIONNER UN ESPACE" setLeftButton:nil setRightButton:right];
-    
+    [custom styleNavBar:self setTitle:@"SÉLECTIONNER UN ESPACE" setLeftButton:left setRightButton:right];
 }
 
-- (void)launchLeft {
-    NSLog(@"Erase");
+- (void)navbarLeftButton {
+    NSLog(@"Left");
 }
 
-- (void)launchRight {
-    NSLog(@"Help");
+- (void)navbarRightButton {
+    NSLog(@"Right");
 }
 
 - (void) getMapStates {
