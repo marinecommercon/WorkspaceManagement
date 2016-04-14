@@ -5,5 +5,4 @@ use_frameworks!
 
 target 'WorkspaceManagement' do
 pod 'Mapwize'
-pod 'CCMPopup'
 end
