@@ -10,27 +10,24 @@
 
 @implementation CheckDAO
 
-+ (BOOL) checkAvailability: (NSDate*)beginDateWished withEnd:(NSDate*)endDateWished withRoom:(Room*)room {
++ (BOOL)checkAvailabilityBegin:(NSString*)begin withEnd:(NSString*)end forRoom:(Room*)room {
+    
+    NSDate *wishBegin = [Utils parseTimeToDate:begin];
+    NSDate *wishEnd   = [Utils parseTimeToDate:end];
     
     if(room.reservations.count != 0){
         for (Reservation *reservation in room.reservations) {
             
-            //[self logReservation:beginDateWished withEnd:endDateWished];
-            //[self logReservation:reservation.beginTime withEnd:reservation.endTime];
+            NSDate *resaBegin = [Utils parseTimeToDate:reservation.beginTime];
+            NSDate *resaEnd   = [Utils parseTimeToDate:reservation.endTime];
             
-            // The wish is before the reservation
-            if([reservation.beginTime timeIntervalSinceDate:beginDateWished]>0 &&
-               [reservation.beginTime timeIntervalSinceDate:endDateWished]>=0){
-                //NSLog(@"The wish is before the reservation");
+            // The wish is before or after the reservation
+            // wishEnd 8h30 before/= resaBegin 8h
+            // wishBegin 8h after/= resaEnd 8h30
+            if([resaBegin timeIntervalSinceDate:wishEnd]>=0 || [wishBegin timeIntervalSinceDate:resaEnd]>=0){
             }
             
-            // The wish is after the reservation
-            else if([beginDateWished timeIntervalSinceDate:reservation.endTime]>=0 &&
-                    [endDateWished timeIntervalSinceDate:reservation.endTime]>0){
-                //NSLog(@"The wish is after the reservation");
-            }
-            
-            // If for one reservation there is a conflict, the room is not available. Process stops.
+            // If for one reservation the wish is inside, the room is not available. Process stops.
             else {
                 //NSLog(@"The wish is inside the reservation");
                 return false;
@@ -40,44 +37,34 @@
     return true;
 }
 
-+ (BOOL) checkAvailability: (NSString*)beginStringWished End:(NSString*)endStringWished Room:(Room*)room {
++ (NSString*)checkReservationTypeIfExist:(NSString*)begin withEnd:(NSString*)end forRoom:(Room*)room {
     
-    NSDate *beginDateWished = [Utils parseTimeToDate:beginStringWished];
-    NSDate *endDateWished   = [Utils parseTimeToDate:endStringWished];
+    NSDate *wishBegin = [Utils parseTimeToDate:begin];
+    NSDate *wishEnd   = [Utils parseTimeToDate:end];
     
     if(room.reservations.count != 0){
         for (Reservation *reservation in room.reservations) {
             
-            //            [self logReservation:beginDateWished withEnd:endDateWished];
-            //            [self logReservation:reservation.beginTime withEnd:reservation.endTime];
+            NSDate *resaBegin = [Utils parseTimeToDate:reservation.beginTime];
+            NSDate *resaEnd   = [Utils parseTimeToDate:reservation.endTime];
             
-            // The wish is before the reservation
-            if([reservation.beginTime timeIntervalSinceDate:beginDateWished]>0 &&
-               [reservation.beginTime timeIntervalSinceDate:endDateWished]>=0){
-                //NSLog(@"The wish is before the reservation");
+            // The wish is before or after the reservation
+            // wishEnd 8h30 before/= resaBegin 8h
+            // wishBegin 8h after/= resaEnd 8h30
+            if([resaBegin timeIntervalSinceDate:wishEnd]>=0 || [wishBegin timeIntervalSinceDate:resaEnd]>=0){
             }
             
-            // The wish is after the reservation
-            else if([beginDateWished timeIntervalSinceDate:reservation.endTime]>=0 &&
-                    [endDateWished timeIntervalSinceDate:reservation.endTime]>0){
-                //NSLog(@"The wish is after the reservation");
-            }
-            
-            // If for one reservation there is a conflict, the room is not available. Process stops.
+            // If for one reservation the wish is inside, the room is not available. Process stops.
             else {
                 //NSLog(@"The wish is inside the reservation");
-                return false;
+                return reservation.type;
             }
         }
     }
-    return true;
+    return nil;
 }
 
-
-+ (BOOL) checkAvailability: (NSString*)beginTimeWished withEnd:(NSString*)endTimeWished {
-    
-    NSDate *beginDateWished = [Utils parseTimeToDate:beginTimeWished];
-    NSDate *endDateWished   = [Utils parseTimeToDate:endTimeWished];
++ (BOOL)checkAvailability: (NSString*)begin withEnd:(NSString*)end {
     int count = 0;
     NSMutableArray * possibilities = [NSMutableArray new];
     
@@ -86,7 +73,7 @@
         for (Room *room in listRooms) {
             
             // If room available
-            if([self checkAvailability:beginDateWished withEnd:endDateWished withRoom:room]){
+            if([self checkAvailabilityBegin:begin withEnd:end forRoom:room]){
                 [possibilities addObject:room];
             } else {
                 count++;
@@ -101,6 +88,22 @@
         }
     }
     return true;
+}
+
++ (NSString*)checkCurrentReservationType:(NSString*)currentTime room:(Room*)room {
+    NSDate *currentDate       = [Utils parseTimeToDate:currentTime];
+    NSDate *dateOneMinuteMore = [currentDate dateByAddingTimeInterval:(60)];
+    NSString *timeOneMinuteMore = [Utils parseDateToTime:dateOneMinuteMore];
+    NSString *type = [self checkReservationTypeIfExist:currentTime withEnd:timeOneMinuteMore forRoom:room];
+    return type;
+}
+
++ (NSString*)checkNextReservationType:(NSString*)nextHalfHour room:(Room*)room {
+    NSDate *nextHalfHourDate       = [Utils parseTimeToDate:nextHalfHour];
+    NSDate *dateThirtyMinuteMore   = [nextHalfHourDate dateByAddingTimeInterval:(60)];
+    NSString *timeThirtyMinuteMore = [Utils parseDateToTime:dateThirtyMinuteMore];
+    NSString *type = [self checkReservationTypeIfExist:nextHalfHour withEnd:timeThirtyMinuteMore forRoom:room];
+    return type;
 }
 
 + (int) getPossibleDurationForBeginTime:(NSString*)beginTime withRoom: (Room*) room {
@@ -119,15 +122,18 @@
         Reservation *firstReservation = [sortedReservationArray objectAtIndex:0];
         Reservation *lastReservation  = [sortedReservationArray objectAtIndex:sortedReservationArray.count-1];
         
+        NSDate *resaBegin = [Utils parseTimeToDate:firstReservation.beginTime];
+        NSDate *resaEnd   = [Utils parseTimeToDate:lastReservation.endTime];
+        
         // Case : my wish is before the beginning of the reservation
-        if([firstReservation.beginTime timeIntervalSinceDate:myWishDate] >=0){
-            minutes = [self getMaxTimeBeforeFirstReservation:myWishDate withTime:firstReservation.beginTime];
+        if([resaBegin timeIntervalSinceDate:myWishDate] >=0){
+            minutes = [self getMaxTimeBeforeFirstReservation:myWishDate withTime:resaBegin];
             halfHours = floorf(minutes/30);
             return halfHours;
         }
         
         // Case : my wish is after the end of the last reservation
-        else if([myWishDate timeIntervalSinceDate:lastReservation.endTime] >= 0){
+        else if([myWishDate timeIntervalSinceDate:resaEnd] >= 0){
             minutes = [self getMaxTimeAfterLastReservation:myWishDate];
             halfHours = floorf(minutes/30);
             return halfHours;
@@ -138,13 +144,14 @@
         else if(sortedReservationArray.count>1){
             
             for(int i = 0 ; i < sortedReservationArray.count-1 ; i++){
-                
                 Reservation *reservation1 = [sortedReservationArray objectAtIndex:i];
                 Reservation *reservation2 = [sortedReservationArray objectAtIndex:i+1];
+                NSDate *resa1End   = [Utils parseTimeToDate:reservation1.endTime];
+                NSDate *resa2Begin = [Utils parseTimeToDate:reservation2.beginTime];
                 
                 // Case between 2 reservations
-                if([myWishDate timeIntervalSinceDate:reservation1.endTime] >= 0 && [myWishDate timeIntervalSinceDate: reservation2.beginTime] <= 0){
-                    double duration = [reservation2.beginTime timeIntervalSinceDate:myWishDate];
+                if([myWishDate timeIntervalSinceDate:resa1End] >= 0 && [myWishDate timeIntervalSinceDate: resa2Begin] <= 0){
+                    double duration = [resa2Begin timeIntervalSinceDate:myWishDate];
                     halfHours = floorf(duration/1800);
                     return halfHours;
                 }
@@ -187,7 +194,6 @@
         minutes = floor(duration/60);
         return minutes;
     }
-    
 }
 
 + (double) getMaxDurationForBeginTime:(NSString*)beginTime {
@@ -205,27 +211,15 @@
     return maxDurationTemp;
 }
 
-+ (BOOL)getCurrentStateForRoom:(NSString*)idMapwize {
-    Room   *room = [ModelDAO getRoomById:idMapwize];
-    NSDate *currentDate     = [NSDate date];
-    NSDate *minuteAfterDate = [currentDate dateByAddingTimeInterval:(60)];
-    
-    BOOL available = [self checkAvailability:currentDate withEnd:minuteAfterDate withRoom:room];
-    
-    //NSString *test1 = [Utils parseDateToTime:currentDate];
-    //NSString *test2 = [Utils parseDateToTime:minuteAfterDate];
-    //BOOL available2 = [self checkAvailability:test1 End:test2 Room:room];
-    
-    return available;
-}
-
 + (BOOL)getStateForRoom:(NSString*)idMapwize time:(NSString*)time timeInterval:(int)interval {
     Room   *room              = [ModelDAO getRoomById:idMapwize];
     NSDate *chosenDate        = [Utils parseTimeToDate:time];
-    NSDate *intervalAfterDate = [chosenDate dateByAddingTimeInterval:interval];
+    NSDate *dateAfterInterval = [chosenDate dateByAddingTimeInterval:interval];
     
-    BOOL available = [self checkAvailability:chosenDate withEnd:intervalAfterDate withRoom:room];
+    NSString *chosenTime = [Utils parseDateToTime:chosenDate];
+    NSString *timeAfterInterval = [Utils parseDateToTime:dateAfterInterval];
     
+    BOOL available = [self checkAvailabilityBegin:chosenTime withEnd:timeAfterInterval forRoom:room];
     return available;
 }
 

@@ -22,8 +22,10 @@
     self.ws.delegate = self;
     self.deviceList  = deviceList;
     
-    NSDate *now              = [NSDate date];
-    NSDate *sevenDaysAgo     = [now dateByAddingTimeInterval:-14*24*60*60];
+//    NSDate *now              = [NSDate date];
+
+    NSDate *now              = [[NSDate date] dateByAddingTimeInterval:-25*24*60*60];
+    NSDate *sevenDaysAgo     = [now dateByAddingTimeInterval:-27*24*60*60];
     NSDateFormatter *dformat = [[NSDateFormatter alloc]init];
     [dformat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     startDate = [dformat  stringFromDate:sevenDaysAgo];

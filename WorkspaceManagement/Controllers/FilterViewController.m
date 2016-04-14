@@ -362,7 +362,7 @@
             [self.carousel scrollToItemAtIndex:self.realTimePosition animated:NO];
         }
         else if(self.realTimePosition == self.carousel.currentItemIndex) {
-            [self.delegate didChangeCarousel:[self.schedulesArray objectAtIndex:self.carousel.currentItemIndex] realTime:self.realTime];
+            [self.delegate didChangeCarousel:self.schedulesArray position:self.carousel.currentItemIndex realTime:self.realTime];
         }
     }
 }
@@ -455,7 +455,7 @@
     if(self.realTimePosition == self.carousel.currentItemIndex){
         self.realTime = true;
         [self checkBeforeNextRound];
-        [self.delegate didChangeCarousel:[self.schedulesArray objectAtIndex:self.carousel.currentItemIndex] realTime:self.realTime];
+        [self.delegate didChangeCarousel:self.schedulesArray position:self.carousel.currentItemIndex realTime:self.realTime];
     }
     
     // FUTURE + DOCK SELECTED
@@ -475,7 +475,7 @@
                                             [dock setFilterState:@(1)];
                                             self.realTime = false;
                                             [self checkBeforeNextRound];
-                                            [self.delegate didChangeCarousel:[self.schedulesArray objectAtIndex:self.carousel.currentItemIndex] realTime:self.realTime];
+                                            [self.delegate didChangeCarousel:self.schedulesArray position:self.carousel.currentItemIndex realTime:self.realTime];
                                         }];
             UIAlertAction* noButton = [UIAlertAction
                                        actionWithTitle:@"Non"
@@ -494,7 +494,7 @@
         else {
             self.realTime = false;
             [self checkBeforeNextRound];
-            [self.delegate didChangeCarousel:[self.schedulesArray objectAtIndex:self.carousel.currentItemIndex] realTime:self.realTime];
+            [self.delegate didChangeCarousel:self.schedulesArray position:self.carousel.currentItemIndex realTime:self.realTime];
         }
     }
     

@@ -30,7 +30,7 @@
 
 + (void)addRoomWithName:(NSString*)name IdMapwize:(NSString*)idMapwize;
 
-+ (void)addReservationWithBegin:(NSString*)begin forRoom:(Room*)room;
++ (void)addReservation:(NSString*)begin end:(NSString*)end room:(Room*)room type:(NSString*)type;
 
 + (void)addSensorWithId: (NSString*)idSensor eventDate:(NSDate*)eventDate eventValue:(NSString*) eventValue forRoom:(Room*)room;
 

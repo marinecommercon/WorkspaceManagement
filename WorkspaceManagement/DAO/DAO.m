@@ -95,41 +95,4 @@
     [self saveContext];
 }
 
-// LOGS
-
-+ (void) logDate: (NSDate*)date {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm"];
-    NSLog(@"Date saved is %@",[formatter stringFromDate:date]);
-}
-
-+ (void) logReservation: (NSDate*)beginDate withEnd:(NSDate*)endDate {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm"];
-    NSLog(@"Reservation %@ - %@",[formatter stringFromDate:beginDate],[formatter stringFromDate:endDate]);
-}
-
-+ (void) logAllRooms {
-    NSArray *rooms = [self getObjects:@"Room" withPredicate:nil];
-    if(rooms.count != 0){
-        for (Room *room in rooms) {
-            NSLog(@"room with name : %@", room.name);
-        }
-    }
-}
-
-+ (void) logAllReservations {
-    NSArray *rooms = [self getObjects:@"Room" withPredicate:nil];
-    if(rooms.count != 0){
-        for (Room *room in rooms) {
-            if(room.reservations.count != 0){
-                for (Reservation *reservation in room.reservations) {
-                    [self logReservation:reservation.beginTime withEnd:reservation.endTime];
-                }
-            } else {            }
-        }
-    }
-}
-
-
 @end

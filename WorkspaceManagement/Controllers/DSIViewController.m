@@ -32,7 +32,11 @@
     self.schedulesArray = @[@"07:30", @"08:00", @"08:30", @"09:00", @"09:30", @"10:00", @"10:30", @"11:00", @"11:30", @"12:00",@"12:30", @"13:00", @"13:30", @"14:00", @"14:30", @"15:00", @"15:30", @"16:00", @"16:30", @"17:00", @"17:30", @"18:00", @"18:30", @"19:00", @"19:30", @"20:00", @"20:30",@"21:00"];
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type CONTAINS[cd] %@", @"dsi"];
-    _pickerData  = [DAO getObjects:@"Room" withPredicate:predicate];
+    
+    NSArray *rooms  = [DAO getObjects:@"Room" withPredicate:predicate];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
+    _pickerData = [rooms sortedArrayUsingDescriptors:sortDescriptors];
+    
     roomSelected = [_pickerData objectAtIndex:0];
     
     // Set Picker Delegate
@@ -170,8 +174,7 @@
     
     // No changes detected
     if([[cellDetails objectAtIndex:indexPath.row][1] isEqualToString:@"notChanged"]){
-        BOOL available = [CheckDAO checkAvailability:beginString End:endString Room:roomSelected];
-        
+        BOOL available = [CheckDAO checkAvailabilityBegin:beginString withEnd:endString forRoom:roomSelected];
         if(available){
             cellDetails[indexPath.row] = @[@"free",@"notChanged"];
             cell.label.text = @"Libre";
@@ -186,7 +189,6 @@
             [cell.imageState1 setBackgroundColor:[UIColor bnpBlue]];
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewOccupeImage.png"]];
             cell.label.textColor = [UIColor bnpBlue];
-            
         }
     }
     // Changes detected
@@ -240,7 +242,8 @@
     for(int i=0; i<[cellDetails count]; i++){
         if ([cellDetails[i][0] isEqualToString:@"busy"]) {
             NSString *begin = [self.schedulesArray objectAtIndex:i];
-            [ModelDAO addReservationWithBegin:begin forRoom:roomSelected];
+            NSString *end = [self.schedulesArray objectAtIndex:i+1];
+            [ModelDAO addReservation:begin end:end room:roomSelected type:@"dsi"];
         }
     }
 }

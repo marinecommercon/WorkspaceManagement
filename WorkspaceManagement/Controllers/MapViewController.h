@@ -15,6 +15,7 @@
 #import "PopupDetailViewController.h"
 #import "Manager.h"
 #import "UIColor+AppAdditions.h"
+#import "CheckDAO.H"
 
 @interface MapViewController : UIViewController <MWZMapDelegate, ManagerDelegate, FilterViewControllerDelegate>
 
@@ -34,7 +35,9 @@
 
 // Params to make decision (states of rooms)
 @property BOOL filtersON;
-@property (nonatomic,strong)  NSString *time;
+@property (nonatomic,strong)  NSString *timeIndex1;
+@property (nonatomic,strong)  NSString *timeIndex2;
+@property (nonatomic,strong)  NSString *timeIndex3;
 @property BOOL realTime;
 @property int sliderValue;
 

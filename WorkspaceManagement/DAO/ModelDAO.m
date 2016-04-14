@@ -81,12 +81,11 @@
     [DAO saveContext];
 }
 
-+ (void)addReservationWithBegin:(NSString*)begin forRoom:(Room*)room {
++ (void)addReservation:(NSString*)begin end:(NSString*)end room:(Room*)room type:(NSString*)type {
     Reservation* reservationTemp = (Reservation*)[DAO getInstance:@"Reservation"];
-    NSDate *beginDate = [Utils parseTimeToDate:begin];
-    NSDate *endDate   = [beginDate dateByAddingTimeInterval:(30*60)];
-    [reservationTemp setBeginTime:beginDate];
-    [reservationTemp setEndTime:endDate];
+    [reservationTemp setBeginTime:begin];
+    [reservationTemp setEndTime:end];
+    [reservationTemp setType:type];
     [room addReservationsObject:reservationTemp];
     [DAO saveContext];
 }

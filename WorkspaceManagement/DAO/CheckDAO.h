@@ -14,17 +14,19 @@
 
 @interface CheckDAO : NSObject
 
-+ (BOOL)checkAvailability:(NSString*)beginTimeWished withEnd:(NSString*)endTimeWished;
++ (BOOL)checkAvailabilityBegin:(NSString*)begin withEnd:(NSString*)end forRoom:(Room*)room;
 
-+ (BOOL)checkAvailability:(NSDate*)beginDateWished withEnd:(NSDate*)endDateWished withRoom:(Room*)room;
++ (NSString*)checkReservationTypeIfExist:(NSString*)begin withEnd:(NSString*)end forRoom:(Room*)room;
 
-+ (BOOL)checkAvailability:(NSString*)beginStringWished End:(NSString*)endStringWished Room:(Room*)room;
++ (BOOL)checkAvailability: (NSString*)begin withEnd:(NSString*)end;
+
++ (NSString*)checkCurrentReservationType:(NSString*)currentTime room:(Room*)room;
+
++ (NSString*)checkNextReservationType:(NSString*)nextHalfHour room:(Room*)room;
 
 + (int)getPossibleDurationForBeginTime:(NSString*)beginTime withRoom: (Room*)room;
 
 + (double)getMaxDurationForBeginTime:(NSString*)beginTime;
-
-+ (BOOL)getCurrentStateForRoom:(NSString*)idMapwize;
 
 + (BOOL)getStateForRoom:(NSString*)idMapwize time:(NSString*)time timeInterval:(int)interval;
 

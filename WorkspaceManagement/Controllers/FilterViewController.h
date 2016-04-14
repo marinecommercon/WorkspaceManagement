@@ -12,7 +12,7 @@
 #import "UIColor+AppAdditions.h"
 
 @protocol FilterViewControllerDelegate
-- (void)didChangeCarousel:(NSString*)hour realTime:(BOOL)realTime;
+- (void)didChangeCarousel:(NSArray*)schedulesArray position:(NSInteger)position realTime:(BOOL)realTime;
 - (void)didChangeSlider:(int)sliderValue;
 @end
 

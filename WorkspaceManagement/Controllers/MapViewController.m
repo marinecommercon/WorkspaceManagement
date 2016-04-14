@@ -27,7 +27,6 @@
     // INIT PARAMS FOR DECISION
     self.realTime    = true;
     self.filtersON   = false;
-    self.sliderValue = 1;
     
     [self initMapWize];
     [self initContainerSwipeGesture];
@@ -36,21 +35,22 @@
     self.finishedSensorUpdate = true;
     self.manager = [[Manager alloc]init];
     self.manager.delegate = self;
-    
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
-    self.filterViewController = [storyboard instantiateViewControllerWithIdentifier:@"filterViewController"];
-    self.filterViewController.delegate = self;
-    [self addChildViewController:self.filterViewController];
-    self.filterViewController.view.frame = CGRectMake(0, 0, self.container.frame.size.width, self.container.frame.size.height);
-    [self.container addSubview:self.filterViewController.view];
-    [self.filterViewController didMoveToParentViewController:self];
-
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     self.stepForSwipe = 1;
     [self shouldStartAsynchtaskSensors];
     [self getMapStates];
+    
+    if(self.filterViewController == nil){
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        self.filterViewController = [storyboard instantiateViewControllerWithIdentifier:@"filterViewController"];
+        self.filterViewController.delegate = self;
+        [self addChildViewController:self.filterViewController];
+        self.filterViewController.view.frame = CGRectMake(0, 0, self.container.frame.size.width, self.container.frame.size.height);
+        [self.container addSubview:self.filterViewController.view];
+        [self.filterViewController didMoveToParentViewController:self];
+    }
 }
 
 - (void) getMapStates {
@@ -59,10 +59,12 @@
 
 // FILTER DELEGATE
 
-- (void) didChangeCarousel:(NSString *)time realTime:(BOOL)realTime {
-    self.realTime = realTime;
-    self.time     = time;
-    [self decide:[NSString stringWithFormat:@"time is : %@ realTime ? : %d", self.time,self.realTime]];
+- (void)didChangeCarousel:(NSArray*)schedulesArray position:(NSInteger)position realTime:(BOOL)realTime {
+    self.realTime   = realTime;
+    self.timeIndex1 = [schedulesArray objectAtIndex:position];
+    self.timeIndex2 = [schedulesArray objectAtIndex:position+1];
+    self.timeIndex3 = [schedulesArray objectAtIndex:position+2];
+    [self decide:[NSString stringWithFormat:@"time is : %@ realTime ? : %d", self.timeIndex1,self.realTime]];
 }
 
 - (void) didChangeSlider:(int)sliderValue {
@@ -79,18 +81,52 @@
     
     // If main map view
     switch (self.stepForSwipe) {
-        case 1:
+        case 0 || 1:
             
+            // ROOMS FREE
             for(Room *room in roomsFree){
                 if(self.realTime){
+                    
+                    // SENSOR = 1
                     if([CheckDAO roomHasSensorOn:room]){
-                     
+                     [room setMapState:@"red"];
                     }
+                    // SENSOR = 0
                     else{
-                        [room setMapState:@"free"];
+                        [room setMapState:@"green_free"];
                     }
                 }
             }
+            
+            // ROOMS APP-DSI
+            for(Room *room in roomsAppDsi){
+                if(self.realTime){
+                    
+                    
+                    // AVAILABLE ??
+                    NSString *reservationType = [CheckDAO checkCurrentReservationType:self.timeIndex1 room:room];
+                    if([reservationType isEqualToString:@"dsi"]){
+                        [room setMapState:@"red"];
+                    }
+                    else if([reservationType isEqualToString:@"app"]) {
+                        [room setMapState:@"grey"];
+                    }
+                    else if(reservationType == nil){
+                        NSString *nextReservationType = [CheckDAO checkNextReservationType:self.timeIndex2 room:room];
+                        if(nextReservationType != nil){
+                            [room setMapState:@"green_book_ko"];
+                        }
+                        else {
+                            [room setMapState:@"green_book_ok"];
+                        }
+                        NSLog(@"room: %@ available : %@",room.name, nextReservationType);
+                    }
+                    
+                }
+            }
+            
+            
+            
             break;
         case 2:
             
@@ -104,7 +140,7 @@
     }
    
     
-
+    [self updateMap];
 }
 
 // MANAGER DELEGATE

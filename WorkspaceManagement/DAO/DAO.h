@@ -29,15 +29,5 @@
 
 + (void)deleteAllObjects:(NSArray *)managedObjects;
 
-// LOGS
-
-+ (void)logDate:(NSDate*)date;
-
-+ (void)logReservation:(NSDate*)beginDate withEnd:(NSDate*)endDate;
-
-+ (void)logAllRooms;
-
-+ (void)logAllReservations;
-
 @end
 

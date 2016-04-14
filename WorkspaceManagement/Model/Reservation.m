@@ -12,6 +12,7 @@
 
 @dynamic beginTime;
 @dynamic endTime;
+@dynamic type;
 @dynamic room;
 
 @end
