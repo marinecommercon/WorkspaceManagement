@@ -10,6 +10,7 @@
 #import "Room.h"
 #import "ModelDAO.h"
 #import "UIColor+AppAdditions.h"
+#import "ReservationViewController.h"
 
 @interface PopupDetailViewController : UIViewController
 

@@ -298,12 +298,11 @@
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
     
-//    UIImage *sliderMinTrackImage = [UIImage imageNamed: @"Maxtrackimage.png"];
-//    UIImage *sliderMaxTrackImage = [UIImage imageNamed: @"Mintrackimage.png"];
-//    sliderMinTrackImage = [sliderMinTrackImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 22)];
-//    sliderMaxTrackImage = [sliderMaxTrackImage resizableImageWithCapInsets:UIEdgeInsetsMake(0, 22, 0, 22)];
-//    [slider setMinimumTrackImage:sliderMinTrackImage forState:UIControlStateNormal];
-//    [slider setMaximumTrackImage:sliderMaxTrackImage forState:UIControlStateNormal];
+    UIImage *sliderMinTrackImage = [UIImage imageNamed: @"Maxtrackimage.png"];
+    UIImage *sliderMaxTrackImage = [UIImage imageNamed: @"Mintrackimage.png"];
+    
+    [slider setMinimumTrackImage:sliderMinTrackImage forState:UIControlStateNormal];
+    [slider setMaximumTrackImage:sliderMaxTrackImage forState:UIControlStateNormal];
     
     [self.viewSlider addGestureRecognizer:recognizer];
     [self.viewSlider addGestureRecognizer:tapGestureRecognizer];

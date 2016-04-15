@@ -7,6 +7,7 @@
 //
 
 #import "MapViewController.h"
+#import "NavBarInstance.h"
 
 @interface MapViewController ()
 
@@ -41,6 +42,7 @@
     self.stepForSwipe = 1;
     [self shouldStartAsynchtaskSensors];
     [self getMapStates];
+    [self updateNavBar];
     
     if(self.filterViewController == nil){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
@@ -51,6 +53,24 @@
         [self.container addSubview:self.filterViewController.view];
         [self.filterViewController didMoveToParentViewController:self];
     }
+}
+
+- (void) updateNavBar {
+    
+    
+    UIImage *right = [UIImage imageNamed:@"WSMImagesBtnHelp"];
+    
+    NavBarInstance *custom = [NavBarInstance sharedInstance];
+    [custom styleNavBar:self setTitle:@"SÉLECTIONNER UN ESPACE" setLeftButton:nil setRightButton:right];
+    
+}
+
+- (void)launchLeft {
+    NSLog(@"Erase");
+}
+
+- (void)launchRight {
+    NSLog(@"Help");
 }
 
 - (void) getMapStates {
@@ -285,6 +305,16 @@
     [container addGestureRecognizer:swipeDown];
 }
 
+- (void) changeTitle {
+    NavBarInstance *test = [NavBarInstance sharedInstance];
+    [test setNavBarTitle:@"SÉLECTIONNER UN ESPACE"];
+}
+
+- (void) changeTitle2 {
+    NavBarInstance *test = [NavBarInstance sharedInstance];
+    [test setNavBarTitle:@"CHOIX DES CRITÈRES"];
+}
+
 - (void)swipeUp:(UIGestureRecognizer *)swipe
 {
     [UIView beginAnimations:nil context:NULL];
@@ -296,6 +326,7 @@
         case (1):
             // CAROUSEL -> CAROUSEL + DURATION
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.465;
+            [self changeTitle2];
             container.frame = frame;
             self.stepForSwipe = 2;
             break;
@@ -325,6 +356,7 @@
         case (2):
             // CAROUSEL + DURATION -> CAROUSEL
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.22;
+            [self changeTitle];
             container.frame = frame;
             self.stepForSwipe = 1;
             break;

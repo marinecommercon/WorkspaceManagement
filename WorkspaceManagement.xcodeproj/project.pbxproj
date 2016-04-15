@@ -14,6 +14,10 @@
 		301832BC1CAD22A100964F60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 301832BB1CAD22A100964F60 /* Assets.xcassets */; };
 		301832BF1CAD22A100964F60 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 301832BD1CAD22A100964F60 /* LaunchScreen.storyboard */; };
 		3076423B1CBBE51A00503B40 /* DINPro-CondBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3076423A1CBBE32400503B40 /* DINPro-CondBold.otf */; };
+		3079FB371CC0E5FA006D4399 /* ReservationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3079FB361CC0E5FA006D4399 /* ReservationViewController.m */; };
+		3079FB3A1CC0E631006D4399 /* ValidationReservationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3079FB391CC0E631006D4399 /* ValidationReservationViewController.m */; };
+		3079FB3D1CC0E644006D4399 /* FindRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3079FB3C1CC0E644006D4399 /* FindRoomViewController.m */; };
+		3079FB401CC0E6C8006D4399 /* NavBarInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 3079FB3F1CC0E6C8006D4399 /* NavBarInstance.m */; };
 		308094841CAD4C6400B81DF0 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 308094831CAD4C6400B81DF0 /* iCarousel.m */; };
 		7810F8D81CAE918C00B259D3 /* Mapwize.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7810F8D71CAE918C00B259D3 /* Mapwize.framework */; };
 		7810F8DA1CAE91A200B259D3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7810F8D91CAE91A200B259D3 /* CoreLocation.framework */; };
@@ -57,6 +61,14 @@
 		301832BE1CAD22A100964F60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		301832C01CAD22A100964F60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3076423A1CBBE32400503B40 /* DINPro-CondBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DINPro-CondBold.otf"; sourceTree = "<group>"; };
+		3079FB351CC0E5FA006D4399 /* ReservationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReservationViewController.h; sourceTree = "<group>"; };
+		3079FB361CC0E5FA006D4399 /* ReservationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReservationViewController.m; sourceTree = "<group>"; };
+		3079FB381CC0E631006D4399 /* ValidationReservationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValidationReservationViewController.h; sourceTree = "<group>"; };
+		3079FB391CC0E631006D4399 /* ValidationReservationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValidationReservationViewController.m; sourceTree = "<group>"; };
+		3079FB3B1CC0E644006D4399 /* FindRoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindRoomViewController.h; sourceTree = "<group>"; };
+		3079FB3C1CC0E644006D4399 /* FindRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindRoomViewController.m; sourceTree = "<group>"; };
+		3079FB3E1CC0E6C8006D4399 /* NavBarInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavBarInstance.h; sourceTree = "<group>"; };
+		3079FB3F1CC0E6C8006D4399 /* NavBarInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavBarInstance.m; sourceTree = "<group>"; };
 		308094821CAD4C6400B81DF0 /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		308094831CAD4C6400B81DF0 /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
 		600ADB83DDE49F4708A05E9C /* Pods-WorkspaceManagement.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorkspaceManagement.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WorkspaceManagement/Pods-WorkspaceManagement.debug.xcconfig"; sourceTree = "<group>"; };
@@ -146,6 +158,8 @@
 			children = (
 				7810F91A1CB3C2FE00B259D3 /* ScheduleTableViewCell.h */,
 				7810F91B1CB3C2FE00B259D3 /* ScheduleTableViewCell.m */,
+				3079FB3E1CC0E6C8006D4399 /* NavBarInstance.h */,
+				3079FB3F1CC0E6C8006D4399 /* NavBarInstance.m */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -247,6 +261,12 @@
 				7810F92C1CB3C44900B259D3 /* MapViewController.m */,
 				7810F92E1CB3C4FB00B259D3 /* PopupDetailViewController.h */,
 				7810F92F1CB3C4FB00B259D3 /* PopupDetailViewController.m */,
+				3079FB351CC0E5FA006D4399 /* ReservationViewController.h */,
+				3079FB361CC0E5FA006D4399 /* ReservationViewController.m */,
+				3079FB381CC0E631006D4399 /* ValidationReservationViewController.h */,
+				3079FB391CC0E631006D4399 /* ValidationReservationViewController.m */,
+				3079FB3B1CC0E644006D4399 /* FindRoomViewController.h */,
+				3079FB3C1CC0E644006D4399 /* FindRoomViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -426,14 +446,17 @@
 			files = (
 				301832BA1CAD22A100964F60 /* Workspace_Management.xcdatamodeld in Sources */,
 				7810F8E91CAEAEA700B259D3 /* Sensor.m in Sources */,
+				3079FB401CC0E6C8006D4399 /* NavBarInstance.m in Sources */,
 				782F41941CBBF8E600AB2B58 /* Equipment.m in Sources */,
 				7810F92D1CB3C44900B259D3 /* MapViewController.m in Sources */,
 				7810F9271CB3C42F00B259D3 /* DSIViewController.m in Sources */,
 				7810F9161CB3C1DD00B259D3 /* ModelDAO.m in Sources */,
+				3079FB3D1CC0E644006D4399 /* FindRoomViewController.m in Sources */,
 				308094841CAD4C6400B81DF0 /* iCarousel.m in Sources */,
 				7810F9301CB3C4FB00B259D3 /* PopupDetailViewController.m in Sources */,
 				7887537D1CB504610077AA6A /* WSDownloader.m in Sources */,
 				7810F8EC1CAEAEB800B259D3 /* Reservation.m in Sources */,
+				3079FB371CC0E5FA006D4399 /* ReservationViewController.m in Sources */,
 				7887537A1CB5043E0077AA6A /* Manager.m in Sources */,
 				782F419E1CBD3CD400AB2B58 /* Utils.m in Sources */,
 				7810F9281CB3C42F00B259D3 /* FilterViewController.m in Sources */,
@@ -441,6 +464,7 @@
 				7810F9151CB3C1DD00B259D3 /* DAO.m in Sources */,
 				7810F91D1CB3C2FE00B259D3 /* ScheduleTableViewCell.m in Sources */,
 				301832B11CAD22A100964F60 /* AppDelegate.m in Sources */,
+				3079FB3A1CC0E631006D4399 /* ValidationReservationViewController.m in Sources */,
 				7810F8E61CAEADB400B259D3 /* Room.m in Sources */,
 				301832AE1CAD22A100964F60 /* main.m in Sources */,
 				7810F9141CB3C1DD00B259D3 /* CheckDAO.m in Sources */,

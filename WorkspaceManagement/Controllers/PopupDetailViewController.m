@@ -15,6 +15,7 @@
 @implementation PopupDetailViewController
 
 @synthesize ButtonExit;
+@synthesize PopupRoomBookButton;
 
 - (void)viewDidLoad
 {
@@ -25,6 +26,16 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+- (void)buttonReservation
+{
+    NSLog(@"Reservation");
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ReservationViewController *viewController = (ReservationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ReservationViewController"];
+    [self presentViewController:viewController animated:NO completion:nil];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -40,6 +51,10 @@
     [ButtonExit addTarget:self
                    action:@selector(setButton)
          forControlEvents:UIControlEventTouchUpInside];
+    
+    [PopupRoomBookButton addTarget:self
+                            action:@selector(buttonReservation)
+                  forControlEvents:UIControlEventTouchUpInside];
     
     [self.PopupRoomNameTitleLabel setText:room.name];
     [self.PopupRoomCapacityLabel setText:[NSString stringWithFormat:@"Capacité %@ personnes",room.maxPeople]];
