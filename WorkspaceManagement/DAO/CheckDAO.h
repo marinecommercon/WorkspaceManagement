@@ -22,6 +22,8 @@
 
 + (NSString*)checkCurrentReservationType:(NSString*)currentTime room:(Room*)room;
 
++ (NSString*)checkCurrentReservationType:(NSString*)currentTime duration:(int)sliderValue room:(Room*)room;
+
 + (NSString*)checkNextReservationType:(NSString*)nextHalfHour room:(Room*)room;
 
 + (int)getPossibleDurationForBeginTime:(NSString*)beginTime withRoom: (Room*)room;

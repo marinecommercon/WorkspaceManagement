@@ -63,7 +63,6 @@
 }
 
 - (void) initSeparatorShadow {
-    
     self.view.layer.shadowOpacity = 0.5;
     self.view.layer.shadowOffset = CGSizeMake(0, 0);
     self.view.layer.shadowRadius = 1;
@@ -87,7 +86,6 @@
     self.viewSearch.layer.shadowOpacity = 0.5;
     self.viewSearch.layer.shadowOffset = CGSizeMake(0, 0);
     self.viewSearch.layer.shadowRadius = 1;
-    
 }
 
 
@@ -286,7 +284,7 @@
     NSInteger numberOfSteps = 8;
     slider.maximumValue = numberOfSteps;
     slider.minimumValue = 0;
-    slider.continuous = YES;
+    slider.continuous   = YES;
     
     [slider addTarget:self
                action:@selector(valueChanged:)
@@ -336,15 +334,22 @@
 
 - (void)valueChanged:(UISlider *)sender
 {
+    float minValue = 1.0f;
+    if ([(UISlider*)sender value] < minValue) {
+        [(UISlider*)sender setValue:minValue];
+    }
+    
     int index = (int)(slider.value + 0.5);
     [slider setValue:index animated:NO];
+    [self.delegate didChangeSlider:index];
 }
 
 // HANDLE CAROUSEL
 
 - (void) updateCarousel:(NSTimer *)timer {
-    self.hoursDictionnary = [Utils generateHoursForCaroussel:[self.schedulesArray objectAtIndex:self.realTimePosition]];
     
+    self.hoursDictionnary = [Utils generateHoursForCaroussel:[self.schedulesArray objectAtIndex:self.realTimePosition]];
+
     if(self.hoursDictionnary != nil){
         self.schedulesArray   = [self.hoursDictionnary objectForKey:@"hours"];
         self.realTimePosition = [[self.hoursDictionnary objectForKey:@"position"] intValue];
@@ -368,7 +373,11 @@
 
 - (void) initCarousel {
     // INIT TYPE
-    carousel.type   = iCarouselTypeLinear;
+    [self.carousel setType:iCarouselTypeLinear];
+    
+    // Only to create movment
+    [self.carousel setCurrentItemIndex:-1];
+    
     UITapGestureRecognizer *tripleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tripleTapped:)];
     tripleTapGestureRecognizer.numberOfTapsRequired = 3;
     [self.carousel addGestureRecognizer:tripleTapGestureRecognizer];
@@ -377,12 +386,12 @@
     self.schedulesArray = [[NSMutableArray alloc] init];
     self.hoursDictionnary = [Utils generateHoursForCaroussel:nil];
     if(self.hoursDictionnary != nil){
+    
         self.schedulesArray   = [self.hoursDictionnary objectForKey:@"hours"];
         self.realTimePosition = [[self.hoursDictionnary objectForKey:@"position"] intValue];
         [self.carousel reloadData];
         [self.carousel scrollToItemAtIndex:self.realTimePosition animated:NO];
     }
-
 }
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view

@@ -64,6 +64,7 @@
         if([[self parseTimeToDate:@"07:30"] timeIntervalSinceDate:date] > 0){
             [newSchedules addObject:myTime];
             [newSchedules addObject:schedules[0]];
+            position = 0;
         }
         else {
             [newSchedules addObject:schedules[0]];

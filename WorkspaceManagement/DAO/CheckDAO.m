@@ -61,7 +61,7 @@
             }
         }
     }
-    return nil;
+    return @"noreservation";
 }
 
 + (BOOL)checkAvailability: (NSString*)begin withEnd:(NSString*)end {
@@ -91,8 +91,16 @@
 }
 
 + (NSString*)checkCurrentReservationType:(NSString*)currentTime room:(Room*)room {
-    NSDate *currentDate       = [Utils parseTimeToDate:currentTime];
-    NSDate *dateOneMinuteMore = [currentDate dateByAddingTimeInterval:(60)];
+    NSDate *currentDate         = [Utils parseTimeToDate:currentTime];
+    NSDate *dateOneMinuteMore   = [currentDate dateByAddingTimeInterval:(60)];
+    NSString *timeOneMinuteMore = [Utils parseDateToTime:dateOneMinuteMore];
+    NSString *type = [self checkReservationTypeIfExist:currentTime withEnd:timeOneMinuteMore forRoom:room];
+    return type;
+}
+
++ (NSString*)checkCurrentReservationType:(NSString*)currentTime duration:(int)sliderValue room:(Room*)room {
+    NSDate *currentDate         = [Utils parseTimeToDate:currentTime];
+    NSDate *dateOneMinuteMore   = [currentDate dateByAddingTimeInterval:(sliderValue*30*60)];
     NSString *timeOneMinuteMore = [Utils parseDateToTime:dateOneMinuteMore];
     NSString *type = [self checkReservationTypeIfExist:currentTime withEnd:timeOneMinuteMore forRoom:room];
     return type;
@@ -100,7 +108,7 @@
 
 + (NSString*)checkNextReservationType:(NSString*)nextHalfHour room:(Room*)room {
     NSDate *nextHalfHourDate       = [Utils parseTimeToDate:nextHalfHour];
-    NSDate *dateThirtyMinuteMore   = [nextHalfHourDate dateByAddingTimeInterval:(60)];
+    NSDate *dateThirtyMinuteMore   = [nextHalfHourDate dateByAddingTimeInterval:(30*60)];
     NSString *timeThirtyMinuteMore = [Utils parseDateToTime:dateThirtyMinuteMore];
     NSString *type = [self checkReservationTypeIfExist:nextHalfHour withEnd:timeThirtyMinuteMore forRoom:room];
     return type;
@@ -224,7 +232,7 @@
 }
 
 + (BOOL)roomHasSensorOn:(Room*)room {
-    NSSet<Sensor *> *sensors = room.sensors;
+    NSSet *sensors = room.sensors;
     
     // If at least one sensor has eventValue = 1 return true
     for(Sensor *sensor in sensors){

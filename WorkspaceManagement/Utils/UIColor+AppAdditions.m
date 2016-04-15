@@ -45,4 +45,9 @@
     return [UIColor colorWithRed:238.0/255.0 green:194.0/255.0 blue:203.0/255.0 alpha:1.0];
 }
 
++ (UIColor *)bnpPink
+{
+    return [UIColor colorWithRed:255.0/255.0 green:0.0/255.0 blue:186.0/255.0 alpha:1.0];
+}
+
 @end

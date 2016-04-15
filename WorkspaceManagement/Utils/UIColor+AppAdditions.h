@@ -18,5 +18,6 @@
 + (UIColor *) bnpGreenLight;
 + (UIColor *) bnpRed;
 + (UIColor *) bnpRedLight;
++ (UIColor *) bnpPink;
 
 @end

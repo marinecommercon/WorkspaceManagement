@@ -27,6 +27,7 @@
     // INIT PARAMS FOR DECISION
     self.realTime    = true;
     self.filtersON   = false;
+    self.sliderValue = 1;
     
     [self initMapWize];
     [self initContainerSwipeGesture];
@@ -97,9 +98,10 @@
     // If main map view
     switch (self.stepForSwipe) {
         case 0 || 1:
-            
             // ROOMS FREE
             for(Room *room in roomsFree){
+                
+                // ROOMS FREE + REALTIME
                 if(self.realTime){
                     
                     // SENSOR = 1
@@ -111,45 +113,141 @@
                         [room setMapState:@"green_free"];
                     }
                 }
+                // ROOMS FREE + FUTUR
+                else if(!self.realTime){
+                    [room setMapState:@"grey"];
+                }
             }
             
             // ROOMS APP-DSI
             for(Room *room in roomsAppDsi){
+                
+                // ROOMS APP-DSI + REALTIME
                 if(self.realTime){
                     
-                    
-                    // AVAILABLE ?? CHECK CURRENT
+                    // Current reservation ?
                     NSString *reservationType = [CheckDAO checkCurrentReservationType:self.timeIndex1 room:room];
                     
+                    // Current reservation = dsi
                     if([reservationType isEqualToString:@"dsi"]){
                         [room setMapState:@"red"];
                     }
+                    // Current reservation = app
                     else if([reservationType isEqualToString:@"app"]) {
-                        [room setMapState:@"grey"];
+                        [room setMapState:@"blue"];
                     }
+                    // No current reservation
                     else if([reservationType isEqualToString:@"noreservation"]){
                         
+                        // Next reservation ?
                         NSString *nextReservationType = [CheckDAO checkNextReservationType:self.timeIndex2 room:room];
-                        if(nextReservationType != nil){
+                        
+                        // Next reservation = dsi
+                        if([nextReservationType isEqualToString:@"dsi"]){
                             [room setMapState:@"green_book_ko"];
                         }
-                        else {
+                        // Next reservation = app
+                        else if([nextReservationType isEqualToString:@"app"]) {
+                            [room setMapState:@"blue"];
+                        }
+                        // No next reservation
+                        else if([nextReservationType isEqualToString:@"noreservation"]) {
                             [room setMapState:@"green_book_ok"];
                         }
-                        NSLog(@"room: %@ available : %@",room.name, nextReservationType);
                     }
+                    // No current reservation and no next reservation
                     else {
-                        [room setMapState:@"grey"];
+                        [room setMapState:@"green_book_ok"];
                     }
+                }
+                
+                // ROOMS APP-DSI + FUTURE
+                else if(!self.realTime){
                     
+                    // Current reservation ?
+                    NSString *reservationType = [CheckDAO checkCurrentReservationType:self.timeIndex1 room:room];
                     
+                    // Current reservation = dsi
+                    if([reservationType isEqualToString:@"dsi"]){
+                        [room setMapState:@"test"];
+                    }
+                    // Current reservation = app
+                    else if([reservationType isEqualToString:@"app"]) {
+                        [room setMapState:@"blue"];
+                    }
+                    // No current reservation
+                    else if([reservationType isEqualToString:@"noreservation"]) {
+                        [room setMapState:@"green_book_ok"];
+                    }
+                }
+            }
+            break;
+            
+        case 2:
+            // ROOMS FREE
+            for(Room *room in roomsFree){
+                
+                // ROOMS FREE + REALTIME
+                if(self.realTime){
+                    
+                    // SENSOR = 1
+                    if([CheckDAO roomHasSensorOn:room]){
+                        [room setMapState:@"red"];
+                    }
+                    // SENSOR = 0
+                    else{
+                        [room setMapState:@"green_free"];
+                    }
+                }
+                // ROOMS FREE + FUTUR
+                else if(!self.realTime){
+                    [room setMapState:@"grey"];
                 }
             }
             
-            
-            
-            break;
-        case 2:
+            // ROOMS APP-DSI
+            for(Room *room in roomsAppDsi){
+                
+                // ROOMS APP-DSI + REALTIME
+                if(self.realTime){
+                    
+                    // Current reservation ?
+                    NSString *reservationType = [CheckDAO checkCurrentReservationType:self.timeIndex1 duration:self.sliderValue room:room];
+                    
+                    // Current reservation = dsi
+                    if([reservationType isEqualToString:@"dsi"]){
+                        [room setMapState:@"red"];
+                    }
+                    // Current reservation = app
+                    else if([reservationType isEqualToString:@"app"]) {
+                        [room setMapState:@"blue"];
+                    }
+                    // No current reservation
+                    else if([reservationType isEqualToString:@"noreservation"]){
+                        [room setMapState:@"gree_boook_ok"];
+                    }
+                }
+                
+                // ROOMS APP-DSI + FUTURE
+                else if(!self.realTime){
+                    
+                    // Current reservation ?
+                    NSString *reservationType = [CheckDAO checkCurrentReservationType:self.timeIndex1 duration:self.sliderValue room:room];
+                    
+                    // Current reservation = dsi
+                    if([reservationType isEqualToString:@"dsi"]){
+                        [room setMapState:@"red"];
+                    }
+                    // Current reservation = app
+                    else if([reservationType isEqualToString:@"app"]) {
+                        [room setMapState:@"blue"];
+                    }
+                    // No current reservation
+                    else if([reservationType isEqualToString:@"noreservation"]) {
+                        [room setMapState:@"green_book_ok"];
+                    }
+                }
+            }
             
             break;
         case 3:
@@ -159,7 +257,6 @@
         default:
             break;
     }
-    
     
     [self updateMap];
 }
@@ -184,6 +281,8 @@
     
     MWZPlaceStyle* greenStyle = [[MWZPlaceStyle alloc] initWithStrokeColor:[UIColor bnpGreen] strokeWidth:@1 fillColor:[UIColor bnpGreenLight] labelBackgroundColor:nil markerUrl:nil];
     
+    MWZPlaceStyle* testStyle = [[MWZPlaceStyle alloc] initWithStrokeColor:[UIColor bnpPink] strokeWidth:@1 fillColor:[UIColor bnpPink] labelBackgroundColor:nil markerUrl:nil];
+    
     NSArray *listRooms = [DAO getObjects:@"Room" withPredicate:nil];
     for(Room *room in listRooms){
         
@@ -198,6 +297,9 @@
         }
         else if([room.mapState isEqualToString:@"red"]){
             [self.myMapView setStyle:redStyle forPlaceById:room.idMapwize];
+        }
+        else if([room.mapState isEqualToString:@"test"]){
+            [self.myMapView setStyle:testStyle forPlaceById:room.idMapwize];
         }
     }
 }
@@ -220,10 +322,8 @@
     myMapView.delegate = self;
     [myMapView loadMapWithOptions: options];
     
-    [myMapView fitBounds:[[MWZLatLonBounds alloc] initWithNorthEast:[[MWZLatLon alloc] initWithLatitude:@48.82633358744936 longitude:@2.259978353977203] southWest:[[MWZLatLon alloc] initWithLatitude:@48.8254489062897 longitude:@2.258988618850708]]];
-    
     [myMapView access: @"h14aEHT8O6OvxoNo"];
-    [myMapView centerOnCoordinates:@48.82594334079911 longitude:@2.259484827518463 floor:@5 zoom:@19];
+    [myMapView centerOnCoordinates:@48.82576 longitude:@2.25957 floor:@5 zoom:@21];
 }
 
 - (void)map:(MWZMapView*) map didClick:(MWZLatLon*) latlon {
@@ -319,6 +419,7 @@
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.465;
             container.frame = frame;
             self.stepForSwipe = 2;
+            [self decide:@"step 2"];
             break;
             
         case (2):
@@ -348,6 +449,7 @@
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.22;
             container.frame = frame;
             self.stepForSwipe = 1;
+            [self decide:@"step 1"];
             break;
             
         case (3):
@@ -357,7 +459,6 @@
             self.stepForSwipe = 2;
             self.myMapView.userInteractionEnabled = true;
             self.filtersON = [self.filterViewController filtersChanged];
-            [self decide:[NSString stringWithFormat:@"filtersOn ? : %d", self.filtersON]];
             [self shouldStartAsynchtaskSensors];
             break;
             
@@ -373,7 +474,7 @@
     if(!self.asynchtaskRunning){
         NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
         self.timer = [[NSTimer alloc] initWithFireDate: delay
-                                              interval: 60
+                                              interval: 15
                                                 target: self
                                               selector:@selector(checkSensors:)
                                               userInfo:nil repeats:YES];

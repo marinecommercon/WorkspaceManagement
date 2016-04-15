@@ -1,47 +1,40 @@
-[{"name":"Salle pitch",
- "idMapwize":"570673a46c46c00b0093bcd1",
- "maxPeople":4,
- "type":"app-dsi"
- ,"infoRoom":"Informations relatives à la salle de pitch",
- "mapState":"grey"},
- 
-{"name":"La fabrique à solutions",
- "idMapwize":"5703d7d5b247f50b00a07a21",
- "maxPeople":12,"type":"app-dsi",
- "infoRoom":"Informations relatives à la fabrique à solutions",
- "mapState":"grey"},
- 
-{"name":"Salle Delhi",
- "idMapwize":"56d5ca6dac5a950b003c89a5",
- "maxPeople":16,
- "type":"app-dsi",
- "infoRoom":"Informations relatives à la salle Delhi"
- ,"mapState":"grey"},
- 
-{"name":"Café de l'innovation",
- "idMapwize":"5703d81fb247f50b00a07a23",
- "maxPeople":6,
- "type":"free",
- "infoRoom":"Informations relatives au café de l'innovation",
- "mapState":"grey"},
- 
-{"name":"Often Space",
- "idMapwize":"5703d82fb247f50b00a07a25",
- "maxPeople":6,
- "type":"free",
- "infoRoom":"Informations relatives à l'often space"
- ,"mapState":"grey"},
- 
-{"name":"Bureau partagé",
- "idMapwize":"5703d772b247f50b00a07a1f",
- "maxPeople":6,
- "type":"app",
- "infoRoom":"Informations relatives au bureau partagé",
- "mapState":"grey"},
- 
-{"name":"Bureau partagé de Kevin",
- "idMapwize":"5703d723b247f50b00a07a1d",
- "maxPeople":6,
- "type":"app",
- "infoRoom":"Informations relatives au bureau partagé de Kevin",
- "mapState":"grey"}]
+ [{"name":"Salle de pitch",
+  "idMapwize":"570673a46c46c00b0093bcd1",
+  "maxPeople":4,
+  "type":"app-dsi"
+  ,"infoRoom":"Salle de réunion.",
+  "mapState":"grey"},
+  
+  {"name":"La fabrique à solutions",
+  "idMapwize":"5703d7d5b247f50b00a07a21",
+  "maxPeople":12,"type":"app-dsi",
+  "infoRoom":"Salle de créativité.",
+  "mapState":"grey"},
+  
+  {"name":"Salle Delhi",
+  "idMapwize":"56d5ca6dac5a950b003c89a5",
+  "maxPeople":16,
+  "type":"app-dsi",
+  "infoRoom":"Salle de réunion."
+  ,"mapState":"grey"},
+  
+  {"name":"Café de l'innovation",
+  "idMapwize":"5703d81fb247f50b00a07a23",
+  "maxPeople":6,
+  "type":"free",
+  "infoRoom":" Espace informel.",
+  "mapState":"grey"},
+  
+  {"name":"Often Space",
+  "idMapwize":"5703d82fb247f50b00a07a25",
+  "maxPeople":6,
+  "type":"free",
+  "infoRoom":"Espace de travail mutualisé."
+  ,"mapState":"grey"},
+  
+  {"name":"Bureau partagé de Kevin",
+  "idMapwize":"5703d772b247f50b00a07a1f",
+  "maxPeople":6,
+  "type":"app",
+  "infoRoom":"Espace de travail.",
+  "mapState":"grey"}]

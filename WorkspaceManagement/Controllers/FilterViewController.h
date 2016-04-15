@@ -22,7 +22,7 @@
 
 @property (nonatomic,strong)  NSMutableArray *schedulesArray;
 @property (nonatomic,strong)  NSDictionary *hoursDictionnary;
-@property NSInteger realTimePosition;
+@property int realTimePosition;
 
 @property (nonatomic, strong) IBOutlet iCarousel *carousel;
 @property (weak, nonatomic) IBOutlet UISlider *slider;
