@@ -52,9 +52,9 @@
 -(void) initNavbar {
     UIImage *left = [UIImage imageNamed:@"WSMImagesBtnExit"];
     UIImage *right = [UIImage imageNamed:@"DSIViewLibreImage"];
-    NavBarInstance *custom = [NavBarInstance sharedInstance];
-    [custom styleNavBar:self setTitle:@"PLANNING DSI" setLeftButton:left setRightButton:right];
-
+    self.navbar = [NavBarInstance sharedInstance];
+    [self.navbar styleNavBar:self setTitle:@"PLANNING DSI" setLeftButton:left setRightButton:right];
+    [self.navbar.buttonLeft setHidden:false];
 }
 
 - (void)navbarLeftButton {

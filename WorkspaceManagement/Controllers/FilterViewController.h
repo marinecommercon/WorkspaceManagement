@@ -48,11 +48,15 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *peopleLabel;
 
+@property (strong,nonatomic) NSMutableArray *roomsAppDsiFiltered;
+@property (strong,nonatomic) NSMutableArray *roomsFreeFiltered;
+@property (strong,nonatomic) NSMutableArray *roomsNotCorresponding;
 @property BOOL realTime;
 @property int  numberOfPeople;
 
 - (BOOL) filtersChanged;
 - (void) initState;
+- (void) updateFilteredLists;
 
 @end
 

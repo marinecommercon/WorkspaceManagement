@@ -16,7 +16,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [ModelDAO loadDatabase:true];
+    [ModelDAO loadDatabase:false];
     return YES;
 }
 

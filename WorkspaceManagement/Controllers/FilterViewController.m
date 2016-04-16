@@ -47,12 +47,13 @@
     
     asynchtaskRunning = false;
     
-    // INIT STATE = 1 = NOT SELECTED
-    self.numberOfPeople = 1;
-    
     //[self shouldStartAsynchtaskCarousel];
+    [self initState];
     [self initSlider];
     [self initCarousel];
+    self.roomsAppDsiFiltered   = [[NSMutableArray alloc] init];
+    self.roomsFreeFiltered     = [[NSMutableArray alloc] init];
+    self.roomsNotCorresponding = [[NSMutableArray alloc] init];
     
     // Init the filters
     [self updatePeopleLabel];
@@ -245,11 +246,33 @@
             return false;
         }
     }
-    
     if([room.maxPeople intValue] >= (int)self.numberOfPeople){
         return true;
     } else {
         return false;
+    }
+}
+
+- (void) updateFilteredLists:(NSArray*)equipmentList {
+    NSPredicate *predicate;
+    [self.roomsFreeFiltered     removeAllObjects];
+    [self.roomsAppDsiFiltered   removeAllObjects];
+    [self.roomsNotCorresponding removeAllObjects];
+    
+    predicate = nil;
+    NSArray *rooms = [DAO getObjects:@"Room" withPredicate:predicate];
+    for (Room *room in rooms){
+        if([self room:room hasEquipments:equipmentList]){
+            if([room.type isEqualToString:@"free"]){
+                [self.roomsFreeFiltered addObject:room];
+            }
+            else {
+                [self.roomsAppDsiFiltered addObject:room];
+            }
+        }
+        else {
+            [self.roomsNotCorresponding addObject:room];
+        }
     }
 }
 
@@ -549,17 +572,19 @@
     }
     // Changes have been detected
     else {
+        [self updateFilteredLists:equipmentList];
         return true;
     }
 }
 
 - (void) initState {
-    self.numberOfPeople = 1;
+    self.stepper.value   = 1;
+    self.numberOfPeople  = 1;
     [self updatePeopleLabel];
-    self.slider.value   = 1;
+    
     NSArray *equipmentList = [DAO getObjects:@"Equipment" withPredicate:nil];
     for(Equipment *equipment in equipmentList){
-        [equipment setFilterState:0];
+        [equipment setFilterState:@(1)];
     }
     [self.retroButton setBackgroundColor:nil];
     [self.screenButton setBackgroundColor:nil];

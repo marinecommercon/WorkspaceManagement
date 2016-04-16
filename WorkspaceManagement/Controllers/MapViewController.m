@@ -25,9 +25,10 @@
     self.asynchtaskRunning = false;
     
     // INIT PARAMS FOR DECISION
-    self.realTime    = true;
-    self.filtersON   = false;
-    self.sliderValue = 1;
+    self.realTime     = true;
+    self.filtersON    = false;
+    self.sliderValue  = 1;
+    self.stepForSwipe = 1;
     
     [self initMapWize];
     [self initContainerSwipeGesture];
@@ -39,9 +40,8 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
-    self.stepForSwipe = 1;
-    [self shouldStartAsynchtaskSensors];
-    [self getMapStates];
+    
+    [self initNavbar];
     
     if(self.filterViewController == nil){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
@@ -52,7 +52,14 @@
         [self.container addSubview:self.filterViewController.view];
         [self.filterViewController didMoveToParentViewController:self];
     }
-    [self initNavbar];
+    
+    [self shouldStartAsynchtaskSensors];
+    [self getMapStates];
+    [self decide];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    self.stepForSwipe = 1;
 }
 
 - (void) getMapStates {
@@ -80,26 +87,36 @@
             break;
     }
     
-    [self decide:@"caroussel"];
+    [self decide];
 }
 
 - (void) didChangeSlider:(int)sliderValue {
     self.sliderValue = sliderValue;
-    [self decide:[NSString stringWithFormat:@"slider : %d ", self.sliderValue]];
+    [self decide];
 }
 
-- (void) decide:(NSString*)keyword{
+- (void) decide {
     
+    // INIT ROOMS
     NSPredicate *predicateAppDsi = [NSPredicate predicateWithFormat:@"type != %@", @"free"];
-    NSArray *roomsAppDsi = [DAO getObjects:@"Room" withPredicate:predicateAppDsi];
+    self.roomsAppDsi = [DAO getObjects:@"Room" withPredicate:predicateAppDsi];
     NSPredicate *predicateFree = [NSPredicate predicateWithFormat:@"type == %@", @"free"];
-    NSArray *roomsFree = [DAO getObjects:@"Room" withPredicate:predicateFree];
+    self.roomsFree = [DAO getObjects:@"Room" withPredicate:predicateFree];
+    
+    if(self.filtersON){
+        [self.navbar.buttonLeft setHidden:false];
+        self.roomsAppDsi = self.filterViewController.roomsAppDsiFiltered;
+        self.roomsFree   = self.filterViewController.roomsFreeFiltered;
+        for(Room *room in self.filterViewController.roomsNotCorresponding){
+            [room setMapState:@"grey"];
+        }
+    }
     
     // If main map view
     switch (self.stepForSwipe) {
         case 0 || 1:
             // ROOMS FREE
-            for(Room *room in roomsFree){
+            for(Room *room in self.roomsFree){
                 
                 // ROOMS FREE + REALTIME
                 if(self.realTime){
@@ -120,7 +137,7 @@
             }
             
             // ROOMS APP-DSI
-            for(Room *room in roomsAppDsi){
+            for(Room *room in self.roomsAppDsi){
                 
                 // ROOMS APP-DSI + REALTIME
                 if(self.realTime){
@@ -136,28 +153,32 @@
                     else if([reservationType isEqualToString:@"app"]) {
                         [room setMapState:@"blue"];
                     }
+                    // Current reservation is impossible because too late
+                    else if([reservationType isEqualToString:@"impossible"]) {
+                        [room setMapState:@"green_book_ko"];
+                    }
                     // No current reservation
                     else if([reservationType isEqualToString:@"noreservation"]){
                         
-                        // Next reservation ?
+                        // No current reservation and next reservation ?
                         NSString *nextReservationType = [CheckDAO checkNextReservationType:self.timeIndex2 room:room];
                         
-                        // Next reservation = dsi
+                        // No current reservation and next reservation = dsi
                         if([nextReservationType isEqualToString:@"dsi"]){
                             [room setMapState:@"green_book_ko"];
                         }
-                        // Next reservation = app
+                        // No current reservation and next reservation = app
                         else if([nextReservationType isEqualToString:@"app"]) {
                             [room setMapState:@"blue"];
                         }
-                        // No next reservation
+                        // No current reservation and next reservation is impossible because too late
+                        else if([nextReservationType isEqualToString:@"impossible"]) {
+                            [room setMapState:@"green_book_ko"];
+                        }
+                        // No current reservation and no next reservation
                         else if([nextReservationType isEqualToString:@"noreservation"]) {
                             [room setMapState:@"green_book_ok"];
                         }
-                    }
-                    // No current reservation and no next reservation
-                    else {
-                        [room setMapState:@"green_book_ok"];
                     }
                 }
                 
@@ -169,11 +190,15 @@
                     
                     // Current reservation = dsi
                     if([reservationType isEqualToString:@"dsi"]){
-                        [room setMapState:@"test"];
+                        [room setMapState:@"red"];
                     }
                     // Current reservation = app
                     else if([reservationType isEqualToString:@"app"]) {
                         [room setMapState:@"blue"];
+                    }
+                    // Current reservation is impossible because too late
+                    else if([reservationType isEqualToString:@"impossible"]) {
+                        [room setMapState:@"green_book_ko"];
                     }
                     // No current reservation
                     else if([reservationType isEqualToString:@"noreservation"]) {
@@ -185,7 +210,7 @@
             
         case 2:
             // ROOMS FREE
-            for(Room *room in roomsFree){
+            for(Room *room in self.roomsFree){
                 
                 // ROOMS FREE + REALTIME
                 if(self.realTime){
@@ -206,7 +231,7 @@
             }
             
             // ROOMS APP-DSI
-            for(Room *room in roomsAppDsi){
+            for(Room *room in self.roomsAppDsi){
                 
                 // ROOMS APP-DSI + REALTIME
                 if(self.realTime){
@@ -222,9 +247,13 @@
                     else if([reservationType isEqualToString:@"app"]) {
                         [room setMapState:@"blue"];
                     }
+                    // Current reservation is impossible because too late
+                    else if([reservationType isEqualToString:@"impossible"]) {
+                        [room setMapState:@"green_book_ko"];
+                    }
                     // No current reservation
                     else if([reservationType isEqualToString:@"noreservation"]){
-                        [room setMapState:@"gree_boook_ok"];
+                        [room setMapState:@"green_book_ok"];
                     }
                 }
                 
@@ -242,16 +271,16 @@
                     else if([reservationType isEqualToString:@"app"]) {
                         [room setMapState:@"blue"];
                     }
+                    // Current reservation is impossible because too late
+                    else if([reservationType isEqualToString:@"impossible"]) {
+                        [room setMapState:@"green_book_ko"];
+                    }
                     // No current reservation
                     else if([reservationType isEqualToString:@"noreservation"]) {
                         [room setMapState:@"green_book_ok"];
                     }
                 }
             }
-            
-            break;
-        case 3:
-            
             break;
             
         default:
@@ -265,7 +294,7 @@
 
 - (void)finishCheckWithUpdate:(BOOL)updateNeeded {
     if(updateNeeded){
-        [self decide:@"sensors"];
+        [self decide];
     }
     self.finishedSensorUpdate = true;
 }
@@ -381,7 +410,7 @@
 - (void )map:(MWZMapView*) map didClickLong: (MWZLatLon*) latlon {
     if(self.filtersON){
         self.filtersON = false;
-        [self decide:[NSString stringWithFormat:@"filtersOn ? : %d", self.filtersON]];
+        [self decide];
         [self.filterViewController initState];
     }
 }
@@ -419,7 +448,8 @@
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.465;
             container.frame = frame;
             self.stepForSwipe = 2;
-            [self decide:@"step 2"];
+            
+            [self decide];
             break;
             
         case (2):
@@ -429,6 +459,7 @@
             self.stepForSwipe = 3;
             self.myMapView.userInteractionEnabled = false;
             [self shouldStopAsynchtaskSensors];
+            
             break;
             
         default:
@@ -449,7 +480,8 @@
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.22;
             container.frame = frame;
             self.stepForSwipe = 1;
-            [self decide:@"step 1"];
+            
+            [self decide];
             break;
             
         case (3):
@@ -460,6 +492,8 @@
             self.myMapView.userInteractionEnabled = true;
             self.filtersON = [self.filterViewController filtersChanged];
             [self shouldStartAsynchtaskSensors];
+            
+            [self decide];
             break;
             
         default:
@@ -506,12 +540,15 @@
 - (void)initNavbar {
     UIImage *right = [UIImage imageNamed:@"WSMImagesBtnHelp"];
     UIImage *left = [UIImage imageNamed:@"WSMImagesBtnReload"];
-    NavBarInstance *custom = [NavBarInstance sharedInstance];
-    [custom styleNavBar:self setTitle:@"SÉLECTIONNER UN ESPACE" setLeftButton:left setRightButton:right];
+    self.navbar = [NavBarInstance sharedInstance];
+    [self.navbar styleNavBar:self setTitle:@"SÉLECTIONNER UN ESPACE" setLeftButton:left setRightButton:right];
 }
 
 - (void)navbarLeftButton {
-    NSLog(@"Left");
+    self.filtersON = false;
+    [self.navbar.buttonLeft setHidden:true];
+    [self.filterViewController initState];
+    [self decide];
 }
 
 - (void)navbarRightButton {

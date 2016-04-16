@@ -22,6 +22,10 @@
 
 @property (strong, nonatomic) PopupDetailViewController *popupDetailViewController;
 @property (strong,nonatomic) FilterViewController *filterViewController;
+@property (strong,nonatomic) NavBarInstance *navbar;
+
+@property (strong,nonatomic) NSArray *roomsAppDsi;
+@property (strong,nonatomic) NSArray *roomsFree;
 
 @property (strong, nonatomic)CLLocationManager* locationManager;
 @property (strong, nonatomic) IBOutlet UIView *container;

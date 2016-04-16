@@ -91,7 +91,14 @@
 }
 
 + (NSString*)checkCurrentReservationType:(NSString*)currentTime room:(Room*)room {
-    NSDate *currentDate         = [Utils parseTimeToDate:currentTime];
+    NSString *limitTime = @"21:00";
+    NSDate *limitDate   = [Utils parseTimeToDate:limitTime];
+    
+    NSDate *currentDate = [Utils parseTimeToDate:currentTime];
+    if( [currentDate timeIntervalSinceDate:limitDate] >= 0){
+    return @"impossible";
+    }
+    
     NSDate *dateOneMinuteMore   = [currentDate dateByAddingTimeInterval:(60)];
     NSString *timeOneMinuteMore = [Utils parseDateToTime:dateOneMinuteMore];
     NSString *type = [self checkReservationTypeIfExist:currentTime withEnd:timeOneMinuteMore forRoom:room];
@@ -99,16 +106,38 @@
 }
 
 + (NSString*)checkCurrentReservationType:(NSString*)currentTime duration:(int)sliderValue room:(Room*)room {
-    NSDate *currentDate         = [Utils parseTimeToDate:currentTime];
-    NSDate *dateOneMinuteMore   = [currentDate dateByAddingTimeInterval:(sliderValue*30*60)];
-    NSString *timeOneMinuteMore = [Utils parseDateToTime:dateOneMinuteMore];
-    NSString *type = [self checkReservationTypeIfExist:currentTime withEnd:timeOneMinuteMore forRoom:room];
+    NSString *limitUpTime   = @"21:00";
+    NSString *limitDownTime = @"07:30";
+    NSDate   *limitUpDate   = [Utils parseTimeToDate:limitUpTime];
+    NSDate   *limitDownDate = [Utils parseTimeToDate:limitDownTime];
+    
+    NSDate   *currentDate   = [Utils parseTimeToDate:currentTime];
+    if([limitDownDate timeIntervalSinceDate:currentDate] > 0){
+        currentTime = @"07:30";
+        currentDate = limitDownDate;
+    }
+
+    NSDate   *dateDeltaMore = [currentDate dateByAddingTimeInterval:(sliderValue*30*60)];
+    if( [dateDeltaMore timeIntervalSinceDate:limitUpDate] >= 0){
+        return @"impossible";
+    }
+    
+    NSString *timeDeltaMore = [Utils parseDateToTime:dateDeltaMore];
+    NSString *type = [self checkReservationTypeIfExist:currentTime withEnd:timeDeltaMore forRoom:room];
     return type;
 }
 
 + (NSString*)checkNextReservationType:(NSString*)nextHalfHour room:(Room*)room {
-    NSDate *nextHalfHourDate       = [Utils parseTimeToDate:nextHalfHour];
-    NSDate *dateThirtyMinuteMore   = [nextHalfHourDate dateByAddingTimeInterval:(30*60)];
+    NSString *limitUpTime   = @"21:00";
+    NSDate   *limitUpDate   = [Utils parseTimeToDate:limitUpTime];
+    
+    NSDate *nextHalfHourDate = [Utils parseTimeToDate:nextHalfHour];
+    if([nextHalfHourDate timeIntervalSinceDate:limitUpDate] >= 0){
+        return @"impossible";
+    }
+    
+    
+    NSDate   *dateThirtyMinuteMore = [nextHalfHourDate dateByAddingTimeInterval:(30*60)];
     NSString *timeThirtyMinuteMore = [Utils parseDateToTime:dateThirtyMinuteMore];
     NSString *type = [self checkReservationTypeIfExist:nextHalfHour withEnd:timeThirtyMinuteMore forRoom:room];
     return type;
