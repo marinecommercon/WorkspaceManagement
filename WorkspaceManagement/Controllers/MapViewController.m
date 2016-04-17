@@ -41,7 +41,10 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     
-    [self initNavbar];
+    if(self.navbar == nil){
+        [self initNavbar];
+    }
+    
     
     if(self.filterViewController == nil){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
@@ -145,13 +148,21 @@
                     // Current reservation ?
                     NSString *reservationType = [CheckDAO checkCurrentReservationType:self.timeIndex1 room:room];
                     
-                    // Current reservation = dsi
-                    if([reservationType isEqualToString:@"dsi"]){
+                    // Current reservation = dsi and filters off
+                    if([reservationType isEqualToString:@"dsi"] && !self.filtersON){
                         [room setMapState:@"red"];
                     }
-                    // Current reservation = app
-                    else if([reservationType isEqualToString:@"app"]) {
+                    // Current reservation = dsi and filters on
+                    if([reservationType isEqualToString:@"dsi"] && self.filtersON){
+                        [room setMapState:@"grey"];
+                    }
+                    // Current reservation = app and filters off
+                    else if([reservationType isEqualToString:@"app"] && !self.filtersON) {
                         [room setMapState:@"blue"];
+                    }
+                    // Current reservation = app and filters on
+                    else if([reservationType isEqualToString:@"app"] && self.filtersON) {
+                        [room setMapState:@"grey"];
                     }
                     // Current reservation is impossible because too late
                     else if([reservationType isEqualToString:@"impossible"]) {
@@ -188,13 +199,21 @@
                     // Current reservation ?
                     NSString *reservationType = [CheckDAO checkCurrentReservationType:self.timeIndex1 room:room];
                     
-                    // Current reservation = dsi
-                    if([reservationType isEqualToString:@"dsi"]){
+                    // Current reservation = dsi and filters off
+                    if([reservationType isEqualToString:@"dsi"] && !self.filtersON){
                         [room setMapState:@"red"];
                     }
+                    // Current reservation = dsi and filters on
+                    if([reservationType isEqualToString:@"dsi"] && self.filtersON){
+                        [room setMapState:@"grey"];
+                    }
                     // Current reservation = app
-                    else if([reservationType isEqualToString:@"app"]) {
+                    else if([reservationType isEqualToString:@"app"] && !self.filtersON) {
                         [room setMapState:@"blue"];
+                    }
+                    // Current reservation = app and filters on
+                    if([reservationType isEqualToString:@"app"] && self.filtersON){
+                        [room setMapState:@"grey"];
                     }
                     // Current reservation is impossible because too late
                     else if([reservationType isEqualToString:@"impossible"]) {
@@ -239,13 +258,21 @@
                     // Current reservation ?
                     NSString *reservationType = [CheckDAO checkCurrentReservationType:self.timeIndex1 duration:self.sliderValue room:room];
                     
-                    // Current reservation = dsi
-                    if([reservationType isEqualToString:@"dsi"]){
+                    // Current reservation = dsi and filters off
+                    if([reservationType isEqualToString:@"dsi"]  && !self.filtersON){
                         [room setMapState:@"red"];
                     }
-                    // Current reservation = app
-                    else if([reservationType isEqualToString:@"app"]) {
+                    // Current reservation = dsi and filters on
+                    else if([reservationType isEqualToString:@"dsi"] && self.filtersON) {
+                        [room setMapState:@"grey"];
+                    }
+                    // Current reservation = app and filters off
+                    else if([reservationType isEqualToString:@"app"] && !self.filtersON) {
                         [room setMapState:@"blue"];
+                    }
+                    // Current reservation = app and filters on
+                    else if([reservationType isEqualToString:@"app"] && self.filtersON) {
+                        [room setMapState:@"grey"];
                     }
                     // Current reservation is impossible because too late
                     else if([reservationType isEqualToString:@"impossible"]) {
@@ -263,9 +290,13 @@
                     // Current reservation ?
                     NSString *reservationType = [CheckDAO checkCurrentReservationType:self.timeIndex1 duration:self.sliderValue room:room];
                     
-                    // Current reservation = dsi
-                    if([reservationType isEqualToString:@"dsi"]){
+                    // Current reservation = dsi and filters off
+                    if([reservationType isEqualToString:@"dsi"] && !self.filtersON){
                         [room setMapState:@"red"];
+                    }
+                    // Current reservation = dsi and filters on
+                    else if([reservationType isEqualToString:@"dsi"] && self.filtersON) {
+                        [room setMapState:@"grey"];
                     }
                     // Current reservation = app
                     else if([reservationType isEqualToString:@"app"]) {
@@ -448,7 +479,7 @@
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.465;
             container.frame = frame;
             self.stepForSwipe = 2;
-            
+            self.filterViewController.stepForSwipe = 2;
             [self decide];
             break;
             
@@ -457,6 +488,7 @@
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 6.35;
             container.frame = frame;
             self.stepForSwipe = 3;
+            self.filterViewController.stepForSwipe = 3;
             self.myMapView.userInteractionEnabled = false;
             [self shouldStopAsynchtaskSensors];
             
@@ -480,7 +512,7 @@
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.22;
             container.frame = frame;
             self.stepForSwipe = 1;
-            
+            self.filterViewController.stepForSwipe = 1;
             [self decide];
             break;
             
@@ -489,10 +521,10 @@
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.465;
             container.frame = frame;
             self.stepForSwipe = 2;
+            self.filterViewController.stepForSwipe = 2;
             self.myMapView.userInteractionEnabled = true;
             self.filtersON = [self.filterViewController filtersChanged];
             [self shouldStartAsynchtaskSensors];
-            
             [self decide];
             break;
             

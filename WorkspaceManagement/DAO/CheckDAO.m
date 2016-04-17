@@ -118,7 +118,7 @@
     }
 
     NSDate   *dateDeltaMore = [currentDate dateByAddingTimeInterval:(sliderValue*30*60)];
-    if( [dateDeltaMore timeIntervalSinceDate:limitUpDate] >= 0){
+    if( [dateDeltaMore timeIntervalSinceDate:limitUpDate] > 0){
         return @"impossible";
     }
     
