@@ -30,12 +30,7 @@
 - (void)buttonReservation
 {
     NSLog(@"Reservation");
-    [self.delegate didClickOnReservation];
-    
-    
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    ReservationViewController *viewController = (ReservationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ReservationViewController"];
-//    [self presentViewController:viewController animated:NO completion:nil];
+    [self.delegate didClickOnReservation:self.room];
 }
 
 
@@ -46,6 +41,8 @@
 
 - (void) setInfos:(Room*)room {
     [super viewDidLoad];
+    
+    self.room = room;
     
     // Do any additional setup after loading the view.
     self.view.layer.borderWidth = 3;

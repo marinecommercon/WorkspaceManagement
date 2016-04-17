@@ -446,24 +446,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTb-yc-OCy">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="VALIDER MA RESERVATION"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="80" y="379" width="240" height="40"/>
-                                </variation>
-                                <connections>
-                                    <action selector="validate:" destination="TcC-gD-U7l" eventType="touchUpInside" id="KY9-IG-u7b"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mbV-uN-hJ4" userLabel="ViewSlider">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <subviews>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="tuW-bz-mo5">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="tuW-bz-mo5">
                                         <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
                                     </slider>
                                 </subviews>
-                                <color key="backgroundColor" red="0.50196081400000003" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="tuW-bz-mo5" firstAttribute="centerX" secondItem="mbV-uN-hJ4" secondAttribute="centerX" id="0jF-Kx-Vxu"/>
                                     <constraint firstItem="tuW-bz-mo5" firstAttribute="height" secondItem="mbV-uN-hJ4" secondAttribute="height" multiplier="0.3" id="Zl0-ah-tP6"/>
@@ -500,20 +489,14 @@
                                         <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
-                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                            <rect key="frame" x="19" y="16" width="320" height="32"/>
-                                        </variation>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NLq-FT-v8Y">
                                         <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
-                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                            <rect key="frame" x="19" y="67" width="320" height="31.5"/>
-                                        </variation>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="NLq-FT-v8Y" firstAttribute="height" secondItem="hxO-fm-1pN" secondAttribute="height" id="3Kl-t5-Lg2"/>
                                     <constraint firstItem="hxO-fm-1pN" firstAttribute="centerY" secondItem="Q0w-O7-zcY" secondAttribute="centerY" multiplier="0.5" id="3r8-YN-FzI"/>
@@ -542,8 +525,7 @@
                                         <exclude reference="n6Q-re-Lja"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="191" width="400" height="128"/>
+                                <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="subviews">
                                         <include reference="hxO-fm-1pN"/>
                                         <include reference="NLq-FT-v8Y"/>
@@ -560,6 +542,13 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTb-yc-OCy">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="VALIDER MA RESERVATION"/>
+                                <connections>
+                                    <action selector="validate:" destination="TcC-gD-U7l" eventType="touchUpInside" id="KY9-IG-u7b"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -578,9 +567,9 @@
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="MTb-yc-OCy"/>
                                 <exclude reference="mbV-uN-hJ4"/>
                                 <exclude reference="Q0w-O7-zcY"/>
+                                <exclude reference="MTb-yc-OCy"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="7GX-YT-KKy"/>
@@ -599,9 +588,9 @@
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
-                                <include reference="MTb-yc-OCy"/>
                                 <include reference="mbV-uN-hJ4"/>
                                 <include reference="Q0w-O7-zcY"/>
+                                <include reference="MTb-yc-OCy"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="7GX-YT-KKy"/>
@@ -621,10 +610,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="woE-08-gpU"/>
                     <connections>
-                        <outlet property="TextFieldNameReunion" destination="NLq-FT-v8Y" id="yu5-Nu-kNK"/>
-                        <outlet property="TextFieldNom" destination="hxO-fm-1pN" id="gh1-P9-nB9"/>
                         <outlet property="slider" destination="tuW-bz-mo5" id="dBh-dv-uZD"/>
+                        <outlet property="textFieldAuthor" destination="hxO-fm-1pN" id="RF0-b0-MjL"/>
+                        <outlet property="textFieldSubject" destination="NLq-FT-v8Y" id="u3t-4S-ZL0"/>
                         <outlet property="viewSlider" destination="mbV-uN-hJ4" id="kad-wU-PSr"/>
+                        <segue destination="gVp-UF-Xt0" kind="show" identifier="ValidationViewController" id="NMq-1P-jVW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VI3-Md-1Mi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -669,7 +659,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="So1-GC-dTx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2007" y="1048.5"/>
+            <point key="canvasLocation" x="1899" y="1145.25"/>
         </scene>
         <!--Find Room View Controller-->
         <scene sceneID="3Ca-Rw-ct3">

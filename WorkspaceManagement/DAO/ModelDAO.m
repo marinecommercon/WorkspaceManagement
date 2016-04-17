@@ -72,6 +72,33 @@
     return sensorsId;
 }
 
++ (NSString*)getReservationType:(NSString*)beginTime {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"beginTime == %@", beginTime];
+    Reservation * reservation = (Reservation *)[DAO getObject:@"Reservation" withPredicate:predicate];
+    return reservation.type;
+}
+
++ (Reservation*)getCorrespondingReservation:(NSString*)beginTime room: (Room*)room {
+    NSArray *sortedReservationArray = [Utils sortReservationsOfRoom:room.reservations];
+    NSDate  *beginDate              = [Utils parseTimeToDate:beginTime];
+    NSDate  *endDate                = [beginDate dateByAddingTimeInterval:(30*60)];;
+    
+    // There must be at least one reservation
+    if(sortedReservationArray.count != 0){
+        for(Reservation *reservation in sortedReservationArray){
+            NSDate *resaBegin = [Utils parseTimeToDate:reservation.beginTime];
+            NSDate *resaEnd   = [Utils parseTimeToDate:reservation.endTime];
+            
+            // Case : my wish is before the beginning of the reservation
+            if([beginDate timeIntervalSinceDate:resaBegin] >=0 && [resaEnd timeIntervalSinceDate:endDate] >=0){
+                return reservation;
+            }
+        }
+    }
+    return nil;
+}
+
+
 // ADD
 
 + (void)addRoomWithName:(NSString*)name IdMapwize:(NSString*)idMapwize {
@@ -86,6 +113,17 @@
     [reservationTemp setBeginTime:begin];
     [reservationTemp setEndTime:end];
     [reservationTemp setType:type];
+    [room addReservationsObject:reservationTemp];
+    [DAO saveContext];
+}
+
++ (void)addReservationApp:(NSString*)begin end:(NSString*)end room:(Room*)room author:(NSString*)author subject:(NSString*)subject {
+    Reservation* reservationTemp = (Reservation*)[DAO getInstance:@"Reservation"];
+    [reservationTemp setBeginTime:begin];
+    [reservationTemp setEndTime:end];
+    [reservationTemp setType:@"app-initial"];
+    [reservationTemp setAuthor:author];
+    [reservationTemp setSubject:subject];
     [room addReservationsObject:reservationTemp];
     [DAO saveContext];
 }

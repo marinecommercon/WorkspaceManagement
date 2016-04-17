@@ -13,6 +13,8 @@
 @dynamic beginTime;
 @dynamic endTime;
 @dynamic type;
+@dynamic author;
+@dynamic subject;
 @dynamic room;
 
 @end

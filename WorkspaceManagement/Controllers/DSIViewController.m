@@ -159,10 +159,28 @@
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewLibreImage.png"]];
             cell.label.textColor = [UIColor bnpBlue];
         } else {
-            cellDetails[indexPath.row] = @[@"busy",@"notChanged"];
+            NSString *type;
+            
+            // Get the corresponding reservation if exist
+            Reservation *reservation = [ModelDAO getCorrespondingReservation:beginString room:roomSelected];
+            if(reservation != nil) {
+                type = reservation.type;
+            }
+            
+            if([type isEqualToString:@"app-initial"]){
+                [cell.imageState1 setBackgroundColor:[UIColor orangeColor]];
+                cellDetails[indexPath.row] = @[@"busy-initial",@"notChanged"];
+            }
+            else if([type isEqualToString:@"app-confirmed"]){
+                [cell.imageState1 setBackgroundColor:[UIColor redColor]];
+                cellDetails[indexPath.row] = @[@"busy-confirmed",@"notChanged"];
+            }
+            else if([type isEqualToString:@"dsi"]){
+                [cell.imageState1 setBackgroundColor:[UIColor bnpBlue]];
+                cellDetails[indexPath.row] = @[@"busy-dsi",@"notChanged"];
+            }
             cell.label.text = @"Occupé";
             [cell setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-            [cell.imageState1 setBackgroundColor:[UIColor bnpBlue]];
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewOccupeImage.png"]];
             cell.label.textColor = [UIColor bnpBlue];
         }
@@ -178,10 +196,17 @@
             cell.label.textColor = [UIColor bnpBlue];
         }
         
-        else if([state isEqualToString:@"busy"]){
+        else if([state isEqualToString:@"busy-dsi"]){
             cell.label.text = @"Occupé";
             [cell setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
             [cell.imageState1 setBackgroundColor:[UIColor bnpBlue]];
+            [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewOccupeImage.png"]];
+            cell.label.textColor = [UIColor bnpGrey];
+        }
+        else if([state isEqualToString:@"busy-confirmed"]){
+            cell.label.text = @"Occupé";
+            [cell setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+            [cell.imageState1 setBackgroundColor:[UIColor redColor]];
             [cell.imageState2 setImage:[UIImage imageNamed:@"DSIViewOccupeImage.png"]];
             cell.label.textColor = [UIColor bnpGrey];
         }
@@ -204,10 +229,13 @@
     
     // Change value of state
     if([state isEqualToString:@"free"]){
-        cellDetails[indexPath.row] = @[@"busy",@"changed"];
+        cellDetails[indexPath.row] = @[@"busy-dsi",@"changed"];
     }
-    else {
+    else if([state isEqualToString:@"busy-dsi"] || [state isEqualToString:@"busy-confirmed"]){
         cellDetails[indexPath.row] = @[@"free",@"changed"];
+    }
+    else if([state isEqualToString:@"busy-initial"]){
+        cellDetails[indexPath.row] = @[@"busy-confirmed",@"changed"];
     }
     [_tableView reloadData];
     
@@ -216,10 +244,20 @@
 - (IBAction)saveButton:(id)sender {
     [ModelDAO deleteReservationsFromRoom:roomSelected];
     for(int i=0; i<[cellDetails count]; i++){
-        if ([cellDetails[i][0] isEqualToString:@"busy"]) {
+        if ([cellDetails[i][0] isEqualToString:@"busy-dsi"]) {
             NSString *begin = [self.schedulesArray objectAtIndex:i];
             NSString *end = [self.schedulesArray objectAtIndex:i+1];
             [ModelDAO addReservation:begin end:end room:roomSelected type:@"dsi"];
+        }
+        else if ([cellDetails[i][0] isEqualToString:@"busy-initial"]) {
+            NSString *begin = [self.schedulesArray objectAtIndex:i];
+            NSString *end   = [self.schedulesArray objectAtIndex:i+1];
+            [ModelDAO addReservation:begin end:end room:roomSelected type:@"app-initial"];
+        }
+        else if ([cellDetails[i][0] isEqualToString:@"busy-confirmed"]) {
+            NSString *begin = [self.schedulesArray objectAtIndex:i];
+            NSString *end   = [self.schedulesArray objectAtIndex:i+1];
+            [ModelDAO addReservation:begin end:end room:roomSelected type:@"app-confirmed"];
         }
     }
 }

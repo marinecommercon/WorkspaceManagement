@@ -20,7 +20,7 @@
 + (NavBarInstance *) sharedInstance;
 
 - (void)styleNavBar:(UIViewController*)view setTitle:(NSString *)title setLeftButton:(UIImage *)leftButton setRightButton:(UIImage*)rightButton;
-- (void)setNavBarTitle:(NSString*)title;
+- (void) setNavBarTitle:(NSString*)title;
 - (void) setButtonImageLeft:(UIImage*)leftImage;
 - (void) setButtonImageRight:(UIImage*)rightImage;
 

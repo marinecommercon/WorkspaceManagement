@@ -26,7 +26,7 @@
 
 + (NSString*)checkNextReservationType:(NSString*)nextHalfHour room:(Room*)room;
 
-+ (int)getPossibleDurationForBeginTime:(NSString*)beginTime withRoom: (Room*)room;
++ (int)getMaxDuration:(NSString*)beginTime room: (Room*)room;
 
 + (double)getMaxDurationForBeginTime:(NSString*)beginTime;
 

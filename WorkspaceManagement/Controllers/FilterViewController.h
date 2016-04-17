@@ -58,7 +58,7 @@
 
 - (BOOL) filtersChanged;
 - (void) initState;
-- (void) updateFilteredLists;
+- (void) updateFilteredLists:(NSArray*)equipmentList;
 
 
 @end

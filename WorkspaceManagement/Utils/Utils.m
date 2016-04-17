@@ -34,9 +34,8 @@
     return dateString;
 }
 
-+ (NSArray*)sortReservationsOfRoom:(Room*)room {
-    
-    NSSet<Reservation *> *reservations = room.reservations;
++ (NSArray*)sortReservationsOfRoom:(NSSet*)reservations {
+
     NSSortDescriptor *dateDescriptor = [NSSortDescriptor
                                         sortDescriptorWithKey:@"beginTime"
                                         ascending:YES];

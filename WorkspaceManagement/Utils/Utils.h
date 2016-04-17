@@ -18,7 +18,7 @@
 
 + (NSString*)parseDateToTime:(NSDate*)date;
 
-+ (NSArray*)sortReservationsOfRoom:(Room*)room;
++ (NSArray*)sortReservationsOfRoom:(NSSet*)reservations;
 
 + (NSDictionary*)generateHoursForCaroussel:(NSString*)currentTime;
 

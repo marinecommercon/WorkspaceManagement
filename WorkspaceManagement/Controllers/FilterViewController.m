@@ -19,15 +19,6 @@
 
 @implementation FilterViewController
 
-@synthesize carousel;
-@synthesize slider;
-@synthesize viewSlider;
-@synthesize viewDate;
-@synthesize viewNbrPeople;
-@synthesize viewRoomItems;
-@synthesize viewSearch;
-@synthesize textFieldSearch;
-
 - (void)awakeFromNib
 {
     
@@ -36,8 +27,8 @@
 
 - (void)dealloc
 {
-    carousel.delegate = nil;
-    carousel.dataSource = nil;
+    self.carousel.delegate = nil;
+    self.carousel.dataSource = nil;
 }
 
 - (void)viewDidLoad
@@ -305,11 +296,12 @@
 
 - (void) initSlider {
     NSInteger numberOfSteps = 8;
-    slider.maximumValue = numberOfSteps;
-    slider.minimumValue = 0;
-    slider.continuous   = YES;
+    self.slider.maximumValue = numberOfSteps;
+    self.slider.minimumValue = 0;
+    self.slider.value = 1;
+    self.slider.continuous   = YES;
     
-    [slider addTarget:self
+    [self.slider addTarget:self
                action:@selector(valueChanged:)
      forControlEvents:UIControlEventValueChanged];
     
@@ -321,8 +313,8 @@
     UIImage *sliderMinTrackImage = [UIImage imageNamed: @"Maxtrackimage.png"];
     UIImage *sliderMaxTrackImage = [UIImage imageNamed: @"Mintrackimage.png"];
     
-    [slider setMinimumTrackImage:sliderMinTrackImage forState:UIControlStateNormal];
-    [slider setMaximumTrackImage:sliderMaxTrackImage forState:UIControlStateNormal];
+    [self.slider setMinimumTrackImage:sliderMinTrackImage forState:UIControlStateNormal];
+    [self.slider setMaximumTrackImage:sliderMaxTrackImage forState:UIControlStateNormal];
     
     [self.viewSlider addGestureRecognizer:recognizer];
     
@@ -332,12 +324,12 @@
 {
     if (recognizer.direction == UISwipeGestureRecognizerDirectionRight)
     {
-        slider.value = slider.value + 1;
+        self.slider.value = self.slider.value + 1;
     }
     
     if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft)
     {
-        slider.value = slider.value - 1;
+        self.slider.value = self.slider.value - 1;
     }
 }
 
@@ -348,8 +340,8 @@
         [(UISlider*)sender setValue:minValue];
     }
     
-    int index = (int)(slider.value + 0.5);
-    [slider setValue:index animated:NO];
+    int index = (int)(self.slider.value + 0.5);
+    [self.slider setValue:index animated:NO];
     [self.delegate didChangeSlider:index];
 }
 

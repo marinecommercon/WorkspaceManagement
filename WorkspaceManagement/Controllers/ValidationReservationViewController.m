@@ -14,8 +14,6 @@
 
 @implementation ValidationReservationViewController
 
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -38,16 +36,11 @@
 {
     UIImage *right = [UIImage imageNamed:@"WSMImagesBtnExit"];
     NavBarInstance *custom = [NavBarInstance sharedInstance];
-    [custom styleNavBar:self setTitle:@"RESERVER UNE SALLE" setLeftButton:nil setRightButton:right];
-}
-
-- (void)navbarLeftButton {
-
+    [custom styleNavBar:self setTitle:@"RÉSERVER UNE SALLE" setLeftButton:nil setRightButton:right];
 }
 
 - (void)navbarRightButton {
-    NSLog(@"Should go to MapViewController");
-}
+    [self.navigationController popToRootViewControllerAnimated:YES];}
 
 - (IBAction)findRoom:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

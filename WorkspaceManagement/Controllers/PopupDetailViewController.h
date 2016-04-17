@@ -13,13 +13,14 @@
 #import "ReservationViewController.h"
 
 @protocol PopupDetailViewControllerDelegate
-- (void)didClickOnReservation;
+- (void)didClickOnReservation:(Room*)room;
 @end
 
 @interface PopupDetailViewController : UIViewController
 
 @property (nonatomic, weak) id<PopupDetailViewControllerDelegate> delegate;
 
+@property (strong,nonatomic)  Room *room;
 @property (strong, nonatomic) IBOutlet UIImageView *PopupImagesBackgroundRoom;
 @property (strong, nonatomic) IBOutlet UIButton *ButtonExit;
 @property (strong, nonatomic) IBOutlet UIImageView *PopupImagesGeoloc;

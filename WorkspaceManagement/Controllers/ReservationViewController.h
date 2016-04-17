@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ValidationReservationViewController.h"
 #import "ReservationViewController.h"
+#import "Room.h"
+#import "CheckDAO.h"
 
 @interface ReservationViewController : UIViewController
 
@@ -16,8 +18,11 @@
 @property (strong, nonatomic) IBOutlet UIView *viewSlider;
 @property (strong,nonatomic) NavBarInstance *navbar;
 
-@property (strong, nonatomic) IBOutlet UITextField *TextFieldNom;
-@property (strong, nonatomic) IBOutlet UITextField *TextFieldNameReunion;
+@property (strong,nonatomic)  Room *room;
+@property (strong,nonatomic)  NSString *beginTime;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldAuthor;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldSubject;
+@property float maxValue;
 
 - (IBAction)validate:(id)sender;
 

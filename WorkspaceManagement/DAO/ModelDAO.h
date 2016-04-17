@@ -26,11 +26,17 @@
 
 + (NSArray*)getAllSensorsId;
 
++ (NSString*)getReservationType:(NSString*)beginTime;
+
++ (Reservation*)getCorrespondingReservation:(NSString*)beginTime room: (Room*)room;
+
 // ADD
 
 + (void)addRoomWithName:(NSString*)name IdMapwize:(NSString*)idMapwize;
 
 + (void)addReservation:(NSString*)begin end:(NSString*)end room:(Room*)room type:(NSString*)type;
+
++ (void)addReservationApp:(NSString*)begin end:(NSString*)end room:(Room*)room author:(NSString*)author subject:(NSString*)subject;
 
 + (void)addSensorWithId: (NSString*)idSensor eventDate:(NSDate*)eventDate eventValue:(NSString*) eventValue forRoom:(Room*)room;
 

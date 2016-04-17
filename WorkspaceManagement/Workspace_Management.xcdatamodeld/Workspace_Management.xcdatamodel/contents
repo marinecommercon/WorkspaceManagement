@@ -7,8 +7,10 @@
         <relationship name="room" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Room" inverseName="equipments" inverseEntity="Room" syncable="YES"/>
     </entity>
     <entity name="Reservation" representedClassName="Reservation" syncable="YES">
+        <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="beginTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="endTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="room" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Room" inverseName="reservations" inverseEntity="Room" syncable="YES"/>
     </entity>
@@ -31,7 +33,7 @@
     </entity>
     <elements>
         <element name="Equipment" positionX="-450" positionY="-132" width="128" height="103"/>
-        <element name="Reservation" positionX="-65" positionY="-171" width="128" height="105"/>
+        <element name="Reservation" positionX="-65" positionY="-171" width="128" height="135"/>
         <element name="Room" positionX="-281" positionY="-297" width="128" height="180"/>
         <element name="Sensor" positionX="-245" positionY="-45" width="128" height="103"/>
     </elements>

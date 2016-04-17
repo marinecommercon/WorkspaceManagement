@@ -143,9 +143,9 @@
     return type;
 }
 
-+ (int) getPossibleDurationForBeginTime:(NSString*)beginTime withRoom: (Room*) room {
++ (int)getMaxDuration:(NSString*)beginTime room: (Room*)room {
     
-    NSArray *sortedReservationArray = [Utils sortReservationsOfRoom:room];
+    NSArray *sortedReservationArray = [Utils sortReservationsOfRoom:room.reservations];
     NSDate  *myWishDate             = [Utils parseTimeToDate:beginTime];
     int minutes   = 0;
     int halfHours = 0;
@@ -239,7 +239,7 @@
     
     if(listRooms.count != 0){
         for (Room *room in listRooms) {
-            double possibleDuration = [self getPossibleDurationForBeginTime:beginTime withRoom:room];
+            double possibleDuration = [self getMaxDuration:beginTime room:room];
             if(possibleDuration > maxDurationTemp){
                 maxDurationTemp = possibleDuration;
             }

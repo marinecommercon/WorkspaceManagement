@@ -41,9 +41,8 @@
 
 // Params to make decision (states of rooms)
 @property BOOL filtersON;
-@property (nonatomic,strong)  NSString *timeIndex1;
-@property (nonatomic,strong)  NSString *timeIndex2;
-@property (nonatomic,strong)  NSString *timeIndex3;
+@property (nonatomic,strong)  NSString *currentTime;
+@property (nonatomic,strong)  NSString *nextTime;
 @property BOOL realTime;
 @property int sliderValue;
 
