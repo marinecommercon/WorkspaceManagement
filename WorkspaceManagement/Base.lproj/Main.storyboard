@@ -95,6 +95,8 @@
                     <connections>
                         <outlet property="container" destination="adK-Xe-Euz" id="g7z-oo-NdS"/>
                         <outlet property="myMapView" destination="p0z-Df-AK2" id="aia-Gm-1Z0"/>
+                        <segue destination="TcC-gD-U7l" kind="show" identifier="ReservationViewController" id="MNC-cn-LoN"/>
+                        <segue destination="eKT-R3-bwl" kind="show" identifier="DSIViewController" id="UwL-Vl-ODl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -180,7 +182,7 @@
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="26.5" y="30.5" width="24" height="18"/>
+                                                        <rect key="frame" x="26.5" y="30" width="24" height="18"/>
                                                     </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DSIViewLibreImage" translatesAutoresizingMaskIntoConstraints="NO" id="21l-SD-saq" userLabel="Image State 2">
@@ -430,7 +432,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yrr-Te-azh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="453" y="1305.75"/>
+            <point key="canvasLocation" x="540" y="1121.25"/>
         </scene>
         <!--Reservation View Controller-->
         <scene sceneID="Ur5-sz-IPZ">
@@ -447,6 +449,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTb-yc-OCy">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="VALIDER MA RESERVATION"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="80" y="379" width="240" height="40"/>
+                                </variation>
                                 <connections>
                                     <action selector="validate:" destination="TcC-gD-U7l" eventType="touchUpInside" id="KY9-IG-u7b"/>
                                 </connections>
@@ -495,11 +500,17 @@
                                         <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                            <rect key="frame" x="19" y="16" width="320" height="32"/>
+                                        </variation>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NLq-FT-v8Y">
                                         <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                            <rect key="frame" x="19" y="67" width="320" height="31.5"/>
+                                        </variation>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -531,7 +542,8 @@
                                         <exclude reference="n6Q-re-Lja"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="191" width="400" height="128"/>
                                     <mask key="subviews">
                                         <include reference="hxO-fm-1pN"/>
                                         <include reference="NLq-FT-v8Y"/>
@@ -607,6 +619,7 @@
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="woE-08-gpU"/>
                     <connections>
                         <outlet property="TextFieldNameReunion" destination="NLq-FT-v8Y" id="yu5-Nu-kNK"/>
                         <outlet property="TextFieldNom" destination="hxO-fm-1pN" id="gh1-P9-nB9"/>
@@ -616,7 +629,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VI3-Md-1Mi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1317" y="994.5"/>
+            <point key="canvasLocation" x="1239" y="1145.25"/>
         </scene>
         <!--Validation Reservation View Controller-->
         <scene sceneID="3Vl-gk-ciZ">
@@ -656,7 +669,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="So1-GC-dTx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1947" y="994.5"/>
+            <point key="canvasLocation" x="2007" y="1048.5"/>
         </scene>
         <!--Find Room View Controller-->
         <scene sceneID="3Ca-Rw-ct3">
@@ -674,7 +687,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Khb-L3-HOu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2580" y="994.5"/>
+            <point key="canvasLocation" x="2706" y="1048.5"/>
         </scene>
         <!--Popup Detail View Controller-->
         <scene sceneID="fef-VR-jWk">
@@ -1138,7 +1151,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4q8-Oz-6I0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2533.5" y="317.25"/>
+            <point key="canvasLocation" x="2521.5" y="313.5"/>
         </scene>
         <!--Data Source-->
         <scene sceneID="EMD-5U-iAn">
@@ -1957,7 +1970,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T2g-LH-KUj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1878" y="337.5"/>
+            <point key="canvasLocation" x="1881" y="337.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="huh-Wk-wVX">
@@ -1971,7 +1984,6 @@
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="eeu-Uj-Q6c"/>
-                        <segue destination="eKT-R3-bwl" kind="show" identifier="DSIViewController" id="O6c-Uf-3i7"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bWc-VI-0nQ" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "ValidationReservationViewController.h"
+#import "ReservationViewController.h"
 
 @interface ReservationViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UISlider *slider;
 @property (strong, nonatomic) IBOutlet UIView *viewSlider;
+@property (strong,nonatomic) NavBarInstance *navbar;
 
 @property (strong, nonatomic) IBOutlet UITextField *TextFieldNom;
 @property (strong, nonatomic) IBOutlet UITextField *TextFieldNameReunion;

@@ -30,10 +30,12 @@
 - (void)buttonReservation
 {
     NSLog(@"Reservation");
+    [self.delegate didClickOnReservation];
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    ReservationViewController *viewController = (ReservationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ReservationViewController"];
-    [self presentViewController:viewController animated:NO completion:nil];
+    
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    ReservationViewController *viewController = (ReservationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ReservationViewController"];
+//    [self presentViewController:viewController animated:NO completion:nil];
 }
 
 

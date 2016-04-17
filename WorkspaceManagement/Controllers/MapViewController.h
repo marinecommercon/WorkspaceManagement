@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "CoreLocation/CoreLocation.h"
 #import "FilterViewController.h"
+#import "ReservationViewController.h"
 #import "DSIViewController.h"
 #import "CCMPopup/CCMPopupTransitioning.h"
 #import "PopupDetailViewController.h"
@@ -18,7 +19,7 @@
 #import "CheckDAO.H"
 #import "NavBarInstance.h"
 
-@interface MapViewController : UIViewController <MWZMapDelegate, ManagerDelegate, FilterViewControllerDelegate>
+@interface MapViewController : UIViewController <MWZMapDelegate, ManagerDelegate, FilterViewControllerDelegate, PopupDetailViewControllerDelegate>
 
 @property (strong, nonatomic) PopupDetailViewController *popupDetailViewController;
 @property (strong,nonatomic) FilterViewController *filterViewController;

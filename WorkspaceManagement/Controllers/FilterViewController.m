@@ -314,7 +314,6 @@
      forControlEvents:UIControlEventValueChanged];
     
     UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sliderTapped:)];
     
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
@@ -326,20 +325,7 @@
     [slider setMaximumTrackImage:sliderMaxTrackImage forState:UIControlStateNormal];
     
     [self.viewSlider addGestureRecognizer:recognizer];
-    [self.viewSlider addGestureRecognizer:tapGestureRecognizer];
     
-}
-
-- (void)sliderTapped:(UIGestureRecognizer *)gestureRecognizer
-{
-    CGPoint pointTaped = [gestureRecognizer locationInView:gestureRecognizer.view];
-    CGPoint positionOfSlider = slider.frame.origin;
-    
-    float widthOfSlider = slider.frame.size.width;
-    float newValue = ((pointTaped.x - positionOfSlider.x) * slider.maximumValue) / widthOfSlider;
-    int closedPoint = (int)roundf(newValue);
-    [slider setValue:closedPoint];
-    [self.delegate didChangeSlider:closedPoint];
 }
 
 -(void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer

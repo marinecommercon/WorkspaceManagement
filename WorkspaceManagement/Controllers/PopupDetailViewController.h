@@ -12,9 +12,13 @@
 #import "UIColor+AppAdditions.h"
 #import "ReservationViewController.h"
 
+@protocol PopupDetailViewControllerDelegate
+- (void)didClickOnReservation;
+@end
+
 @interface PopupDetailViewController : UIViewController
 
-- (void) setInfos:(Room*)room;
+@property (nonatomic, weak) id<PopupDetailViewControllerDelegate> delegate;
 
 @property (strong, nonatomic) IBOutlet UIImageView *PopupImagesBackgroundRoom;
 @property (strong, nonatomic) IBOutlet UIButton *ButtonExit;
@@ -33,5 +37,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *Popup4ItemsLabel;
 @property (strong, nonatomic) IBOutlet UIButton *PopupRoomBookButton;
 @property (strong, nonatomic) IBOutlet UILabel *PopupRoomStateLabel;
+
+- (void) setInfos:(Room*)room;
 
 @end

@@ -36,20 +36,19 @@
 
 // HANDLE NAVBAR
 
-- (void) initNavbar
-{
+-(void) initNavbar {
     UIImage *left = [UIImage imageNamed:@"WSMImagesBtnExit"];
-    NavBarInstance *custom = [NavBarInstance sharedInstance];
-    [custom styleNavBar:self setTitle:@"EMPLACEMENT DE L'ESPACE" setLeftButton:left setRightButton:nil];
-    
+    UIImage *right = [UIImage imageNamed:@"DSIViewLibreImage"];
+    self.navbar = [NavBarInstance sharedInstance];
+    [self.navbar styleNavBar:self setTitle:@"RESERVER UNE SALLE" setLeftButton:left setRightButton:right];
+    [self.navbar.buttonLeft setHidden:false];
 }
 
 - (void)navbarLeftButton {
-    [self dismissViewControllerAnimated:NO completion:nil];
+   [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)navbarRightButton {
-    
 }
 
 @end

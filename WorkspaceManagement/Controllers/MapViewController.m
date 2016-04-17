@@ -41,10 +41,7 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     
-    if(self.navbar == nil){
-        [self initNavbar];
-    }
-    
+    [self initNavbar];
     
     if(self.filterViewController == nil){
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
@@ -145,9 +142,16 @@
                 // ROOMS APP-DSI + REALTIME
                 if(self.realTime){
                     
-                    // Current reservation ?
-                    NSString *reservationType = [CheckDAO checkCurrentReservationType:self.timeIndex1 room:room];
-                    
+                    NSString *reservationType;
+                    if(!self.filtersON){
+                        // Current reservation ?
+                        reservationType = [CheckDAO checkCurrentReservationType:self.timeIndex1 room:room];
+                    }
+                    else {
+                        //Keep the duration if filters are on
+                        reservationType = [CheckDAO checkCurrentReservationType:self.timeIndex1 duration:self.sliderValue room:room];
+                    }
+                   
                     // Current reservation = dsi and filters off
                     if([reservationType isEqualToString:@"dsi"] && !self.filtersON){
                         [room setMapState:@"red"];
@@ -321,6 +325,14 @@
     [self updateMap];
 }
 
+// POPUP DELEGATE
+
+-(void) didClickOnReservation{
+    [self.popupDetailViewController dismissViewControllerAnimated:YES completion:nil];
+    ReservationViewController *newView = [self.storyboard instantiateViewControllerWithIdentifier:@"ReservationViewController"];
+    [self.navigationController pushViewController:newView animated:YES];
+}
+
 // MANAGER DELEGATE
 
 - (void)finishCheckWithUpdate:(BOOL)updateNeeded {
@@ -387,7 +399,6 @@
 }
 
 - (void)map:(MWZMapView*) map didClick:(MWZLatLon*) latlon {
-    
 }
 
 - (void) map:(MWZMapView*) map didClickOnPlace:(MWZPlace*) place {
@@ -396,6 +407,7 @@
     // Only if room is not grey
     if(![room.mapState isEqualToString:@"grey"]){
         self.popupDetailViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"PopupDetailController"];
+        self.popupDetailViewController.delegate = self;
         [self.popupDetailViewController setInfos:room];
         
         CCMPopupTransitioning *popup = [CCMPopupTransitioning sharedInstance];
