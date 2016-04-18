@@ -22,9 +22,9 @@
 
 + (NSString*)checkCurrentReservationType:(NSString*)currentTime room:(Room*)room;
 
-+ (NSString*)checkCurrentReservationType:(NSString*)currentTime duration:(int)sliderValue room:(Room*)room;
++ (NSString*)checkReservationType:(NSString*)nextHalfHour duration:(int)sliderValue room:(Room*)room;
 
-+ (NSString*)checkNextReservationType:(NSString*)nextHalfHour room:(Room*)room;
++ (NSString*)checkReservationType:(NSString*)nextHalfHour room:(Room*)room;
 
 + (int)getMaxDuration:(NSString*)beginTime room: (Room*)room;
 

@@ -105,29 +105,29 @@
     return type;
 }
 
-+ (NSString*)checkCurrentReservationType:(NSString*)currentTime duration:(int)sliderValue room:(Room*)room {
++ (NSString*)checkReservationType:(NSString*)nextHalfHour duration:(int)sliderValue room:(Room*)room {
     NSString *limitUpTime   = @"21:00";
     NSString *limitDownTime = @"07:30";
     NSDate   *limitUpDate   = [Utils parseTimeToDate:limitUpTime];
     NSDate   *limitDownDate = [Utils parseTimeToDate:limitDownTime];
     
-    NSDate   *currentDate   = [Utils parseTimeToDate:currentTime];
-    if([limitDownDate timeIntervalSinceDate:currentDate] > 0){
-        currentTime = @"07:30";
-        currentDate = limitDownDate;
+    NSDate   *nextHalfHourDate = [Utils parseTimeToDate:nextHalfHour];
+    if([limitDownDate timeIntervalSinceDate:nextHalfHourDate] > 0){
+        nextHalfHour = @"07:30";
+        nextHalfHourDate = limitDownDate;
     }
 
-    NSDate   *dateDeltaMore = [currentDate dateByAddingTimeInterval:(sliderValue*30*60)];
+    NSDate   *dateDeltaMore = [nextHalfHourDate dateByAddingTimeInterval:(sliderValue*30*60)];
     if( [dateDeltaMore timeIntervalSinceDate:limitUpDate] > 0){
         return @"impossible";
     }
     
     NSString *timeDeltaMore = [Utils parseDateToTime:dateDeltaMore];
-    NSString *type = [self checkReservationTypeIfExist:currentTime withEnd:timeDeltaMore forRoom:room];
+    NSString *type = [self checkReservationTypeIfExist:nextHalfHour withEnd:timeDeltaMore forRoom:room];
     return type;
 }
 
-+ (NSString*)checkNextReservationType:(NSString*)nextHalfHour room:(Room*)room {
++ (NSString*)checkReservationType:(NSString*)nextHalfHour room:(Room*)room {
     NSString *limitUpTime   = @"21:00";
     NSDate   *limitUpDate   = [Utils parseTimeToDate:limitUpTime];
     
@@ -135,7 +135,6 @@
     if([nextHalfHourDate timeIntervalSinceDate:limitUpDate] >= 0){
         return @"impossible";
     }
-    
     
     NSDate   *dateThirtyMinuteMore = [nextHalfHourDate dateByAddingTimeInterval:(30*60)];
     NSString *timeThirtyMinuteMore = [Utils parseDateToTime:dateThirtyMinuteMore];

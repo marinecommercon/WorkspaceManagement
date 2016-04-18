@@ -111,8 +111,7 @@
             [room setMapState:@"grey"];
         }
     }
-    
-    // If main map view
+
     switch (self.stepForSwipe) {
         case 0 || 1:
             // ROOMS FREE
@@ -120,18 +119,10 @@
                 
                 // ROOMS FREE + REALTIME
                 if(self.realTime){
-                    
-                    // SENSOR = 1
-                    if([CheckDAO roomHasSensorOn:room]){
-                        [room setMapState:@"red"];
-                    }
-                    // SENSOR = 0
-                    else{
-                        [room setMapState:@"green_free"];
-                    }
+                    [self decideSensors:room];
                 }
                 // ROOMS FREE + FUTUR
-                else if(!self.realTime){
+                else {
                     [room setMapState:@"grey"];
                 }
             }
@@ -143,64 +134,62 @@
                 if(self.realTime){
                     
                     NSString *reservationType;
-                    if(!self.filtersON){
-                        // Current reservation ?
-                        reservationType = [CheckDAO checkCurrentReservationType:self.currentTime room:room];
+                    
+                    // ROOMS APP-DSI + REALTIME + FILTERS
+                    if(self.filtersON){
+                         reservationType = [CheckDAO checkCurrentReservationType:self.currentTime room:room];
+                        
+                        // CURRENT RESERVATION
+                        if(![reservationType isEqualToString:@"noreservation"]){
+                            [room setMapState:@"grey"];
+                        }
+                        // NO RESERVATION
+                        else{
+                            NSString *nextReservationType = [CheckDAO checkReservationType:self.nextTime room:room];
+                            
+                            // NO NEXT
+                            if([nextReservationType isEqualToString:@"noreservation"]) {
+                                [room setMapState:@"green_book_ok"];
+                            }
+                            // NEXT
+                            else {
+                                [room setMapState:@"grey"];
+                            }
+                        }
                     }
+                    
+                    // ROOMS APP-DSI + REALTIME + NO FILTERS
                     else {
-                        //Keep the duration if filters are on
-                        reservationType = [CheckDAO checkCurrentReservationType:self.currentTime duration:self.sliderValue room:room];
-                    }
-                   
-                    // Current reservation = dsi and filters off
-                    if([reservationType isEqualToString:@"dsi"] && !self.filtersON){
-                        [room setMapState:@"red"];
-                    }
-                    // Current reservation = dsi and filters on
-                    if([reservationType isEqualToString:@"dsi"] && self.filtersON){
-                        [room setMapState:@"grey"];
-                    }
-                    // Current reservation = app-initial and filters off
-                    else if([reservationType isEqualToString:@"app"] && !self.filtersON) {
-                        [room setMapState:@"blue"];
-                    }
-                    // Current reservation = app-confirmed and filters off
-                    else if([reservationType isEqualToString:@"app"] && !self.filtersON) {
-                        [room setMapState:@"red"];
-                    }
-                    // Current reservation = app and filters on
-                    else if([reservationType isEqualToString:@"app"] && self.filtersON) {
-                        [room setMapState:@"grey"];
-                    }
-                    // Current reservation is impossible because too late
-                    else if([reservationType isEqualToString:@"impossible"]) {
-                        [room setMapState:@"green_book_ko"];
-                    }
-                    // No current reservation
-                    else if([reservationType isEqualToString:@"noreservation"]){
+                        reservationType = [CheckDAO checkCurrentReservationType:self.currentTime room:room];
                         
-                        // No current reservation and next reservation ?
-                        NSString *nextReservationType = [CheckDAO checkNextReservationType:self.nextTime room:room];
-                        
-                        // No current reservation and next reservation = dsi
-                        if([nextReservationType isEqualToString:@"dsi"]){
-                            [room setMapState:@"green_book_ko"];
-                        }
-                        // No current reservation and next reservation = app-initial
-                        else if([nextReservationType isEqualToString:@"app-initial"]) {
-                            [room setMapState:@"blue"];
-                        }
-                        // No current reservation and next reservation = app-confirmed
-                        else if([nextReservationType isEqualToString:@"app-confirmed"]) {
+                        // CURRENT IS DSI
+                        if([reservationType isEqualToString:@"dsi"]){
                             [room setMapState:@"red"];
                         }
-                        // No current reservation and next reservation is impossible because too late
-                        else if([nextReservationType isEqualToString:@"impossible"]) {
+                        // CURRENT IS APP-INITIAL
+                        else if([reservationType isEqualToString:@"app-initial"]) {
+                            [room setMapState:@"blue"];
+                        }
+                        // CURRENT IS APP-CONFIRMED
+                        else if([reservationType isEqualToString:@"app-confirmed"]) {
+                            [room setMapState:@"red"];
+                        }
+                        // CURRENT IS IMPOSSIBLE (too late)
+                        else if([reservationType isEqualToString:@"impossible"]) {
                             [room setMapState:@"green_book_ko"];
                         }
-                        // No current reservation and no next reservation
-                        else if([nextReservationType isEqualToString:@"noreservation"]) {
-                            [room setMapState:@"green_book_ok"];
+                        // NO RESERVATION
+                        else if([reservationType isEqualToString:@"noreservation"]){
+                            NSString *nextReservationType = [CheckDAO checkReservationType:self.nextTime room:room];
+                            
+                            // NO NEXT
+                            if([nextReservationType isEqualToString:@"noreservation"]) {
+                                [room setMapState:@"green_book_ok"];
+                            }
+                            // NEXT
+                            else {
+                                [room setMapState:@"green_book_ko"];
+                            }
                         }
                     }
                 }
@@ -208,37 +197,8 @@
                 // ROOMS APP-DSI + FUTURE
                 else if(!self.realTime){
                     
-                    // Current reservation ?
                     NSString *reservationType = [CheckDAO checkCurrentReservationType:self.currentTime room:room];
-                    
-                    // Current reservation = dsi and filters off
-                    if([reservationType isEqualToString:@"dsi"] && !self.filtersON){
-                        [room setMapState:@"red"];
-                    }
-                    // Current reservation = dsi and filters on
-                    if([reservationType isEqualToString:@"dsi"] && self.filtersON){
-                        [room setMapState:@"grey"];
-                    }
-                    // Current reservation = app-initial
-                    else if([reservationType isEqualToString:@"app-initial"] && !self.filtersON) {
-                        [room setMapState:@"blue"];
-                    }
-                    // Current reservation = app-confirmed
-                    else if([reservationType isEqualToString:@"app-confirmed"] && !self.filtersON) {
-                        [room setMapState:@"red"];
-                    }
-                    // Current reservation = app and filters on
-                    if([reservationType isEqualToString:@"app"] && self.filtersON){
-                        [room setMapState:@"grey"];
-                    }
-                    // Current reservation is impossible because too late
-                    else if([reservationType isEqualToString:@"impossible"]) {
-                        [room setMapState:@"green_book_ko"];
-                    }
-                    // No current reservation
-                    else if([reservationType isEqualToString:@"noreservation"]) {
-                        [room setMapState:@"green_book_ok"];
-                    }
+                    [self decideCurrentType:reservationType room:room];
                 }
             }
             break;
@@ -249,18 +209,10 @@
                 
                 // ROOMS FREE + REALTIME
                 if(self.realTime){
-                    
-                    // SENSOR = 1
-                    if([CheckDAO roomHasSensorOn:room]){
-                        [room setMapState:@"red"];
-                    }
-                    // SENSOR = 0
-                    else{
-                        [room setMapState:@"green_free"];
-                    }
+                    [self decideSensors:room];
                 }
                 // ROOMS FREE + FUTUR
-                else if(!self.realTime){
+                else {
                     [room setMapState:@"grey"];
                 }
             }
@@ -271,79 +223,102 @@
                 // ROOMS APP-DSI + REALTIME
                 if(self.realTime){
                     
-                    // Current reservation ?
-                    NSString *reservationType = [CheckDAO checkCurrentReservationType:self.currentTime duration:self.sliderValue room:room];
-                    
-                    // Current reservation = dsi and filters off
-                    if([reservationType isEqualToString:@"dsi"]  && !self.filtersON){
-                        [room setMapState:@"red"];
-                    }
-                    // Current reservation = dsi and filters on
-                    else if([reservationType isEqualToString:@"dsi"] && self.filtersON) {
-                        [room setMapState:@"grey"];
-                    }
-                    // Current reservation = app-initial and filters off
-                    else if([reservationType isEqualToString:@"app-initial"] && !self.filtersON) {
-                        [room setMapState:@"blue"];
-                    }
-                    // Current reservation = app-confirmed and filters off
-                    else if([reservationType isEqualToString:@"app-confirmed"] && !self.filtersON) {
-                        [room setMapState:@"red"];
-                    }
-                    // Current reservation = app and filters on
-                    else if([reservationType isEqualToString:@"app"] && self.filtersON) {
-                        [room setMapState:@"grey"];
-                    }
-                    // Current reservation is impossible because too late
-                    else if([reservationType isEqualToString:@"impossible"]) {
-                        [room setMapState:@"green_book_ko"];
-                    }
-                    // No current reservation
-                    else if([reservationType isEqualToString:@"noreservation"]){
-                        [room setMapState:@"green_book_ok"];
-                    }
+                    // Take next time on carousel + duration
+                    NSString *reservationType = [CheckDAO checkReservationType:self.nextTime duration:self.sliderValue room:room];
+                    [self decideCurrentType:reservationType room:room];
                 }
                 
                 // ROOMS APP-DSI + FUTURE
                 else if(!self.realTime){
                     
-                    // Current reservation ?
-                    NSString *reservationType = [CheckDAO checkCurrentReservationType:self.currentTime duration:self.sliderValue room:room];
-                    
-                    // Current reservation = dsi and filters off
-                    if([reservationType isEqualToString:@"dsi"] && !self.filtersON){
-                        [room setMapState:@"red"];
-                    }
-                    // Current reservation = dsi and filters on
-                    else if([reservationType isEqualToString:@"dsi"] && self.filtersON) {
-                        [room setMapState:@"grey"];
-                    }
-                    // Current reservation = app-intial
-                    else if([reservationType isEqualToString:@"app-initial"]) {
-                        [room setMapState:@"blue"];
-                    }
-                    // Current reservation = app-confirmed
-                    else if([reservationType isEqualToString:@"app-confirmed"]) {
-                        [room setMapState:@"red"];
-                    }
-                    // Current reservation is impossible because too late
-                    else if([reservationType isEqualToString:@"impossible"]) {
-                        [room setMapState:@"green_book_ko"];
-                    }
-                    // No current reservation
-                    else if([reservationType isEqualToString:@"noreservation"]) {
-                        [room setMapState:@"green_book_ok"];
-                    }
+                    // Take current time + duration
+                    NSString *reservationType = [CheckDAO checkReservationType:self.currentTime duration:self.sliderValue room:room];
+                    [self decideCurrentType:reservationType room:room];
                 }
             }
             break;
-            
         default:
             break;
     }
     
     [self updateMap];
 }
+
+- (void) decideSensors:(Room*)room {
+    if(self.filtersON){
+        // ROOMS FREE + REALTIME + SENSOR = 1
+        if([CheckDAO roomHasSensorOn:room]){
+            [room setMapState:@"grey"];
+        }
+        // ROOMS FREE + REALTIME + SENSOR = 0
+        else{
+            [room setMapState:@"green_free"];
+        }
+    }
+    else {
+        // ROOMS FREE + REALTIME + SENSOR = 1
+        if([CheckDAO roomHasSensorOn:room]){
+            [room setMapState:@"red"];
+        }
+        // ROOMS FREE + REALTIME + SENSOR = 0
+        else{
+            [room setMapState:@"green_free"];
+        }
+    }
+}
+
+- (void) decideFreeRooms:(Room*)room reservationType:(NSString*)type {
+    // NO RESERVATION FOR NEXT HALF HOUR + DURATION
+    if([type isEqualToString:@"noreservation"]) {
+        [room setMapState:@"green_book_ok"];
+    }
+    // RESERVATION FOR NEXT HALF HOUR + DURATION
+    else {
+        [room setMapState:@"grey"];
+    }
+}
+
+- (void) decideCurrentType:(NSString*)type room:(Room*)room  {
+    
+    // ROOMS APP-DSI + REALTIME/FUTURE + FILTERS
+    if(self.filtersON){
+        
+        // NO RESERVATION FOR NEXT HALF HOUR + DURATION
+        if([type isEqualToString:@"noreservation"]) {
+            [room setMapState:@"green_book_ok"];
+        }
+        // RESERVATION FOR NEXT HALF HOUR + DURATION
+        else {
+            [room setMapState:@"grey"];
+        }
+    }
+    
+    // ROOMS APP-DSI + REALTIME/FUTURE + NO FILTERS
+    else{
+        
+        // IS DSI
+        if([type isEqualToString:@"dsi"]){
+            [room setMapState:@"red"];
+        }
+        // IS APP-INITIAL
+        else if([type isEqualToString:@"app-initial"]) {
+            [room setMapState:@"blue"];
+        }
+        // IS APP-CONFIRMED
+        else if([type isEqualToString:@"app-confirmed"]) {
+            [room setMapState:@"red"];
+        }
+        // IS IMPOSSIBLE (too late)
+        else if([type isEqualToString:@"impossible"]) {
+            [room setMapState:@"green_book_ko"];
+        }
+        // NO RESERVATION
+        else if([type isEqualToString:@"noreservation"]){
+            [room setMapState:@"green_book_ok"];
+        }
+    }
+}
+
 
 // POPUP DELEGATE
 
@@ -578,7 +553,7 @@
     if(!self.asynchtaskRunning){
         NSDate  *delay = [NSDate dateWithTimeIntervalSinceNow: 0.0];
         self.timer = [[NSTimer alloc] initWithFireDate: delay
-                                              interval: 15
+                                              interval: 2
                                                 target: self
                                               selector:@selector(checkSensors:)
                                               userInfo:nil repeats:YES];

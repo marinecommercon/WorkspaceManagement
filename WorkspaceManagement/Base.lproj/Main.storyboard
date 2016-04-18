@@ -446,6 +446,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTb-yc-OCy">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="VALIDER MA RESERVATION"/>
+                                <connections>
+                                    <action selector="validate:" destination="TcC-gD-U7l" eventType="touchUpInside" id="KY9-IG-u7b"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mbV-uN-hJ4" userLabel="ViewSlider">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <subviews>
@@ -542,13 +549,6 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MTb-yc-OCy">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="VALIDER MA RESERVATION"/>
-                                <connections>
-                                    <action selector="validate:" destination="TcC-gD-U7l" eventType="touchUpInside" id="KY9-IG-u7b"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -567,9 +567,9 @@
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
+                                <exclude reference="MTb-yc-OCy"/>
                                 <exclude reference="mbV-uN-hJ4"/>
                                 <exclude reference="Q0w-O7-zcY"/>
-                                <exclude reference="MTb-yc-OCy"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="7GX-YT-KKy"/>
@@ -588,9 +588,9 @@
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
+                                <include reference="MTb-yc-OCy"/>
                                 <include reference="mbV-uN-hJ4"/>
                                 <include reference="Q0w-O7-zcY"/>
-                                <include reference="MTb-yc-OCy"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="7GX-YT-KKy"/>
@@ -614,7 +614,6 @@
                         <outlet property="textFieldAuthor" destination="hxO-fm-1pN" id="RF0-b0-MjL"/>
                         <outlet property="textFieldSubject" destination="NLq-FT-v8Y" id="u3t-4S-ZL0"/>
                         <outlet property="viewSlider" destination="mbV-uN-hJ4" id="kad-wU-PSr"/>
-                        <segue destination="gVp-UF-Xt0" kind="show" identifier="ValidationViewController" id="NMq-1P-jVW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VI3-Md-1Mi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -659,7 +658,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="So1-GC-dTx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1899" y="1145.25"/>
+            <point key="canvasLocation" x="2007" y="1048.5"/>
         </scene>
         <!--Find Room View Controller-->
         <scene sceneID="3Ca-Rw-ct3">
@@ -1146,6 +1145,7 @@
         <!--Data Source-->
         <scene sceneID="EMD-5U-iAn">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T2g-LH-KUj" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="filterViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LZh-e3-Bcn" customClass="FilterViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HcS-bk-tL8"/>
@@ -1958,7 +1958,6 @@
                         <outlet property="viewSlider" destination="MWy-8l-Rrv" id="CCw-Et-SkF"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="T2g-LH-KUj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1881" y="337.5"/>
         </scene>
