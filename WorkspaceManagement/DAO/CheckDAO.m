@@ -39,11 +39,12 @@
 
 + (NSString*)checkReservationTypeIfExist:(NSString*)begin withEnd:(NSString*)end forRoom:(Room*)room {
     
+    NSArray *sortedReservationArray = [Utils sortReservationsOfRoom:room.reservations];
     NSDate *wishBegin = [Utils parseTimeToDate:begin];
     NSDate *wishEnd   = [Utils parseTimeToDate:end];
     
-    if(room.reservations.count != 0){
-        for (Reservation *reservation in room.reservations) {
+    if(sortedReservationArray.count != 0){
+        for (Reservation *reservation in sortedReservationArray) {
             
             NSDate *resaBegin = [Utils parseTimeToDate:reservation.beginTime];
             NSDate *resaEnd   = [Utils parseTimeToDate:reservation.endTime];

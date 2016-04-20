@@ -558,6 +558,7 @@
 - (void) initState {
     self.stepper.value   = 1;
     self.numberOfPeople  = 1;
+    self.slider.value    = 1;
     [self updatePeopleLabel];
     
     NSArray *equipmentList = [DAO getObjects:@"Equipment" withPredicate:nil];

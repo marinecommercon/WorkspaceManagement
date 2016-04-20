@@ -267,17 +267,6 @@
     }
 }
 
-- (void) decideFreeRooms:(Room*)room reservationType:(NSString*)type {
-    // NO RESERVATION FOR NEXT HALF HOUR + DURATION
-    if([type isEqualToString:@"noreservation"]) {
-        [room setMapState:@"green_book_ok"];
-    }
-    // RESERVATION FOR NEXT HALF HOUR + DURATION
-    else {
-        [room setMapState:@"grey"];
-    }
-}
-
 - (void) decideCurrentType:(NSString*)type room:(Room*)room  {
     
     // ROOMS APP-DSI + REALTIME/FUTURE + FILTERS

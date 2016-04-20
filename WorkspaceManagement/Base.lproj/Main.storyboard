@@ -1145,7 +1145,6 @@
         <!--Data Source-->
         <scene sceneID="EMD-5U-iAn">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="T2g-LH-KUj" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="filterViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LZh-e3-Bcn" customClass="FilterViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HcS-bk-tL8"/>
@@ -1958,6 +1957,7 @@
                         <outlet property="viewSlider" destination="MWy-8l-Rrv" id="CCw-Et-SkF"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T2g-LH-KUj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1881" y="337.5"/>
         </scene>
