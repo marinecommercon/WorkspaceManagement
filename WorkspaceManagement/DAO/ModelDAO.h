@@ -14,7 +14,7 @@
 
 @interface ModelDAO : NSObject
 
-// GET
+#pragma mark GET
 
 + (Room*)getRoomById:(NSString*)idMapwize;
 
@@ -22,31 +22,21 @@
 
 + (Sensor*)getSensorById:(NSString*)idSensor;
 
-+ (NSArray*)getAllRoomsName;
-
 + (NSArray*)getAllSensorsId;
 
-+ (NSString*)getReservationType:(NSString*)beginTime;
++ (Reservation*)getReservationForBegin:(NSString*)beginTime room: (Room*)room;
 
-+ (Reservation*)getCorrespondingReservation:(NSString*)beginTime room: (Room*)room;
+#pragma mark ADD
 
-// ADD
++ (void)addReservation:(NSString*)begin end:(NSString*)end room:(Room*)room author:(NSString*)author subject:(NSString*)subject type:(NSString*)type;
 
-+ (void)addRoomWithName:(NSString*)name IdMapwize:(NSString*)idMapwize;
-
-+ (void)addReservation:(NSString*)begin end:(NSString*)end room:(Room*)room type:(NSString*)type;
-
-+ (void)addReservationApp:(NSString*)begin end:(NSString*)end room:(Room*)room author:(NSString*)author subject:(NSString*)subject;
-
-+ (void)addSensorWithId: (NSString*)idSensor eventDate:(NSDate*)eventDate eventValue:(NSString*) eventValue forRoom:(Room*)room;
-
-// UPDATE
+#pragma mark UPDATE SENSORS
 
 + (BOOL)checkSensorWithId: (NSString*)idSensor eventDate:(NSDate*)eventDate eventValue:(NSString*)eventValue;
 
-// SET LOCAL JSON
+#pragma mark SET DATABASE
 
-+ (void)loadDatabase:(BOOL)needReset;
++ (void)resetDatabase:(BOOL)needReset;
 
 + (void)setSensorsWithReset:(BOOL)needReset;
 
@@ -58,9 +48,7 @@
 
 + (void)setRoomEquipment;
 
-// DELETE
-
-+ (void)deletePlanning;
+#pragma mark DELETE
 
 + (void)deleteAllRooms;
 
@@ -69,8 +57,6 @@
 + (void)deleteAllEquipments;
 
 + (void)deleteAllSensors;
-
-+ (void)deleteReservationWithBegin:(NSString*)begin;
 
 + (void)deleteReservationsFromRoom:(Room*)room;
 

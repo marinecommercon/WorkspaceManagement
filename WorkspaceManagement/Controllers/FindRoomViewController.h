@@ -11,4 +11,6 @@
 
 @interface FindRoomViewController : UIViewController
 
+@property (strong,nonatomic) NavBarInstance *navbar;
+
 @end

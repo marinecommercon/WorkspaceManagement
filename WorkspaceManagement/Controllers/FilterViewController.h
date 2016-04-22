@@ -59,7 +59,7 @@
 - (BOOL) filtersChanged;
 - (void) initState;
 - (void) updateFilteredLists:(NSArray*)equipmentList;
-
+- (void) updateCarousel:(NSTimer *)timer andPosition:(BOOL)updatePosition;
 
 @end
 

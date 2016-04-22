@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self initNavbar];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -25,7 +25,6 @@
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    [self initNavbar];
 }
 
 
@@ -33,18 +32,17 @@
 
 - (void) initNavbar
 {
-    UIImage *left = [UIImage imageNamed:@"WSMImagesBtnExit"];
-    NavBarInstance *custom = [NavBarInstance sharedInstance];
-    [custom styleNavBar:self setTitle:@"EMPLACEMENT DE L'ESPACE" setLeftButton:left setRightButton:nil];
+    UIImage *right = [UIImage imageNamed:@"WSMImagesBtnExit"];
+    self.navbar = [NavBarInstance sharedInstance];
+    [self.navbar styleNavBar:self setTitle:@"EMPLACEMENT DE L'ESPACE" setLeftButton:nil setRightButton:right];
+    [self.navbar.buttonLeft setHidden:false];
     
 }
 
-- (void)navbarLeftButton {
-    [self dismissViewControllerAnimated:NO completion:nil];
-}
-
 - (void)navbarRightButton {
-
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
+
+
 
 @end

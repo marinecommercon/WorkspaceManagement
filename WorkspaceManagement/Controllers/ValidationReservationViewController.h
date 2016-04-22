@@ -12,6 +12,7 @@
 
 @interface ValidationReservationViewController : UIViewController
 
+@property (strong,nonatomic) NavBarInstance *navbar;
 - (IBAction)findRoom:(id)sender;
 
 @end

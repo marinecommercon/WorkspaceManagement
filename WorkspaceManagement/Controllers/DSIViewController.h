@@ -24,6 +24,5 @@
 @property (strong,nonatomic) NavBarInstance *navbar;
 
 - (IBAction)saveButton:(id)sender;
-- (IBAction)resetButton:(id)sender;
 
 @end

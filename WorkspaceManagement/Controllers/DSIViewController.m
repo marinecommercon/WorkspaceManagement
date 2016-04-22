@@ -42,7 +42,7 @@
     
     // Init the statesList
     cellDetails     = [[NSMutableArray alloc] init];
-    for (int i=0; i<100; i++) {
+    for (int i=0; i<self.schedulesArray.count -1; i++) {
         // state + changed ?
         cellDetails[i] = @[@"Whatever",@"notChanged"];
     }
@@ -161,7 +161,7 @@
             NSString *type;
             
             // Get the corresponding reservation if exist
-            Reservation *reservation = [ModelDAO getCorrespondingReservation:beginString room:roomSelected];
+            Reservation *reservation = [ModelDAO getReservationForBegin:beginString room:roomSelected];
             if(reservation != nil) {
                 type = reservation.type;
             }
@@ -246,25 +246,19 @@
         if ([cellDetails[i][0] isEqualToString:@"busy-dsi"]) {
             NSString *begin = [self.schedulesArray objectAtIndex:i];
             NSString *end = [self.schedulesArray objectAtIndex:i+1];
-            [ModelDAO addReservation:begin end:end room:roomSelected type:@"dsi"];
+            [ModelDAO addReservation:begin end:end room:roomSelected author:nil subject:nil type:@"dsi"];
         }
         else if ([cellDetails[i][0] isEqualToString:@"busy-initial"]) {
             NSString *begin = [self.schedulesArray objectAtIndex:i];
             NSString *end   = [self.schedulesArray objectAtIndex:i+1];
-            [ModelDAO addReservation:begin end:end room:roomSelected type:@"app-initial"];
+            [ModelDAO addReservation:begin end:end room:roomSelected author:nil subject:nil type:@"app-initial"];
         }
         else if ([cellDetails[i][0] isEqualToString:@"busy-confirmed"]) {
             NSString *begin = [self.schedulesArray objectAtIndex:i];
             NSString *end   = [self.schedulesArray objectAtIndex:i+1];
-            [ModelDAO addReservation:begin end:end room:roomSelected type:@"app-confirmed"];
+            [ModelDAO addReservation:begin end:end room:roomSelected author:nil subject:nil type:@"app-confirmed"];
         }
     }
-}
-
-- (IBAction)resetButton:(id)sender {
-    [ModelDAO deleteAllReservations];
-    [self clearDetails];
-    [_tableView reloadData];
 }
 
 - (void) clearDetails {

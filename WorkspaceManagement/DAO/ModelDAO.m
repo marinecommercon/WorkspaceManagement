@@ -10,7 +10,8 @@
 
 @implementation ModelDAO
 
-// GET
+
+#pragma mark GET
 
 + (Room*)getRoomById: (NSString*) idMapwize {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"idMapwize == %@", idMapwize];
@@ -25,6 +26,9 @@
         return nil;
     }
 }
+
+// This method is used by the PopupDetailViewController and the FilterViewController
+// It returns the equipment from database by its keyword (retro, screen, table or dock)
 
 + (Equipment*)getEquipmentByKey:(NSString*)key {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"key == %@", key];
@@ -54,14 +58,7 @@
     }
 }
 
-+ (NSArray*)getAllRoomsName {
-    NSMutableArray *roomsName = [[NSMutableArray alloc] init];
-    NSArray *rooms = [DAO getObjects:@"Room" withPredicate:nil];
-    for (Room *room in rooms){
-        [roomsName addObject:room.name];
-    }
-    return roomsName;
-}
+// This method is used for the webservice
 
 + (NSArray*)getAllSensorsId {
     NSMutableArray *sensorsId = [[NSMutableArray alloc] init];
@@ -72,13 +69,13 @@
     return sensorsId;
 }
 
-+ (NSString*)getReservationType:(NSString*)beginTime {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"beginTime == %@", beginTime];
-    Reservation * reservation = (Reservation *)[DAO getObject:@"Reservation" withPredicate:predicate];
-    return reservation.type;
-}
+// DSIViewController :  When the cell shows a reservation, this method let it know the corresponding type of a reservation, if existing
 
-+ (Reservation*)getCorrespondingReservation:(NSString*)beginTime room: (Room*)room {
+// Type for reservation made by the user in the app but not confirmed : app-initial
+// Type for reservation made by the user in the app and confirmed : app-confirmed
+// Type for a reservation made through the DSI view : dsi
+
++ (Reservation*)getReservationForBegin:(NSString*)beginTime room: (Room*)room {
     NSArray *sortedReservationArray = [Utils sortReservationsOfRoom:room.reservations];
     NSDate  *beginDate              = [Utils parseTimeToDate:beginTime];
     NSDate  *endDate                = [beginDate dateByAddingTimeInterval:(30*60)];;
@@ -99,45 +96,26 @@
 }
 
 
-// ADD
+#pragma mark ADD
 
-+ (void)addRoomWithName:(NSString*)name IdMapwize:(NSString*)idMapwize {
-    Room* roomTemp = (Room*)[DAO getInstance:@"Room"];
-    [roomTemp setIdMapwize: idMapwize];
-    [roomTemp setName:name];
-    [DAO saveContext];
-}
+// DSIViewController : add reservations for the selected cells
+// Reservation ViewController : add the reservation made by user
 
-+ (void)addReservation:(NSString*)begin end:(NSString*)end room:(Room*)room type:(NSString*)type {
++ (void)addReservation:(NSString*)begin end:(NSString*)end room:(Room*)room author:(NSString*)author subject:(NSString*)subject type:(NSString*)type {
     Reservation* reservationTemp = (Reservation*)[DAO getInstance:@"Reservation"];
     [reservationTemp setBeginTime:begin];
     [reservationTemp setEndTime:end];
     [reservationTemp setType:type];
-    [room addReservationsObject:reservationTemp];
-    [DAO saveContext];
-}
-
-+ (void)addReservationApp:(NSString*)begin end:(NSString*)end room:(Room*)room author:(NSString*)author subject:(NSString*)subject {
-    Reservation* reservationTemp = (Reservation*)[DAO getInstance:@"Reservation"];
-    [reservationTemp setBeginTime:begin];
-    [reservationTemp setEndTime:end];
-    [reservationTemp setType:@"app-initial"];
     [reservationTemp setAuthor:author];
     [reservationTemp setSubject:subject];
     [room addReservationsObject:reservationTemp];
     [DAO saveContext];
 }
 
-+ (void)addSensorWithId: (NSString*)idSensor eventDate:(NSDate*)eventDate eventValue:(NSString*) eventValue forRoom:(Room*)room {
-    Sensor* sensorTemp = (Sensor*)[DAO getInstance:@"Sensor"];
-    [sensorTemp setIdSensor:idSensor];
-    [sensorTemp setEventDate:eventDate];
-    [sensorTemp setEventValue:eventValue];
-    [room addSensorsObject:sensorTemp];
-    [DAO saveContext];
-}
-
-// UPDATE
+#pragma mark UPDATE SENSOR
+// This method will check if the value of sensor downloaded is the same
+// than the value previously stored in database.
+// It returns true if the map should be updated
 
 + (BOOL)checkSensorWithId: (NSString*)idSensor eventDate:(NSDate*)eventDate eventValue:(NSString*)eventValue {
     
@@ -149,34 +127,27 @@
         [sensorTemp setEventValue:eventValue];
         [DAO saveContext];
         updateWasNeeded = true;
-        //NSLog(@"Update sensor %@", sensorTemp.idSensor);
     } else {
-        
-        //NSLog(@"No need to update sensor %@", sensorTemp.idSensor);
         updateWasNeeded = false;
-        // Fake to test changes on Map
-        
-//        if([eventValue isEqualToString:@"1"]){
-//            [sensorTemp setEventDate:eventDate];
-//            [sensorTemp setEventValue:@"0"];
-//            [DAO saveContext];
-//            updateWasNeeded = true;
-//        }
-//        else {
-//            [sensorTemp setEventDate:eventDate];
-//            [sensorTemp setEventValue:@"1"];
-//            [DAO saveContext];
-//            updateWasNeeded = true;
-//        }
     }
     return updateWasNeeded;
 }
 
-// SET LOCAL JSON
+#pragma mark SET DATABASE
 
-+ (void)loadDatabase:(BOOL)needReset{
+// When calling resetDatabase, for each entity :
+// If [needReset == true  && some entities in DB]  => delete + read Json
+// If [needReset == true  && no entities in DB]  => read Json only
+// If [needReset == false && some entities in DB] => do nothing
+// If [needReset == false && no entities in DB] => read Json only
+
++ (void)resetDatabase:(BOOL)needReset{
     
-    // Rooms creation -> Sensors creation -> Pairs
+    // First  : it will set rooms
+    // Second : it will set sensors
+    // Third  : it will set equipments
+    // Fourth : it will set room-sensors pairs
+    // Fifth  : it will set room-sensors pairs
     [self setRoomsWithReset:needReset];
 }
 
@@ -324,12 +295,7 @@
     }
 }
 
-// DELETE
-
-+ (void)deletePlanning {
-    [self deleteAllRooms];
-    [self deleteAllReservations];
-}
+#pragma mark DELETE
 
 + (void)deleteAllRooms {
     NSArray   *listRooms = [DAO getObjects:@"Room" withPredicate:nil];
@@ -362,13 +328,8 @@
     }
 }
 
-+ (void)deleteReservationWithBegin: (NSString*) begin {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"beginTime == %@", [Utils parseTimeToDate:begin]];
-    NSManagedObject * objectTemp = [DAO getObject:@"Reservation" withPredicate:predicate];
-    [DAO deleteObject:objectTemp];
-    [DAO saveContext];
-}
-
+// In DSI ViewController : Before saving modifications for a room, delete all reservations
+// Then add, line by line, each reservation
 + (void)deleteReservationsFromRoom: (Room*) room {
     NSSet *reservations = room.reservations;
     [room removeReservations:reservations];

@@ -7,6 +7,7 @@
 //
 
 #import "ValidationReservationViewController.h"
+#import "MapViewController.h"
 
 @interface ValidationReservationViewController ()
 
@@ -16,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self initNavbar];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -26,7 +27,7 @@
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    [self initNavbar];
+    
 }
 
 
@@ -35,16 +36,19 @@
 - (void) initNavbar
 {
     UIImage *right = [UIImage imageNamed:@"WSMImagesBtnExit"];
-    NavBarInstance *custom = [NavBarInstance sharedInstance];
-    [custom styleNavBar:self setTitle:@"RÉSERVER UNE SALLE" setLeftButton:nil setRightButton:right];
+    self.navbar = [NavBarInstance sharedInstance];
+    [self.navbar styleNavBar:self setTitle:@"RÉSERVER UNE SALLE" setLeftButton:nil setRightButton:right];
 }
 
 - (void)navbarRightButton {
+    MapViewController *myMapViewController = (MapViewController *) self.navigationController.viewControllers[0];
+    [myMapViewController navbarLeftButton];
+    [myMapViewController.filterViewController updateCarousel:nil andPosition:true];
+    
     [self.navigationController popToRootViewControllerAnimated:YES];}
 
-- (IBAction)findRoom:(id)sender {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    FindRoomViewController *viewController = (FindRoomViewController *)[storyboard instantiateViewControllerWithIdentifier:@"FindRoomViewController"];
-    [self presentViewController:viewController animated:NO completion:nil];
+- (IBAction)findRoom:(id)sender {    
+    FindRoomViewController *findRoom = [self.storyboard instantiateViewControllerWithIdentifier:@"FindRoomViewController"];
+    [self.navigationController pushViewController:findRoom animated:YES];
 }
 @end

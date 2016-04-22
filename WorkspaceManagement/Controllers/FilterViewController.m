@@ -21,7 +21,6 @@
 
 - (void)awakeFromNib
 {
-    
     [self checkBeforeNextRound];
 }
 
@@ -38,7 +37,6 @@
     
     asynchtaskRunning = false;
     
-    //[self shouldStartAsynchtaskCarousel];
     [self initState];
     [self initSlider];
     [self initCarousel];
@@ -87,6 +85,10 @@
     NSString *peopleMsg = [NSString stringWithFormat:@"%d", self.numberOfPeople];
     [self.peopleLabel setText:peopleMsg];
 }
+
+// State 1 : can be selected
+// State 2 : is selected
+// State 0 : Can not be selected
 
 - (IBAction)retroAction:(id)sender {
     Equipment *retro = [ModelDAO getEquipmentByKey:@"retro"];
@@ -139,8 +141,8 @@
 
 - (IBAction)stepperAction:(id)sender {
     self.numberOfPeople = self.stepper.value;
-    [self checkBeforeNextRound];
     [self updatePeopleLabel];
+    [self checkBeforeNextRound];
 }
 
 - (void) checkBeforeNextRound {
@@ -244,14 +246,14 @@
     }
 }
 
+// MAPVIEW CALL
+
 - (void) updateFilteredLists:(NSArray*)equipmentList {
-    NSPredicate *predicate;
     [self.roomsFreeFiltered     removeAllObjects];
     [self.roomsAppDsiFiltered   removeAllObjects];
     [self.roomsNotCorresponding removeAllObjects];
     
-    predicate = nil;
-    NSArray *rooms = [DAO getObjects:@"Room" withPredicate:predicate];
+    NSArray *rooms = [DAO getObjects:@"Room" withPredicate:nil];
     for (Room *room in rooms){
         if([self room:room hasEquipments:equipmentList]){
             if([room.type isEqualToString:@"free"]){
@@ -267,7 +269,7 @@
     }
 }
 
-// HANDLE ASYNCHTASK CAROUSEL
+#pragma mark HANDLE ASYNCHTASK CAROUSEL
 
 - (void) shouldStopAsynchtaskCarousel {
     if(asynchtaskRunning){
@@ -283,7 +285,7 @@
         timer = [[NSTimer alloc] initWithFireDate: delay
                                          interval: 1
                                            target: self
-                                         selector:@selector(updateCarousel:)
+                                         selector:@selector(updateCarousel:andPosition:)
                                          userInfo:nil repeats:YES];
         
         NSRunLoop *runner = [NSRunLoop currentRunLoop];
@@ -347,16 +349,19 @@
 
 // HANDLE CAROUSEL
 
-- (void) updateCarousel:(NSTimer *)timer {
+- (void) updateCarousel:(NSTimer *)timer andPosition:(BOOL)updatePosition {
     
     self.hoursDictionnary = [Utils generateHoursForCaroussel:[self.schedulesArray objectAtIndex:self.realTimePosition]];
-
+    if(updatePosition){
+        [self.carousel scrollToItemAtIndex:self.realTimePosition animated:NO];
+    }
+    
     if(self.hoursDictionnary != nil){
         self.schedulesArray   = [self.hoursDictionnary objectForKey:@"hours"];
         self.realTimePosition = [[self.hoursDictionnary objectForKey:@"position"] intValue];
         [self.carousel reloadData];
         
-        // We need tu update carousel position if (for example) we go from 14:30 to 14:31
+        // We need to update carousel position if (for example) we go from 14:30 to 14:31
         // 14:00 (position 13) 14:29(position 14) 14:30(position 15)
         // Then, 14:00 (position 13) 14:30(position 14) 15:00(position 15)
         // Then, 14:00 (position 13) 14:30(position 14) 14:31(position 15)

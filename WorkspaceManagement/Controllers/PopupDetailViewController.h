@@ -14,6 +14,7 @@
 
 @protocol PopupDetailViewControllerDelegate
 - (void)didClickOnReservation:(Room*)room;
+- (void)didClickOnGeoloc:(Room*)room;
 @end
 
 @interface PopupDetailViewController : UIViewController
@@ -23,7 +24,6 @@
 @property (strong,nonatomic)  Room *room;
 @property (strong, nonatomic) IBOutlet UIImageView *PopupImagesBackgroundRoom;
 @property (strong, nonatomic) IBOutlet UIButton *ButtonExit;
-@property (strong, nonatomic) IBOutlet UIImageView *PopupImagesGeoloc;
 @property (strong, nonatomic) IBOutlet UILabel *PopupRoomNameTitleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *PopupRoomCapacityLabel;
 @property (strong, nonatomic) IBOutlet UILabel *PopupRoomDescriptionLabel;
@@ -38,6 +38,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *Popup4ItemsLabel;
 @property (strong, nonatomic) IBOutlet UIButton *PopupRoomBookButton;
 @property (strong, nonatomic) IBOutlet UILabel *PopupRoomStateLabel;
+
+- (IBAction)geolocButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *geolocButton;
 
 - (void) setInfos:(Room*)room;
 

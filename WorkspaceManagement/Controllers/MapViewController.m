@@ -30,8 +30,8 @@
     self.sliderValue  = 1;
     self.stepForSwipe = 1;
     
+
     [self initMapWize];
-    [self initContainerSwipeGesture];
     
     // FOR SENSOR UPDATE
     self.finishedSensorUpdate = true;
@@ -42,6 +42,11 @@
 - (void) viewDidAppear:(BOOL)animated {
 
     [self initNavbar];
+    
+    [self performSelector:@selector(initContainerSwipeGesture) withObject:nil afterDelay:1.0];
+    // Because of small bug
+    // [self initContainerSwipeGesture];
+   
     self.stepForSwipe = 1;
     
     if(self.filterViewController == nil){
@@ -55,16 +60,11 @@
     }
     
     [self shouldStartAsynchtaskSensors];
-    [self getMapStates];
     [self decide];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
     self.stepForSwipe = 1;
-}
-
-- (void) getMapStates {
-    [self updateMap];
 }
 
 // FILTER DELEGATE
@@ -76,11 +76,7 @@
         case 1:
             self.currentTime = [schedulesArray objectAtIndex:position];
             break;
-        case 2:
-            self.currentTime = [schedulesArray objectAtIndex:position];
-            self.nextTime = [schedulesArray objectAtIndex:position+1];
-            break;
-            
+    
         default:
             self.currentTime = [schedulesArray objectAtIndex:position];
             self.nextTime = [schedulesArray objectAtIndex:position+1];
@@ -327,6 +323,13 @@
     [self.navigationController pushViewController:reservation animated:YES];
 }
 
+-(void) didClickOnGeoloc:(Room*)room{
+  [self.popupDetailViewController dismissViewControllerAnimated:YES completion:nil];
+    FindRoomViewController *findRoom = [self.storyboard instantiateViewControllerWithIdentifier:@"FindRoomViewController"];
+
+    [self.navigationController pushViewController:findRoom animated:YES];
+}
+
 // MANAGER DELEGATE
 
 - (void)finishCheckWithUpdate:(BOOL)updateNeeded {
@@ -547,6 +550,7 @@
                                               selector:@selector(checkSensors:)
                                               userInfo:nil repeats:YES];
         
+        // Can not disappear or will bug ;)
         NSRunLoop *runner = [NSRunLoop currentRunLoop];
         [runner addTimer:self.timer forMode: NSDefaultRunLoopMode];
         self.asynchtaskRunning = true;

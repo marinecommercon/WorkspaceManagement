@@ -6,13 +6,6 @@
 //  Copyright © 2016 docapost. All rights reserved.
 //
 
-#define UIColorFromRGB(rgbValue) \
-[UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
-green:((float)((rgbValue & 0x00FF00) >>  8))/255.0 \
-blue:((float)((rgbValue & 0x0000FF) >>  0))/255.0 \
-alpha:1.0]
-
-
 #import "NavBarInstance.h"
 #import <UIKit/UIKit.h>
 
@@ -33,7 +26,7 @@ static NavBarInstance *_sharedInstance;
     _navItem.title = title;
     
     [_myNavBar setItems:@[_navItem]];
-    [_myNavBar setBarTintColor:UIColorFromRGB(0xFFFFFF)];
+    [_myNavBar setBarTintColor:[UIColor whiteColor]];
     _myNavBar.translucent = NO;
     
     _myNavBar.backgroundColor = [UIColor clearColor];

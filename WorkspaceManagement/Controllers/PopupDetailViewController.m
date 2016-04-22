@@ -29,7 +29,6 @@
 
 - (void)buttonReservation
 {
-    NSLog(@"Reservation");
     [self.delegate didClickOnReservation:self.room];
 }
 
@@ -37,6 +36,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)geolocButton:(id)sender {
+    [self.delegate didClickOnGeoloc:self.room];
 }
 
 - (void) setInfos:(Room*)room {
@@ -100,34 +103,34 @@
 
 - (void) setStateInfos:(Room*)room {
     if([room.mapState isEqualToString:@"green_free"]){
-        [self.PopupImagesGeoloc setImage:[UIImage imageNamed:@"WSMImagesGeolocGreen"]];
+        [self.geolocButton setBackgroundImage:[UIImage imageNamed:@"WSMImagesGeolocGreen"] forState:UIControlStateNormal];
         self.view.layer.borderColor = [[UIColor bnpGreen] CGColor];
         [self.PopupRoomBookButton setHidden:true];
         [self.PopupRoomStateLabel setHidden:false];
         [self.PopupRoomStateLabel setText:@"Salle en accès libre"];
     }
     else if([room.mapState isEqualToString:@"green_book_ok"]){
-        [self.PopupImagesGeoloc setImage:[UIImage imageNamed:@"WSMImagesGeolocGreen"]];
+        [self.geolocButton setBackgroundImage:[UIImage imageNamed:@"WSMImagesGeolocGreen"] forState:UIControlStateNormal];
         self.view.layer.borderColor = [[UIColor bnpGreen] CGColor];
         [self.PopupRoomBookButton setHidden:false];
         [self.PopupRoomStateLabel setHidden:true];
     }
     else if([room.mapState isEqualToString:@"green_book_ko"]){
-        [self.PopupImagesGeoloc setImage:[UIImage imageNamed:@"WSMImagesGeolocGreen"]];
+        [self.geolocButton setBackgroundImage:[UIImage imageNamed:@"WSMImagesGeolocGreen"] forState:UIControlStateNormal];
         self.view.layer.borderColor = [[UIColor bnpGreen] CGColor];
         [self.PopupRoomBookButton setHidden:true];
         [self.PopupRoomStateLabel setHidden:false];
         [self.PopupRoomStateLabel setText:@"Réservation indisponible"];
     }
     else if([room.mapState isEqualToString:@"blue"]){
-        [self.PopupImagesGeoloc setImage:[UIImage imageNamed:@"WSMImagesGeolocBlue"]];
+        [self.geolocButton setBackgroundImage:[UIImage imageNamed:@"WSMImagesGeolocBlue"] forState:UIControlStateNormal];
         self.view.layer.borderColor = [[UIColor bnpBlue] CGColor];
         [self.PopupRoomBookButton setHidden:true];
         [self.PopupRoomStateLabel setHidden:false];
         [self.PopupRoomStateLabel setText:@"Votre réservation"];
     }
     else if([room.mapState isEqualToString:@"red"]){
-        [self.PopupImagesGeoloc setImage:[UIImage imageNamed:@"WSMImagesGeolocRed"]];
+        [self.geolocButton setBackgroundImage:[UIImage imageNamed:@"WSMImagesGeolocRed"] forState:UIControlStateNormal];
         self.view.layer.borderColor = [[UIColor bnpRed] CGColor];
         [self.PopupRoomBookButton setHidden:true];
         [self.PopupRoomStateLabel setHidden:false];

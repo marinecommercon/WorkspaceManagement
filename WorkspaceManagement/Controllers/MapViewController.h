@@ -46,5 +46,6 @@
 @property BOOL realTime;
 @property int sliderValue;
 
+- (void)navbarLeftButton;
 
 @end

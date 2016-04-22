@@ -35,7 +35,7 @@
     NSString *endTime = [Utils parseDateToTime:dateDeltaMore];
     
     // Save the reservation
-    [ModelDAO addReservationApp:self.beginTime end:endTime room:self.room author:self.textFieldAuthor.text subject:self.textFieldSubject.text];
+    [ModelDAO addReservation:self.beginTime end:endTime room:self.room author:self.textFieldAuthor.text subject:self.textFieldSubject.text type:@"app-initial"];
     
     ValidationReservationViewController *validation = [self.storyboard instantiateViewControllerWithIdentifier:@"ValidationReservationViewController"];
     [self.navigationController pushViewController:validation animated:YES];
