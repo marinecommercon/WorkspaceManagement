@@ -16,23 +16,31 @@
 
 #pragma mark GET
 
-+ (Room*)getRoomById:(NSString*)idMapwize;
++ (Room *)getRoomById:(NSString *)idMapwize;
 
-+ (Equipment*)getEquipmentByKey:(NSString*)key;
++ (Equipment *)getEquipmentByKey:(NSString *)key;
 
-+ (Sensor*)getSensorById:(NSString*)idSensor;
++ (Sensor *)getSensorById:(NSString *)idSensor;
 
-+ (NSArray*)getAllSensorsId;
++ (NSArray *)getAllSensorsId;
 
-+ (Reservation*)getReservationForBegin:(NSString*)beginTime room: (Room*)room;
++ (Reservation *)getReservationForBegin:(NSString *)beginTime
+                                   room:(Room *)room;
 
 #pragma mark ADD
 
-+ (void)addReservation:(NSString*)begin end:(NSString*)end room:(Room*)room author:(NSString*)author subject:(NSString*)subject type:(NSString*)type;
++ (void)addReservation:(NSString *)begin
+                   end:(NSString *)end
+                  room:(Room *)room
+                author:(NSString *)author
+               subject:(NSString *)subject
+                  type:(NSString *)type;
 
 #pragma mark UPDATE SENSORS
 
-+ (BOOL)checkSensorWithId: (NSString*)idSensor eventDate:(NSDate*)eventDate eventValue:(NSString*)eventValue;
++ (BOOL)checkSensorWithId:(NSString *)idSensor
+                eventDate:(NSDate *)eventDate
+               eventValue:(NSString *)eventValue;
 
 #pragma mark SET DATABASE
 
@@ -58,6 +66,6 @@
 
 + (void)deleteAllSensors;
 
-+ (void)deleteReservationsFromRoom:(Room*)room;
++ (void)deleteReservationsFromRoom:(Room *)room;
 
 @end

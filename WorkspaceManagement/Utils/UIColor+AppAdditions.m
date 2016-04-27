@@ -8,46 +8,21 @@
 
 #import "UIColor+AppAdditions.h"
 
+UIColor *_colorWithRGBA(unsigned int r, unsigned int g, unsigned int b, CGFloat a)
+{
+    return [UIColor colorWithRed:(float)r/255.0 green:(float)g/255.0 blue:(float)b/255.0 alpha:a];
+}
+
 @implementation UIColor (AppAdditions)
 
-+ (UIColor *)bnpBlue
-{
-    return [UIColor colorWithRed:111.0/255.0 green:134.0/255.0 blue:204.0/255.0 alpha:1.0];
-}
++ (UIColor *)bnpBlue        { return _colorWithRGBA(111, 134, 204, 1.0); }
++ (UIColor *)bnpBlueLight   { return _colorWithRGBA(194, 205, 241, 1.0); }
++ (UIColor *)bnpGrey        { return _colorWithRGBA(149, 149, 149, 1.0); }
++ (UIColor *)bnpGreen       { return _colorWithRGBA( 90, 183, 147, 1.0); }
++ (UIColor *)bnpGreenLight  { return _colorWithRGBA(193, 229, 217, 1.0); }
++ (UIColor *)bnpRed         { return _colorWithRGBA(202,  84, 105, 1.0); }
++ (UIColor *)bnpRedLight    { return _colorWithRGBA(238, 194, 203, 1.0); }
++ (UIColor *)bnpPink        { return _colorWithRGBA(255,   0, 186, 1.0); }
 
-+ (UIColor *)bnpBlueLight
-{
-    return [UIColor colorWithRed:194.0/255.0 green:205.0/255.0 blue:241.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)bnpGrey
-{
-    return [UIColor colorWithRed:149.0/255.0 green:149.0/255.0 blue:149.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)bnpGreen
-{
-    return [UIColor colorWithRed:90.0/255.0 green:183.0/255.0 blue:147.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)bnpGreenLight
-{
-    return [UIColor colorWithRed:193.0/255.0 green:229.0/255.0 blue:217.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)bnpRed
-{
-    return [UIColor colorWithRed:202.0/255.0 green:84.0/255.0 blue:105.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)bnpRedLight
-{
-    return [UIColor colorWithRed:238.0/255.0 green:194.0/255.0 blue:203.0/255.0 alpha:1.0];
-}
-
-+ (UIColor *)bnpPink
-{
-    return [UIColor colorWithRed:255.0/255.0 green:0.0/255.0 blue:186.0/255.0 alpha:1.0];
-}
 
 @end

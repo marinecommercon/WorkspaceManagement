@@ -10,8 +10,8 @@
 
 @interface ScheduleTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel  *timeUpLabel;
-@property (weak, nonatomic) IBOutlet UILabel  *timeDownLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeUpLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeDownLabel;
 @property (weak, nonatomic) IBOutlet UIButton *buttonCell;
 @property (weak, nonatomic) IBOutlet UIImageView *imageState1;
 @property (weak, nonatomic) IBOutlet UIImageView *imageState2;

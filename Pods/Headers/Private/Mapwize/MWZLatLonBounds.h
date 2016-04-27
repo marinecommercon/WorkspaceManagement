@@ -1,0 +1,1 @@
+../../../Mapwize/Pod/Classes/MWZLatLonBounds.h

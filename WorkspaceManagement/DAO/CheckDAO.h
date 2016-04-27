@@ -14,24 +14,24 @@
 
 @interface CheckDAO : NSObject
 
-+ (BOOL)checkAvailabilityBegin:(NSString*)begin withEnd:(NSString*)end forRoom:(Room*)room;
++ (BOOL)checkAvailabilityBegin:(NSString *)begin withEnd:(NSString *)end forRoom:(Room *)room;
 
-+ (NSString*)checkReservationTypeIfExist:(NSString*)begin withEnd:(NSString*)end forRoom:(Room*)room;
++ (NSString *)checkReservationTypeIfExist:(NSString *)begin withEnd:(NSString *)end forRoom:(Room *)room;
 
-+ (BOOL)checkAvailability: (NSString*)begin withEnd:(NSString*)end;
++ (BOOL)checkAvailability:(NSString *)begin withEnd:(NSString *)end;
 
-+ (NSString*)checkCurrentReservationType:(NSString*)currentTime room:(Room*)room;
++ (NSString *)checkCurrentReservationType:(NSString *)currentTime room:(Room *)room;
 
-+ (NSString*)checkReservationType:(NSString*)nextHalfHour duration:(int)sliderValue room:(Room*)room;
++ (NSString *)checkReservationType:(NSString *)nextHalfHour duration:(int)sliderValue room:(Room *)room;
 
-+ (NSString*)checkReservationType:(NSString*)nextHalfHour room:(Room*)room;
++ (NSString *)checkReservationType:(NSString *)nextHalfHour room:(Room *)room;
 
-+ (int)getMaxDuration:(NSString*)beginTime room: (Room*)room;
++ (int)getMaxDuration:(NSString *)beginTime room: (Room*)room;
 
-+ (double)getMaxDurationForBeginTime:(NSString*)beginTime;
++ (double)getMaxDurationForBeginTime:(NSString *)beginTime;
 
-+ (BOOL)getStateForRoom:(NSString*)idMapwize time:(NSString*)time timeInterval:(int)interval;
++ (BOOL)getStateForRoom:(NSString *)idMapwize time:(NSString *)time timeInterval:(int)interval;
 
-+ (BOOL)roomHasSensorOn:(Room*)room;
++ (BOOL)roomHasSensorOn:(Room *)room;
 
 @end

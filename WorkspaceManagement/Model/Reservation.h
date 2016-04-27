@@ -14,11 +14,11 @@
 
 @interface Reservation : NSManagedObject
 
-@property (nonatomic, retain) NSString * beginTime;
-@property (nonatomic, retain) NSString * endTime;
-@property (nonatomic, retain) NSString * type;
-@property (nonatomic, retain) NSString * author;
-@property (nonatomic, retain) NSString * subject;
-@property (nonatomic, retain) Room     * room;
+@property (nonatomic, retain) NSString *beginTime;
+@property (nonatomic, retain) NSString *endTime;
+@property (nonatomic, retain) NSString *type;
+@property (nonatomic, retain) NSString *author;
+@property (nonatomic, retain) NSString *subject;
+@property (nonatomic, retain) Room     *room;
 
 @end

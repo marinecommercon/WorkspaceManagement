@@ -14,9 +14,9 @@
 
 @interface Sensor : NSManagedObject
 
-@property (nonatomic, retain) NSString * idSensor;
-@property (nonatomic, retain) NSDate   * eventDate;
-@property (nonatomic, retain) NSString * eventValue;
-@property (nonatomic, retain) Room     * room;
+@property (nonatomic, retain) NSString *idSensor;
+@property (nonatomic, retain) NSDate   *eventDate;
+@property (nonatomic, retain) NSString *eventValue;
+@property (nonatomic, retain) Room     *room;
 
 @end

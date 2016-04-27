@@ -8,7 +8,8 @@
 
 #import "Manager.h"
 
-@implementation Manager {
+@implementation Manager
+{
     int count;
     BOOL stopExecution;
     BOOL updateWasNeeded;
@@ -21,15 +22,20 @@
 // It calls WSDownloader, giving the date params for the url
 // The webservice with fake devices is available from 23-31 march 2016
 
-- (void) checkSensors:(NSArray*)deviceList {
-    
-    self.ws          = [[WSDownloader alloc]init];
+- (void) checkSensors:(NSArray*)deviceList
+{
+    self.ws          = [[WSDownloader alloc] init];
     self.ws.delegate = self;
     self.deviceList  = deviceList;
 
-//    NSDate *now              = [NSDate date];
-    NSDate *now              = [[NSDate date] dateByAddingTimeInterval:-25*24*60*60];
-    NSDate *sevenDaysAgo     = [now dateByAddingTimeInterval:-27*24*60*60];
+    NSDate *now              = [NSDate date];
+    NSDate *sevenDaysAgo     = [now dateByAddingTimeInterval:-7*24*60*60];
+    
+    // Patch to query Hub between 23 and 31 of march while the hub doesn't deliver new data
+    now = [NSDate dateWithTimeIntervalSince1970:1458691200]; // 20160323:000000
+    sevenDaysAgo = [NSDate dateWithTimeIntervalSince1970:1459382400]; // 20160331:000000
+    
+    
     NSDateFormatter *dformat = [[NSDateFormatter alloc]init];
     [dformat setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     startDate = [dformat  stringFromDate:sevenDaysAgo];
@@ -38,7 +44,9 @@
     count = 0;
     updateWasNeeded = false;
     
-    [self.ws startDownload:[deviceList objectAtIndex:count] withStartDate:startDate andEndDate:endDate];
+    [self.ws startDownload:[deviceList objectAtIndex:count]
+             withStartDate:startDate
+                andEndDate:endDate];
 }
 
 // DOWNLOADER DELEGATE
@@ -46,11 +54,15 @@
 
 - (void)downloadFailed:(NSError *)error
 {
-    if(error.code == -1009){
+    if(error.code == -1009)
+    {
         NSLog(@"Lost Connection");
     }
-    if(count < [self.deviceList count]){
-        [self.ws startDownload:[self.deviceList objectAtIndex:count] withStartDate:startDate andEndDate:endDate];
+    if(count < self.deviceList.count)
+    {
+        [self.ws startDownload:self.deviceList[count]
+                 withStartDate:startDate
+                    andEndDate:endDate];
     }
 }
 
@@ -59,43 +71,54 @@
 
 - (void) didSuccessDownload:(NSData *)data
 {
-    [self startComparison:[self.deviceList objectAtIndex:count] withData:data];
+    [self startComparison:self.deviceList[count]
+                 withData:data];
 }
 
 // If one of the sensor values changed since last update, then we'll inform MapViewController that it should update the map
 
-- (void) startComparison:(NSString *)idSensor withData:(NSData *)data {
+- (void) startComparison:(NSString *)idSensor withData:(NSData *)data
+{
+    NSDictionary *results           = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    NSDictionary *resultsDictionary = results[@"results"][0];
+    NSString *eventDateString       = resultsDictionary[@"eventDate"];
+    NSString *eventValue            = resultsDictionary[@"value"];
     
-    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    NSDictionary *resultsDictionary = [[results objectForKey:@"results"] objectAtIndex:0];
-    NSString *eventDateString = [resultsDictionary objectForKey:@"eventDate"];
-    NSString *eventValue      = [resultsDictionary objectForKey:@"value"];
-    
-    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc]init];
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     NSDate *eventDate = [dateFormatter dateFromString:eventDateString];
     
     //  Check if the sensor exist in database
     
     Sensor *mySensor = [ModelDAO getSensorById:idSensor];
-    if(mySensor != nil){
+    
+    if(mySensor != nil)
+    {
         
         // Compare the value in database with the value downloaded
         // If not, update the value and the eventDate in database
         
-        if([ModelDAO checkSensorWithId:idSensor eventDate:eventDate eventValue:eventValue]){
+        if([ModelDAO checkSensorWithId:idSensor
+                             eventDate:eventDate
+                            eventValue:eventValue])
+        {
             updateWasNeeded = true;
         } 
     }
     
     // Start another download if the list of sensors is not completed
     count++;
-    if(count < [self.deviceList count]){
-        [self.ws startDownload:[self.deviceList objectAtIndex:count] withStartDate:startDate andEndDate:endDate];
+    
+    if(count < self.deviceList.count)
+    {
+        [self.ws startDownload:self.deviceList[count]
+                 withStartDate:startDate
+                    andEndDate:endDate];
     }
     
     // All sensors have been dowloaded
-    else if (count == [self.deviceList count]){
+    else if (count == self.deviceList.count)
+    {
         NSLog(@"Finished to Execute WebService");
         
         // Inform MapViewController that it should/shouldn't update the map

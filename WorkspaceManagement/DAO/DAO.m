@@ -11,87 +11,88 @@
 
 @implementation DAO
 
-+ (NSManagedObjectContext *)getContext {
-    id delegate = [[UIApplication sharedApplication]delegate];
-    return [delegate managedObjectContext];
++ (NSManagedObjectContext *)getContext
+{
+    AppDelegate *appDelegate = UIApplication.sharedApplication.delegate;
+    return appDelegate.managedObjectContext;
 }
 
-+ (void) saveContext {
++ (void)saveContext
+{
     NSError *saveError = nil;
     [[self getContext] save:&saveError];
 }
 
-+ (NSManagedObject*) getInstance:(NSString*) type {
-    return [NSEntityDescription insertNewObjectForEntityForName:type inManagedObjectContext:[self getContext]];
++ (NSManagedObject*)getInstance:(NSString *)type
+{
+    return [NSEntityDescription insertNewObjectForEntityForName:type
+                                         inManagedObjectContext:[self getContext]];
 }
 
-+ (NSEntityDescription *) getEntityDescription:(NSString *)type {
-    return [NSEntityDescription entityForName:type inManagedObjectContext:[self getContext]];
++ (NSEntityDescription *)getEntityDescription:(NSString *)type
+{
+    return [NSEntityDescription entityForName:type
+                       inManagedObjectContext:[self getContext]];
 }
 
 
-+ (NSArray *)getObjects:(NSString *)type withPredicate:(NSPredicate *)predicate {
-    
++ (NSArray *)getObjects:(NSString *)type withPredicate:(NSPredicate *)predicate
+{
     NSFetchRequest *request         = [[NSFetchRequest alloc] init];
     NSEntityDescription *entityDesc = [self getEntityDescription:type];
     [request setEntity:entityDesc];
     
-    if(predicate) {
+    if(predicate)
         [request setPredicate:predicate];
-    }
     
     NSError *error;
     NSArray *objects = [[self getContext] executeFetchRequest:request error:&error];
     
-    if([objects count] == 0) {
+    // return an array if at least 1 object exists.
+    if( !objects || objects.count == 0)
         return nil;
-    }
+    
     return objects;
 }
 
-+ (NSManagedObject *)getObject:(NSString *)type withPredicate:(NSPredicate *)predicate {
++ (NSManagedObject *)getObject:(NSString *)type withPredicate:(NSPredicate *)predicate
+{
+    NSArray *objects = [self getObjects:type withPredicate:predicate];
     
-    NSFetchRequest *request         = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entityDesc = [self getEntityDescription:type];
-    [request setEntity:entityDesc];
-    
-    if(predicate) {
-        [request setPredicate:predicate];
-    }
-    
-    NSError *error;
-    NSArray *objects = [[self getContext] executeFetchRequest:request error:&error];
-    
-    if([objects count] == 0) {
+    if( !objects )
         return nil;
-    }
-    return [objects objectAtIndex:0];
+    
+    return objects[0];
 }
 
-+ (NSArray *)getObjects:(NSString *)type withNot:(NSArray *)array {
-    
++ (NSArray *)getObjects:(NSString *)type withNot:(NSArray *)array
+{
     NSMutableArray *completeArray = [NSMutableArray arrayWithArray:[self getObjects:type withPredicate:nil]];
     
-    if(array) {
-        for (NSManagedObject *obj in array) {
-            if ([completeArray containsObject:obj]) {
-                [completeArray removeObject:obj];
-            }
-        }
+    if(array)
+    {
+//        for (NSManagedObject *obj in array) {
+//            if ([completeArray containsObject:obj]) {
+//                [completeArray removeObject:obj];
+//            }
+//        }
+        [completeArray removeObjectsInArray:array];
     }
     
     return [NSArray arrayWithArray:completeArray];
 }
 
-+ (void)deleteObject:(NSManagedObject *)object {
++ (void)deleteObject:(NSManagedObject *)object
+{
     [[self getContext] deleteObject:object];
     [self saveContext];
 }
 
-+ (void)deleteAllObjects:(NSArray *)managedObjects {
-    for (NSManagedObject * mo in managedObjects) {
++ (void)deleteAllObjects:(NSArray *)managedObjects
+{
+    for (NSManagedObject * mo in managedObjects)
         [[self getContext] deleteObject:mo];
-    }
+
     [self saveContext];
 }
 

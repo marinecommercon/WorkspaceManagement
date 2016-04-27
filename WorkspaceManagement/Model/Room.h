@@ -18,16 +18,16 @@
 
 @interface Room : NSManagedObject
 
-@property (nonatomic, retain) NSString  * name;
-@property (nonatomic, retain) NSString  * idMapwize;
-@property (nonatomic, retain) NSNumber  * maxPeople;
-@property (nonatomic, retain) NSString  * type;
-@property (nonatomic, retain) NSString  * infoRoom;
-@property (nonatomic, retain) NSString  * mapState;
+@property (nonatomic, retain) NSString  *name;
+@property (nonatomic, retain) NSString  *idMapwize;
+@property (nonatomic, retain) NSNumber  *maxPeople;
+@property (nonatomic, retain) NSString  *type;
+@property (nonatomic, retain) NSString  *infoRoom;
+@property (nonatomic, retain) NSString  *mapState;
 
-@property (nonatomic, retain) NSSet     * reservations;
-@property (nonatomic, retain) NSSet     * sensors;
-@property (nonatomic, retain) NSSet     * equipments;
+@property (nonatomic, retain) NSSet     *reservations;
+@property (nonatomic, retain) NSSet     *sensors;
+@property (nonatomic, retain) NSSet     *equipments;
 
 @end
 

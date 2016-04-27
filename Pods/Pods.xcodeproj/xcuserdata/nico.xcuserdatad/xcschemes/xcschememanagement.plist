@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>CCMPopup.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Mapwize-Mapwize.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Mapwize.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-WorkspaceManagement.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>08ED08622852565D675E0AEB6BBC25C3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>39610022AE5A634B450884097FF715FE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>493A92462A8D6801BDB0E3BDFE718EFB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EBA2D1885DB86B08F68D2A258817DC68</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

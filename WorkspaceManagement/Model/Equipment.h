@@ -14,9 +14,9 @@
 
 @interface Equipment : NSManagedObject
 
-@property (nonatomic, retain) NSString   * key;
-@property (nonatomic, retain) NSString   * name;
-@property (nonatomic, retain) NSNumber   * filterState;
-@property (nonatomic, retain) Room       * room;
+@property (nonatomic, retain) NSString   *key;
+@property (nonatomic, retain) NSString   *name;
+@property (nonatomic, retain) NSNumber   *filterState;
+@property (nonatomic, retain) Room       *room;
 
 @end

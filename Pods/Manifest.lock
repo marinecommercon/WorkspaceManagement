@@ -1,0 +1,13 @@
+PODS:
+  - CCMPopup (1.1.0)
+  - Mapwize (1.4.0)
+
+DEPENDENCIES:
+  - CCMPopup
+  - Mapwize
+
+SPEC CHECKSUMS:
+  CCMPopup: e41fad5b8a0823c9cddea8eab6d431670c9dabe5
+  Mapwize: 3a0aed15e4c263f41134ceb9053ce36ce2a4a7cf
+
+COCOAPODS: 0.39.0

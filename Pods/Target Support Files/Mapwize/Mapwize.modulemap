@@ -1,0 +1,6 @@
+framework module Mapwize {
+  umbrella header "Mapwize-umbrella.h"
+
+  export *
+  module * { export * }
+}
