@@ -24,6 +24,7 @@
 @synthesize textFieldAdd;
 @synthesize textFieldAuthor;
 @synthesize textFieldSubject;
+@synthesize sliderInitialValue;
 
 @synthesize buttonValidationReservation;
 
@@ -79,7 +80,7 @@
 
 // HANDLE SLIDER
 
-- (void) initSlider
+- (void)initSlider
 {
     // Check the maximum duration possible
     self.maxValue = [CheckDAO getMaxDuration:self.beginTime room:self.room];
@@ -87,7 +88,7 @@
     NSInteger numberOfSteps = 8;
     self.slider.maximumValue = numberOfSteps;
     self.slider.minimumValue = 0;
-    self.slider.value = 1;
+    self.slider.value = self.sliderInitialValue;
     self.slider.continuous   = YES;
     
     [self.slider addTarget:self

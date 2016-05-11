@@ -107,6 +107,7 @@
     switch( self.stepForSwipe )
     {
         case 1 : helpImageName = @"TutoSelectionEspace"; break;
+        case 2 : 
         case 3 : helpImageName = @"TutoChoixCriteres"; break;
     }
     
@@ -154,13 +155,13 @@
     [self decide];
 }
 
-- (void) didChangeSlider:(int)sliderValue
+- (void)didChangeSlider:(int)sliderValue
 {
     self.sliderValue = sliderValue;
     [self decide];
 }
 
-- (void) decide
+- (void)decide
 {
     // INIT ROOMS
     NSPredicate *predicateAppDsi = [NSPredicate predicateWithFormat:@"type != %@", kReservationTypeFree];
@@ -444,7 +445,7 @@
     Room *room = [ModelDAO roomWithId:place.identifier];
     
     // Only if room is not grey
-    if( room && ![room.mapState isEqualToString:kDAORoomMapStateGrey] )
+    if( room ) // && ![room.mapState isEqualToString:kDAORoomMapStateGrey] )
     {
         self.popupDetailViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"PopupDetailController"];
         self.popupDetailViewController.room = room;
@@ -640,6 +641,42 @@
         NSLog(@"Execute WebService");
         [self.manager checkSensors:ModelDAO.allSensorsId];
         self.finishedSensorUpdate = NO;
+    }
+}
+
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
+{
+    static unsigned int _shakeCount = 0;
+    
+    if (motion == UIEventSubtypeMotionShake)
+    {
+        _shakeCount++;
+        
+        if( _shakeCount % 3 == 0 )
+        {
+            _shakeCount = 0;
+            
+            UIAlertController * alert =   [UIAlertController alertControllerWithTitle:@"Attention"
+                                                                              message:@"Voulez-vous vraiment remettre à zéro les données ?"
+                                                                       preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* yesButton = [UIAlertAction actionWithTitle:@"Oui"
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action)
+                                        {
+                                            [ModelDAO resetDatabase:YES];
+                                        }];
+            UIAlertAction* noButton = [UIAlertAction actionWithTitle:@"Non"
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            
+            [alert addAction:yesButton];
+            [alert addAction:noButton];
+            [self presentViewController:alert animated:YES completion:nil];
+
+            
+
+        }
     }
 }
 

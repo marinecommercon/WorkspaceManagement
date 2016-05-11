@@ -136,144 +136,58 @@
 // State 2 : is selected
 // State 0 : Can not be selected
 
-- (IBAction)retroAction:(id)sender
+- (IBAction)equipmentTap:(UIButton *)sender
 {
-    Equipment *retro = [ModelDAO equipmentWithKey:kDAOEquipmentTypeRetro];
+    Equipment *e = nil;
+    NSString *equipmentType  = nil;
+    NSString *buttonSelected = nil;
+    NSString *buttonOff      = nil;
     
-//    if( [retro.filterState isEqualToNumber:@(1)] )
-//    {
-//        retro.filterState = @(2);
-//        //[self.retroButton setBackgroundColor:[UIColor bnpGreen]];
-//        UIImage *image = [UIImage imageNamed: @"WSMImagesBtnSelectedRetro"];
-//        [self.retroButton setImage:image forState:UIControlStateNormal];
-//    }
-//    else if( [retro.filterState isEqualToNumber: @(2)] )
-//    {
-//        [retro setFilterState:@(1)];
-//        [self.retroButton setBackgroundColor:nil];
-//    }
-    
-    switch( (EquipmentSelectableState)retro.filterState.intValue )
+    if( sender == self.retroButton )
     {
-        case kEquipmentUnselectable: break;
-
-        case kEquipmentSelectable : // can be selected
-            retro.filterState = @(kEquipmentSelected);
-            //[self.retroButton setBackgroundColor:[UIColor bnpGreen]];
-            [self.retroButton setImage:[UIImage imageNamed: @"WSMImagesBtnSelectedRetro"]
-                              forState:UIControlStateNormal];
-            break;
-            
-        case kEquipmentSelected : // is selected
-            retro.filterState = @(kEquipmentSelectable);
-            [self.retroButton setImage:[UIImage imageNamed: @"WSMImagesBtnOffRetro"]
-                              forState:UIControlStateNormal];
-            break;
+        equipmentType  = kDAOEquipmentTypeRetro;
+        buttonSelected = @"WSMImagesBtnSelectedRetro";
+        buttonOff      = @"WSMImagesBtnOffRetro";
+    }
+    else if( sender == self.screenButton )
+    {
+        equipmentType = kDAOEquipmentTypeScreen;
+        buttonSelected = @"WSMImagesBtnSelectedScreen";
+        buttonOff      = @"WSMImagesBtnOffScreen";
+    }
+    else if( sender == self.tableButton )
+    {
+        equipmentType = kDAOEquipmentTypeTable;
+        buttonSelected = @"WSMImagesBtnSelectedTable";
+        buttonOff      = @"WSMImagesBtnOffTable";
+    }
+    else if( sender == self.dockButton )
+    {
+        equipmentType = kDAOEquipmentTypeDock;
+        buttonSelected = @"WSMImagesBtnSelectedDock";
+        buttonOff      = @"WSMImagesBtnOffDock";
     }
 
-    [self checkBeforeNextRound];
-}
-- (IBAction)screenAction:(id)sender
-{
-    Equipment *screen = [ModelDAO equipmentWithKey:kDAOEquipmentTypeScreen];
+    if( !equipmentType )
+        return;
     
-//    if([screen.filterState isEqual: @(1)])
-//    {
-//        screen.filterState = @(2);
-//        UIImage *image = [UIImage imageNamed: @"WSMImagesBtnSelectedScreen"];
-//        [self.screenButton setImage:image forState:UIControlStateNormal];
-//    }
-//    else if([screen.filterState  isEqual: @(2)]){
-//        [screen setFilterState:@(1)];
-//        UIImage *image = [UIImage imageNamed: @"WSMImagesBtnOffScreen"];
-//        [self.screenButton setImage:image forState:UIControlStateNormal];
-//    }
+    e = [ModelDAO equipmentWithKey:equipmentType];
     
-    switch( (EquipmentSelectableState)screen.filterState.intValue )
-    {
-        case kEquipmentUnselectable: break;
-
-        case kEquipmentSelectable : // can be selected
-            screen.filterState = @(kEquipmentSelected);
-            [self.screenButton setImage:[UIImage imageNamed: @"WSMImagesBtnSelectedScreen"]
-                               forState:UIControlStateNormal];
-            break;
-            
-        case kEquipmentSelected : // is selected
-            screen.filterState = @(kEquipmentSelectable);
-            [self.screenButton setImage:[UIImage imageNamed: @"WSMImagesBtnOffScreen"]
-                               forState:UIControlStateNormal];
-            break;
-    }
-
-    [self checkBeforeNextRound];
-}
-
-- (IBAction)tableAction:(id)sender
-{
-    Equipment *table = [ModelDAO equipmentWithKey:kDAOEquipmentTypeTable];
+    if( !e )
+        return;
     
-//    if([table.filterState  isEqual: @(1)]){
-//        [table setFilterState:@(2)];
-//        //[self.tableButton setBackgroundColor:[UIColor bnpGreen]];
-//        UIImage *image = [UIImage imageNamed: @"WSMImagesBtnSelectedTable"];
-//        [self.tableButton setImage:image forState:UIControlStateNormal];
-//    }
-//    else if([table.filterState  isEqual: @(2)]){
-//        [table setFilterState:@(1)];
-//        UIImage *image = [UIImage imageNamed: @"WSMImagesBtnOffTable"];
-//        [self.tableButton setImage:image forState:UIControlStateNormal];;
-//    }
-    
-    switch( (EquipmentSelectableState)table.filterState.intValue )
-    {
-        case kEquipmentUnselectable: break;
-
-        case kEquipmentSelectable : // can be selected
-            table.filterState = @(kEquipmentSelected);
-            [self.tableButton setImage:[UIImage imageNamed: @"WSMImagesBtnSelectedTable"]
-                              forState:UIControlStateNormal];
-            break;
-            
-        case kEquipmentSelected : // is selected
-            table.filterState = @(kEquipmentSelectable);
-            [self.tableButton setImage:[UIImage imageNamed: @"WSMImagesBtnOffTable"]
-                              forState:UIControlStateNormal];;
-            break;
-    }
-    
-    [self checkBeforeNextRound];
-}
-- (IBAction)dockAction:(id)sender
-{
-    Equipment *dock = [ModelDAO equipmentWithKey:kDAOEquipmentTypeDock];
-    
-//    if([dock.filterState  isEqual: @(1)]){
-//        [dock setFilterState:@(2)];
-//        //[self.dockButton setBackgroundColor:[UIColor bnpGreen]];
-//        UIImage *image = [UIImage imageNamed: @"WSMImagesBtnSelectedDock"];
-//        [self.dockButton setImage:image forState:UIControlStateNormal];
-//    }
-//    else if([dock.filterState  isEqual: @(2)]){
-//        [dock setFilterState:@(1)];
-//        UIImage *image = [UIImage imageNamed: @"WSMImagesBtnOffDock"];
-//        [self.dockButton setImage:image forState:UIControlStateNormal];
-//    }
-    
-    switch( (EquipmentSelectableState)dock.filterState.intValue )
+    switch( (EquipmentSelectableState)e.filterState.intValue )
     {
         case kEquipmentUnselectable: break;
             
         case kEquipmentSelectable : // can be selected
-            dock.filterState = @(kEquipmentSelected);
-            [self.dockButton setImage:[UIImage imageNamed: @"WSMImagesBtnSelectedDock"]
-                              forState:UIControlStateNormal];
+            e.filterState = @(kEquipmentSelected);
+            [sender setImage:[UIImage imageNamed:buttonSelected] forState:UIControlStateNormal];
             break;
             
         case kEquipmentSelected : // is selected
-            dock.filterState = @(kEquipmentSelectable);
-            [self.dockButton setImage:[UIImage imageNamed: @"WSMImagesBtnOffDock"]
-                              forState:UIControlStateNormal];;
+            e.filterState = @(kEquipmentSelectable);
+            [sender setImage:[UIImage imageNamed:buttonOff] forState:UIControlStateNormal];
             break;
     }
     
@@ -332,14 +246,26 @@
     {
         equipment.filterState = @(kEquipmentSelectable);
         
+//        if( [equipment.key isEqualToString:kDAOEquipmentTypeRetro] )
+//            self.retroButton.backgroundColor = nil;
+//        else if( [equipment.key isEqualToString:kDAOEquipmentTypeScreen] )
+//            self.screenButton.backgroundColor = nil;
+//        else if( [equipment.key isEqualToString:kDAOEquipmentTypeTable] )
+//            self.tableButton.backgroundColor = nil;
+//        else if( [equipment.key isEqualToString:kDAOEquipmentTypeDock] )
+//            self.dockButton.backgroundColor = nil;
         if( [equipment.key isEqualToString:kDAOEquipmentTypeRetro] )
-            self.retroButton.backgroundColor = nil;
+            [self.retroButton setImage:[UIImage imageNamed: @"WSMImagesBtnOnRetro"]
+                              forState:UIControlStateNormal];
         else if( [equipment.key isEqualToString:kDAOEquipmentTypeScreen] )
-            self.screenButton.backgroundColor = nil;
+            [self.screenButton setImage:[UIImage imageNamed: @"WSMImagesBtnOnScreen"]
+                               forState:UIControlStateNormal];
         else if( [equipment.key isEqualToString:kDAOEquipmentTypeTable] )
-            self.tableButton.backgroundColor = nil;
+            [self.tableButton setImage:[UIImage imageNamed: @"WSMImagesBtnOnTable"]
+                              forState:UIControlStateNormal];
         else if( [equipment.key isEqualToString:kDAOEquipmentTypeDock] )
-            self.dockButton.backgroundColor = nil;
+            [self.dockButton setImage:[UIImage imageNamed: @"WSMImagesBtnOnDock"]
+                             forState:UIControlStateNormal];
 
         return true;
     }
@@ -474,11 +400,13 @@
                     action:@selector(valueChanged:)
           forControlEvents:UIControlEventValueChanged];
     
-    UISwipeGestureRecognizer *recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sliderTapped:)];
     
-    [recognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
-    [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
+    UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
+    swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
+    
+    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
+    swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
     
     UIImage *sliderMinTrackImage = [UIImage imageNamed: @"Maxtrackimage.png"];
     UIImage *sliderMaxTrackImage = [UIImage imageNamed: @"Mintrackimage.png"];
@@ -486,7 +414,8 @@
     [self.slider setMinimumTrackImage:sliderMinTrackImage forState:UIControlStateNormal];
     [self.slider setMaximumTrackImage:sliderMaxTrackImage forState:UIControlStateNormal];
     
-    [self.viewSlider addGestureRecognizer:recognizer];
+    [self.viewSlider addGestureRecognizer:swipeLeft];
+    [self.viewSlider addGestureRecognizer:swipeRight];
     [self.viewSlider addGestureRecognizer:tapGestureRecognizer];
 }
 
@@ -505,6 +434,9 @@
     float newValue = ((pointTaped.x - positionOfSlider.x) * slider.maximumValue) / widthOfSlider;
     int closedPoint = (int)roundf(newValue);
     slider.value = closedPoint;
+
+    [self valueChanged:self.slider];
+
     [self.delegate didChangeSlider:closedPoint];
 }
 
@@ -527,6 +459,8 @@
             
         default: break;
     }
+    
+    [self valueChanged:self.slider];
 }
 
 - (void)valueChanged:(UISlider *)sender
@@ -698,7 +632,7 @@
         
         if( (EquipmentSelectableState)dock.filterState.intValue == kEquipmentSelected )
         {
-            UIAlertController * alert=   [UIAlertController alertControllerWithTitle:@"Attention"
+            UIAlertController * alert =   [UIAlertController alertControllerWithTitle:@"Attention"
                                                                              message:@"Vous risquez de perdre votre sélection en cours. Souhaitez-vous poursuivre ?"
                                                                       preferredStyle:UIAlertControllerStyleAlert];
             

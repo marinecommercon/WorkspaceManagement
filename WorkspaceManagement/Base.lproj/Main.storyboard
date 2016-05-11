@@ -943,8 +943,8 @@
                             </imageView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Salle en accés libre" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXI-xK-XhO">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="19"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Helvetica-Oblique" family="Helvetica" pointSize="19"/>
+                                <color key="textColor" red="0.49411764705882355" green="0.47843137254901957" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kc8-E9-Oq6">
@@ -967,6 +967,7 @@
                             <constraint firstItem="c2x-r2-sUr" firstAttribute="height" secondItem="KZW-OH-ZZ5" secondAttribute="height" multiplier="0.1" id="5Q8-R0-8wE"/>
                             <constraint firstItem="cWd-uW-FqN" firstAttribute="centerX" secondItem="KZW-OH-ZZ5" secondAttribute="centerX" multiplier="0.38" id="9Bu-vU-2HM"/>
                             <constraint firstItem="c2x-r2-sUr" firstAttribute="leading" secondItem="KZW-OH-ZZ5" secondAttribute="leadingMargin" constant="27" id="9yu-1L-hpG"/>
+                            <constraint firstItem="NXI-xK-XhO" firstAttribute="centerY" secondItem="KYe-KO-pqv" secondAttribute="centerY" id="A3B-uQ-DmI"/>
                             <constraint firstItem="jQg-da-LBt" firstAttribute="centerY" secondItem="KZW-OH-ZZ5" secondAttribute="centerY" multiplier="0.83" id="BcK-4j-iEf"/>
                             <constraint firstItem="JOS-LF-aRC" firstAttribute="leading" secondItem="KZW-OH-ZZ5" secondAttribute="leadingMargin" constant="26" id="Cy7-bG-F48"/>
                             <constraint firstItem="cWd-uW-FqN" firstAttribute="width" secondItem="KZW-OH-ZZ5" secondAttribute="width" multiplier="0.18" id="D1k-3L-5WG"/>
@@ -1024,6 +1025,17 @@
                             <constraint firstItem="EsW-cC-vmk" firstAttribute="centerX" secondItem="KZW-OH-ZZ5" secondAttribute="centerX" multiplier="1.03" id="x64-6x-8SZ"/>
                             <constraint firstItem="Zxb-ez-KFD" firstAttribute="centerX" secondItem="KZW-OH-ZZ5" secondAttribute="centerX" multiplier="1.21" id="ynP-fL-P1V"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="A3B-uQ-DmI"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular">
+                            <mask key="constraints">
+                                <include reference="A3B-uQ-DmI"/>
+                                <exclude reference="Dfc-FG-1qD"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
@@ -1337,7 +1349,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" image="WSMImagesBtnOnRetro"/>
                                         <connections>
-                                            <action selector="retroAction:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="3vf-yV-1Ak"/>
+                                            <action selector="equipmentTap:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="if7-6r-aRO"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T2f-jM-N4y">
@@ -1349,7 +1361,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" image="WSMImagesBtnOnScreen"/>
                                         <connections>
-                                            <action selector="screenAction:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="H7h-2x-b8F"/>
+                                            <action selector="equipmentTap:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="39h-lw-S5h"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5R-RE-q96">
@@ -1361,7 +1373,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" image="WSMImagesBtnOnTable"/>
                                         <connections>
-                                            <action selector="tableAction:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="xkk-an-9im"/>
+                                            <action selector="equipmentTap:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="cLC-90-mCh"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVo-eo-eW4">
@@ -1373,7 +1385,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" image="WSMImagesBtnOnDock"/>
                                         <connections>
-                                            <action selector="dockAction:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="8az-Hz-6rf"/>
+                                            <action selector="equipmentTap:" destination="LZh-e3-Bcn" eventType="touchUpInside" id="hGj-p7-hZO"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Dock pour ordinateur" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="IME-sp-jLI">

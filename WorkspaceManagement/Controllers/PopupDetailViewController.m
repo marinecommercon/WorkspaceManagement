@@ -24,19 +24,25 @@
 {
     [super viewDidLoad];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
     PopupRoomBookButton.layer.cornerRadius = 5;
     PopupRoomBookButton.clipsToBounds = YES;
     
     // Do any additional setup after loading the view.
     self.view.layer.borderWidth = 3;
     
-//    [ButtonExit addTarget:self
-//                   action:@selector(setButton)
-//         forControlEvents:UIControlEventTouchUpInside];
+    //    [ButtonExit addTarget:self
+    //                   action:@selector(setButton)
+    //         forControlEvents:UIControlEventTouchUpInside];
     
-//    [PopupRoomBookButton addTarget:self
-//                            action:@selector(buttonReservation)
-//                  forControlEvents:UIControlEventTouchUpInside];
+    //    [PopupRoomBookButton addTarget:self
+    //                            action:@selector(buttonReservation)
+    //                  forControlEvents:UIControlEventTouchUpInside];
     
     self.PopupRoomNameTitleLabel.text = self.room.name;
     self.PopupRoomCapacityLabel.text = [NSString stringWithFormat:@"Capacité %@ personnes",self.room.maxPeople];
@@ -70,6 +76,7 @@
     
     viewController.room = self.room;
     viewController.beginTime = mapCtrl.reservationBeginTime;
+    viewController.sliderInitialValue = mapCtrl.sliderValue;
     
     [self presentViewController:viewController animated:NO completion:nil];
 }
@@ -247,14 +254,14 @@
                                        keyImage:            @"WSMImagesGeolocGreen",
                                        keyBorderColor:      UIColor.bnpGreen,
                                        keyBookButtonHidden: @(YES),
-                                       keyRoomStateHidden:  @(YES),
+                                       keyRoomStateHidden:  @(NO),
                                        keyRoomStateText:    @"Salle en accès libre"},
                                
                                kDAORoomMapStateGreenBook_OK: @{
                                        keyImage:            @"WSMImagesGeolocGreen",
                                        keyBorderColor:      UIColor.bnpGreen,
                                        keyBookButtonHidden: @(NO),
-                                       keyRoomStateHidden:  @(NO),
+                                       keyRoomStateHidden:  @(YES),
                                        keyRoomStateText:    @""},
                                
                                kDAORoomMapStateGreenBook_KO: @{

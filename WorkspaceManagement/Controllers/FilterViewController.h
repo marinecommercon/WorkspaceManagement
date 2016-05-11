@@ -43,17 +43,14 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *textFieldSearch;
 
-- (IBAction)retroAction:(id)sender;
-- (IBAction)screenAction:(id)sender;
-- (IBAction)tableAction:(id)sender;
-- (IBAction)dockAction:(id)sender;
+- (IBAction)equipmentTap:(UIButton *)sender;
 - (IBAction)stepperAction:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UILabel *peopleLabel;
 
-@property (strong,nonatomic) NSMutableArray *roomsAppDsiFiltered;
-@property (strong,nonatomic) NSMutableArray *roomsFreeFiltered;
-@property (strong,nonatomic) NSMutableArray *roomsNotCorresponding;
+@property (strong, nonatomic) NSMutableArray *roomsAppDsiFiltered;
+@property (strong, nonatomic) NSMutableArray *roomsFreeFiltered;
+@property (strong, nonatomic) NSMutableArray *roomsNotCorresponding;
 
 @property int  stepForSwipe;
 @property BOOL realTime;
