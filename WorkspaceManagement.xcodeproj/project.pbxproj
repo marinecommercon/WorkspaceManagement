@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		030113771CE3220200A09842 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 030113761CE3220200A09842 /* Constants.m */; };
+		0301137A1CE3326300A09842 /* UIFont+AppAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 030113791CE3326300A09842 /* UIFont+AppAdditions.m */; };
 		301832AE1CAD22A100964F60 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 301832AD1CAD22A100964F60 /* main.m */; };
 		301832B11CAD22A100964F60 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 301832B01CAD22A100964F60 /* AppDelegate.m */; };
 		301832B71CAD22A100964F60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 301832B51CAD22A100964F60 /* Main.storyboard */; };
@@ -51,6 +53,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		030113751CE321C700A09842 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../Constants.h; sourceTree = "<group>"; };
+		030113761CE3220200A09842 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = ../Constants.m; sourceTree = "<group>"; };
+		030113781CE3326300A09842 /* UIFont+AppAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+AppAdditions.h"; sourceTree = "<group>"; };
+		030113791CE3326300A09842 /* UIFont+AppAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+AppAdditions.m"; sourceTree = "<group>"; };
 		301832A91CAD22A100964F60 /* WorkspaceManagement.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkspaceManagement.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		301832AD1CAD22A100964F60 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		301832AF1CAD22A100964F60 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -276,8 +282,12 @@
 			children = (
 				782F419C1CBD3CD400AB2B58 /* Utils.h */,
 				782F419D1CBD3CD400AB2B58 /* Utils.m */,
+				030113751CE321C700A09842 /* Constants.h */,
+				030113761CE3220200A09842 /* Constants.m */,
 				782F41961CBD22B800AB2B58 /* UIColor+AppAdditions.h */,
 				782F41971CBD22B800AB2B58 /* UIColor+AppAdditions.m */,
+				030113781CE3326300A09842 /* UIFont+AppAdditions.h */,
+				030113791CE3326300A09842 /* UIFont+AppAdditions.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -449,6 +459,7 @@
 				3079FB401CC0E6C8006D4399 /* NavBarInstance.m in Sources */,
 				782F41941CBBF8E600AB2B58 /* Equipment.m in Sources */,
 				7810F92D1CB3C44900B259D3 /* MapViewController.m in Sources */,
+				030113771CE3220200A09842 /* Constants.m in Sources */,
 				7810F9271CB3C42F00B259D3 /* DSIViewController.m in Sources */,
 				7810F9161CB3C1DD00B259D3 /* ModelDAO.m in Sources */,
 				3079FB3D1CC0E644006D4399 /* FindRoomViewController.m in Sources */,
@@ -457,6 +468,7 @@
 				7887537D1CB504610077AA6A /* WSDownloader.m in Sources */,
 				7810F8EC1CAEAEB800B259D3 /* Reservation.m in Sources */,
 				3079FB371CC0E5FA006D4399 /* ReservationViewController.m in Sources */,
+				0301137A1CE3326300A09842 /* UIFont+AppAdditions.m in Sources */,
 				7887537A1CB5043E0077AA6A /* Manager.m in Sources */,
 				782F419E1CBD3CD400AB2B58 /* Utils.m in Sources */,
 				7810F9281CB3C42F00B259D3 /* FilterViewController.m in Sources */,

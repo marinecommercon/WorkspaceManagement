@@ -4,6 +4,8 @@
 use_frameworks!
 
 target 'WorkspaceManagement' do
+pod 'BIZPopupView' 
 pod 'Mapwize'
+pod 'IQKeyboardManager'
 pod "CCMPopup"
 end

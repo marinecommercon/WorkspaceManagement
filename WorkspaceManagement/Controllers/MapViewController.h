@@ -17,35 +17,35 @@
 #import "Manager.h"
 #import "UIColor+AppAdditions.h"
 #import "CheckDAO.H"
-#import "NavBarInstance.h"
+#import "BIZPopupViewController.h"
 
-@interface MapViewController : UIViewController <MWZMapDelegate, ManagerDelegate, FilterViewControllerDelegate, PopupDetailViewControllerDelegate>
+@interface MapViewController : UIViewController <MWZMapDelegate, ManagerDelegate, FilterViewControllerDelegate>
 
 @property (strong, nonatomic) PopupDetailViewController *popupDetailViewController;
-@property (strong,nonatomic) FilterViewController *filterViewController;
-@property (strong,nonatomic) NavBarInstance *navbar;
+@property (strong, nonatomic) FilterViewController *filterViewController;
+@property (strong, nonatomic) NavBarInstance *navbar;
 
-@property (strong,nonatomic) NSArray *roomsAppDsi;
-@property (strong,nonatomic) NSArray *roomsFree;
+@property (strong, nonatomic) NSArray *roomsAppDsi;
+@property (strong, nonatomic) NSArray *roomsFree;
 
-@property (strong, nonatomic)CLLocationManager* locationManager;
+@property (strong, nonatomic) CLLocationManager* locationManager;
 @property (strong, nonatomic) IBOutlet UIView *container;
 @property (weak, nonatomic) IBOutlet MWZMapView *myMapView;
-@property (nonatomic, strong) Manager *manager;
+@property (strong, nonatomic ) Manager *manager;
 
 // Params to handle MapViewController
-@property int  stepForSwipe;
+@property (assign, nonatomic) int  stepForSwipe;
 @property BOOL asynchtaskRunning;
 @property BOOL finishedSensorUpdate;
 @property (nonatomic, strong) NSTimer *timer;
 
 // Params to make decision (states of rooms)
 @property BOOL filtersON;
-@property (nonatomic,strong)  NSString *currentTime;
-@property (nonatomic,strong)  NSString *nextTime;
+@property (nonatomic,strong) NSString *currentTime;
+@property (nonatomic,strong) NSString *nextTime;
 @property BOOL realTime;
 @property int sliderValue;
 
-- (void)navbarLeftButton;
+@property (nonatomic, readonly) NSString *reservationBeginTime;
 
 @end

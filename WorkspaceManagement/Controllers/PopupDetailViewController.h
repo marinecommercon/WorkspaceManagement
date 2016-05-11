@@ -11,19 +11,14 @@
 #import "ModelDAO.h"
 #import "UIColor+AppAdditions.h"
 #import "ReservationViewController.h"
-
-@protocol PopupDetailViewControllerDelegate
-- (void)didClickOnReservation:(Room*)room;
-- (void)didClickOnGeoloc:(Room*)room;
-@end
+#import "BIZPopupViewController.h"
 
 @interface PopupDetailViewController : UIViewController
 
-@property (nonatomic, weak) id<PopupDetailViewControllerDelegate> delegate;
-
-@property (strong,nonatomic)  Room *room;
+@property (strong, nonatomic) Room *room;
 @property (strong, nonatomic) IBOutlet UIImageView *PopupImagesBackgroundRoom;
 @property (strong, nonatomic) IBOutlet UIButton *ButtonExit;
+@property (strong, nonatomic) IBOutlet UIImageView *PopupImagesGeoloc;
 @property (strong, nonatomic) IBOutlet UILabel *PopupRoomNameTitleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *PopupRoomCapacityLabel;
 @property (strong, nonatomic) IBOutlet UILabel *PopupRoomDescriptionLabel;
@@ -39,9 +34,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *PopupRoomBookButton;
 @property (strong, nonatomic) IBOutlet UILabel *PopupRoomStateLabel;
 
-- (IBAction)geolocButton:(id)sender;
-@property (weak, nonatomic) IBOutlet UIButton *geolocButton;
+//- (IBAction)geolocButton:(id)sender;
+//@property (weak, nonatomic) IBOutlet UIButton *geolocButton;
 
-- (void) setInfos:(Room*)room;
+//- (void)setInfos:(Room *)room;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "CheckDAO.h"
+#import "Constants.h"
 
 @implementation CheckDAO
 
@@ -72,7 +73,7 @@
         }
     }
     
-    return @"noreservation";
+    return kReservationTypeNoReservation;
 }
 
 + (BOOL)checkAvailability:(NSString *)begin withEnd:(NSString *)end
@@ -80,7 +81,7 @@
     int count = 0;
     NSMutableArray * possibilities = [NSMutableArray array];
     
-    NSArray *listRooms = [DAO getObjects:@"Room" withPredicate:nil];
+    NSArray *listRooms = [DAO getObjects:kDAORoomEntity withPredicate:nil];
     
     if(listRooms.count != 0)
     {
@@ -121,7 +122,7 @@
     NSDate *currentDate = [Utils parseTimeToDate:currentTime];
     
     if( [currentDate timeIntervalSinceDate:limitDate] >= 0 )
-        return @"impossible";
+        return kReservationTypeImpossible;
     
     NSDate *dateOneMinuteMore   = [currentDate dateByAddingTimeInterval:60];
     NSString *timeOneMinuteMore = [Utils parseDateToTime:dateOneMinuteMore];
@@ -149,7 +150,7 @@
     NSDate   *dateDeltaMore = [nextHalfHourDate dateByAddingTimeInterval:(sliderValue*30*60)];
     
     if( [dateDeltaMore timeIntervalSinceDate:limitUpDate] > 0 )
-        return @"impossible";
+        return kReservationTypeImpossible;
     
     NSString *timeDeltaMore = [Utils parseDateToTime:dateDeltaMore];
 
@@ -165,7 +166,7 @@
     
     NSDate *nextHalfHourDate = [Utils parseTimeToDate:nextHalfHour];
     if( [nextHalfHourDate timeIntervalSinceDate:limitUpDate] >= 0 )
-        return @"impossible";
+        return kReservationTypeImpossible;
     
     NSDate   *dateThirtyMinuteMore = [nextHalfHourDate dateByAddingTimeInterval:30*60];
     NSString *timeThirtyMinuteMore = [Utils parseDateToTime:dateThirtyMinuteMore];
@@ -262,7 +263,7 @@
 
 + (double)getMaxDurationForBeginTime:(NSString *)beginTime
 {
-    NSArray *listRooms = [DAO getObjects:@"Room" withPredicate:nil];
+    NSArray *listRooms = [DAO getObjects:kDAORoomEntity withPredicate:nil];
     
     if( !listRooms )
         listRooms = [NSArray array];
@@ -282,7 +283,7 @@
 
 + (BOOL)getStateForRoom:(NSString *)idMapwize time:(NSString *)time timeInterval:(int)interval
 {
-    Room   *room                = [ModelDAO getRoomById:idMapwize];
+    Room   *room                = [ModelDAO roomWithId:idMapwize];
     NSDate *chosenDate          = [Utils parseTimeToDate:time];
     NSDate *dateAfterInterval   = [chosenDate dateByAddingTimeInterval:interval];
     

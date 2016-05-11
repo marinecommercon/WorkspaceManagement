@@ -12,11 +12,13 @@
 #import "UIColor+AppAdditions.h"
 
 @protocol FilterViewControllerDelegate
+
 - (void)didChangeCarousel:(NSArray*)schedulesArray position:(NSInteger)position realTime:(BOOL)realTime;
 - (void)didChangeSlider:(int)sliderValue;
+
 @end
 
-@interface FilterViewController : UIViewController <iCarouselDataSource, iCarouselDelegate>
+@interface FilterViewController : UIViewController <iCarouselDataSource, iCarouselDelegate, UITextFieldDelegate>
 
 @property (nonatomic, weak) id<FilterViewControllerDelegate> delegate;
 
@@ -28,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *slider;
 @property (strong, nonatomic) IBOutlet UIView *viewSlider;
 @property (strong, nonatomic) IBOutlet UIView *viewDate;
+@property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) IBOutlet UIView *viewNbrPeople;
 @property (strong, nonatomic) IBOutlet UIView *viewRoomItems;
 @property (strong, nonatomic) IBOutlet UIView *viewSearch;
@@ -56,10 +59,10 @@
 @property BOOL realTime;
 @property int  numberOfPeople;
 
-- (BOOL) filtersChanged;
-- (void) initState;
-- (void) updateFilteredLists:(NSArray*)equipmentList;
-- (void) updateCarousel:(NSTimer *)timer andPosition:(BOOL)updatePosition;
+- (BOOL)filtersChanged;
+- (void)initState;
+- (void)updateFilteredLists:(NSArray *)equipmentList;
+- (void)updateCarousel:(NSTimer *)timer andPosition:(BOOL)updatePosition;
 
 @end
 

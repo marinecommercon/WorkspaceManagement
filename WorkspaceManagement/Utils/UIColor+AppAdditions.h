@@ -19,5 +19,8 @@
 + (UIColor *) bnpRed;
 + (UIColor *) bnpRedLight;
 + (UIColor *) bnpPink;
++ (UIColor *)bnpDsiTextBlue;
++ (UIColor *)bnpNavBarText;
++ (UIColor *)bnpNavBarShadow;
 
 @end

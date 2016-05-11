@@ -23,6 +23,9 @@ UIColor *_colorWithRGBA(unsigned int r, unsigned int g, unsigned int b, CGFloat 
 + (UIColor *)bnpRed         { return _colorWithRGBA(202,  84, 105, 1.0); }
 + (UIColor *)bnpRedLight    { return _colorWithRGBA(238, 194, 203, 1.0); }
 + (UIColor *)bnpPink        { return _colorWithRGBA(255,   0, 186, 1.0); }
++ (UIColor *)bnpDsiTextBlue { return _colorWithRGBA( 19, 144, 255, 1.0); }
++ (UIColor *)bnpNavBarText  { return _colorWithRGBA( 81, 76, 68, 1.0); } // #514C44
++ (UIColor *)bnpNavBarShadow { return _colorWithRGBA( 0, 0, 0, 0.8); }
 
 
 @end

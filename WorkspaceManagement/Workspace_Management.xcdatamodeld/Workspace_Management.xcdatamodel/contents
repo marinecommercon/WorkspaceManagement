@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15E65" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
     <entity name="Equipment" representedClassName="Equipment" syncable="YES">
         <attribute name="filterState" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
@@ -12,7 +12,7 @@
         <attribute name="endTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="room" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Room" inverseName="reservations" inverseEntity="Room" syncable="YES"/>
+        <relationship name="room" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Room" inverseName="reservations" inverseEntity="Room" syncable="YES"/>
     </entity>
     <entity name="Room" representedClassName="Room" syncable="YES">
         <attribute name="idMapwize" optional="YES" attributeType="String" syncable="YES"/>
@@ -29,12 +29,12 @@
         <attribute name="eventDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="eventValue" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="idSensor" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="room" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Room" inverseName="sensors" inverseEntity="Room" syncable="YES"/>
+        <relationship name="room" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Room" inverseName="sensors" inverseEntity="Room" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Equipment" positionX="-450" positionY="-132" width="128" height="103"/>
-        <element name="Reservation" positionX="-65" positionY="-171" width="128" height="135"/>
-        <element name="Room" positionX="-281" positionY="-297" width="128" height="180"/>
-        <element name="Sensor" positionX="-245" positionY="-45" width="128" height="103"/>
+        <element name="Equipment" positionX="-533" positionY="-186" width="128" height="103"/>
+        <element name="Reservation" positionX="-65" positionY="-324" width="128" height="135"/>
+        <element name="Room" positionX="-281" positionY="-297" width="128" height="178"/>
+        <element name="Sensor" positionX="-65" positionY="-135" width="128" height="103"/>
     </elements>
 </model>

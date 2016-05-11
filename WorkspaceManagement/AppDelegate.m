@@ -17,7 +17,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [ModelDAO resetDatabase:false];
+    [ModelDAO resetDatabase:YES];
     return YES;
 }
 

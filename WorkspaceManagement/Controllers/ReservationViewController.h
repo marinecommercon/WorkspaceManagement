@@ -12,14 +12,31 @@
 #import "Room.h"
 #import "CheckDAO.h"
 
-@interface ReservationViewController : UIViewController
+@protocol ReservationViewControllerDelegate
+
+- (void)didChangeSlider:(int)sliderValue;
+@end
+
+@interface ReservationViewController : UIViewController <UITextFieldDelegate>
+
+@property (nonatomic, weak) id<ReservationViewControllerDelegate> delegate;
+
+@property (strong, nonatomic) IBOutlet UIButton *buttonValidationReservation;
 
 @property (weak, nonatomic) IBOutlet UISlider *slider;
 @property (strong, nonatomic) IBOutlet UIView *viewSlider;
-@property (strong,nonatomic) NavBarInstance *navbar;
 
-@property (strong,nonatomic)  Room *room;
-@property (strong,nonatomic)  NSString *beginTime;
+@property (strong, nonatomic) IBOutlet UIView *viewTextField;
+@property (strong, nonatomic) IBOutlet UITextField *TextFieldNom;
+@property (strong, nonatomic) IBOutlet UITextField *TextFieldNameReunion;
+@property (strong, nonatomic) IBOutlet UITextField *textFieldAdd;
+
+
+
+//@property (strong,nonatomic) NavBarInstance *navbar;
+
+@property (strong, nonatomic)  Room *room;
+@property (copy, nonatomic)  NSString *beginTime;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldAuthor;
 @property (strong, nonatomic) IBOutlet UITextField *textFieldSubject;
 @property float maxValue;

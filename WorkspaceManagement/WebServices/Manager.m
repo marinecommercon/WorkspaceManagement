@@ -77,7 +77,7 @@
 
 // If one of the sensor values changed since last update, then we'll inform MapViewController that it should update the map
 
-- (void) startComparison:(NSString *)idSensor withData:(NSData *)data
+- (void)startComparison:(NSString *)idSensor withData:(NSData *)data
 {
     NSDictionary *results           = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
     NSDictionary *resultsDictionary = results[@"results"][0];
@@ -90,7 +90,7 @@
     
     //  Check if the sensor exist in database
     
-    Sensor *mySensor = [ModelDAO getSensorById:idSensor];
+    Sensor *mySensor = [ModelDAO sensorWithId:idSensor];
     
     if(mySensor != nil)
     {

@@ -18,11 +18,12 @@
 
 @interface DSIViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic,strong)  NSArray               *schedulesArray;
+@property (nonatomic,strong)  NSArray *schedulesArray;
 @property (strong, nonatomic) IBOutlet UIPickerView *pickerViewOutlet;
 @property (strong, nonatomic) IBOutlet UITableView  *tableView;
 @property (strong,nonatomic) NavBarInstance *navbar;
 
 - (IBAction)saveButton:(id)sender;
+//- (IBAction)resetButton:(id)sender;
 
 @end

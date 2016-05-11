@@ -7,6 +7,9 @@
 //
 
 #import "PopupDetailViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "MapViewController.h"
+#import "Constants.h"
 
 @interface PopupDetailViewController ()
 
@@ -20,16 +23,55 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    PopupRoomBookButton.layer.cornerRadius = 5;
+    PopupRoomBookButton.clipsToBounds = YES;
+    
+    // Do any additional setup after loading the view.
+    self.view.layer.borderWidth = 3;
+    
+//    [ButtonExit addTarget:self
+//                   action:@selector(setButton)
+//         forControlEvents:UIControlEventTouchUpInside];
+    
+//    [PopupRoomBookButton addTarget:self
+//                            action:@selector(buttonReservation)
+//                  forControlEvents:UIControlEventTouchUpInside];
+    
+    self.PopupRoomNameTitleLabel.text = self.room.name;
+    self.PopupRoomCapacityLabel.text = [NSString stringWithFormat:@"Capacité %@ personnes",self.room.maxPeople];
+    self.PopupRoomDescriptionLabel.text = self.room.infoRoom;
+    
+    [self setImages:self.room];
+    [self setStateInfos:self.room];
 }
 
-- (void)setButton
+- (IBAction)closePopup
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [UIView animateWithDuration:0.2
+                          delay:0.0
+                        options: UIViewAnimationOptionRepeat| UIViewAnimationOptionAutoreverse|UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.view.alpha = 0.0;
+                     }
+                     completion:nil];
+    
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
-- (void)buttonReservation
+- (IBAction)bookRoom
 {
-    [self.delegate didClickOnReservation:self.room];
+    NSLog(@"Reservation");
+    
+    MapViewController *mapCtrl = (MapViewController *)((UINavigationController *)self.presentingViewController).topViewController;
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ReservationViewController *viewController = (ReservationViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ReservationViewController"];
+    
+    viewController.room = self.room;
+    viewController.beginTime = mapCtrl.reservationBeginTime;
+    
+    [self presentViewController:viewController animated:NO completion:nil];
 }
 
 
@@ -38,104 +80,212 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)geolocButton:(id)sender {
-    [self.delegate didClickOnGeoloc:self.room];
+//- (IBAction)geolocButton:(id)sender {
+//    [self.delegate didClickOnGeoloc:self.room];
+//}
+
+//- (void)setInfos:(Room *)room
+//{
+////    [super viewDidLoad];
+//    
+//    self.room = room;
+//    
+//    // Do any additional setup after loading the view.
+//    self.view.layer.borderWidth = 3;
+//    
+//    [ButtonExit addTarget:self
+//                   action:@selector(setButton)
+//         forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [PopupRoomBookButton addTarget:self
+//                            action:@selector(buttonReservation)
+//                  forControlEvents:UIControlEventTouchUpInside];
+//    
+//    self.PopupRoomNameTitleLabel.text = room.name;
+//    self.PopupRoomCapacityLabel.text = [NSString stringWithFormat:@"Capacité %@ personnes",room.maxPeople];
+//    self.PopupRoomDescriptionLabel.text = room.infoRoom;
+//    
+//    [self setImages:room];
+//    [self setStateInfos:room];
+//}
+
+- (void)setImages:(Room *)room
+{
+//    if([room.equipments containsObject:[ModelDAO equipmentWithKey:@"retro"]]){
+//        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOffRetro"] withLabel:@"Vidéo-projecteur"];
+//    }
+//    if([room.equipments containsObject:[ModelDAO equipmentWithKey:@"screen"]]){
+//        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOffScreen"] withLabel:@"Écran"];
+//    }
+//    if([room.equipments containsObject:[ModelDAO equipmentWithKey:@"table"]]){
+//        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOffTable"] withLabel:@"Tableau"];
+//    }
+//    if([room.equipments containsObject:[ModelDAO equipmentWithKey:@"dock"]]){
+//        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOffDock"] withLabel:@"Dock"];
+//    }
+    
+    NSString *keyLabel = @"label";
+    NSString *keyImage = @"image";
+    
+    NSDictionary *imageAndLabelForEquipment = @{kDAOEquipmentTypeRetro:  @{keyImage: @"WSMImagesBtnOffRetro",  keyLabel: @"Vidéo-projecteur"},
+                                                kDAOEquipmentTypeScreen: @{keyImage: @"WSMImagesBtnOffScreen", keyLabel: @"Écran"},
+                                                kDAOEquipmentTypeTable:  @{keyImage: @"WSMImagesBtnOffTable",  keyLabel: @"Tableau"},
+                                                kDAOEquipmentTypeDock:   @{keyImage: @"WSMImagesBtnOffDock",   keyLabel: @"Dock"}};
+    
+    NSMutableArray *slots = [NSMutableArray arrayWithObjects:
+                             @{keyLabel: self.Popup1ItemsLabel, keyImage: self.Popup1ItemsImage},
+                             @{keyLabel: self.Popup2ItemsLabel, keyImage: self.Popup2ItemsImage},
+                             @{keyLabel: self.Popup3ItemsLabel, keyImage: self.Popup3ItemsImage},
+                             @{keyLabel: self.Popup4ItemsLabel, keyImage: self.Popup4ItemsImage},
+                             nil];
+    
+    for( NSString *equipmentKey in imageAndLabelForEquipment )
+        if( [room.equipments containsObject:[ModelDAO equipmentWithKey:equipmentKey]] )
+        {
+            UILabel *label     = slots.firstObject[keyLabel];
+            UIImageView *image = slots.firstObject[keyImage];
+            
+            label.text = imageAndLabelForEquipment[equipmentKey][keyLabel];
+            image.image = [UIImage imageNamed:imageAndLabelForEquipment[equipmentKey][keyImage]];
+            
+            [slots removeObjectAtIndex:0];
+        }
+
+    for( NSDictionary *emptySlots in slots )
+    {
+        UILabel *label     = emptySlots[keyLabel];
+        UIImageView *image = emptySlots[keyImage];
+        
+        label.hidden = YES;
+        image.hidden = YES;
+    }
 }
 
-- (void) setInfos:(Room*)room {
-    [super viewDidLoad];
-    
-    self.room = room;
-    
-    // Do any additional setup after loading the view.
-    self.view.layer.borderWidth = 3;
-    
-    [ButtonExit addTarget:self
-                   action:@selector(setButton)
-         forControlEvents:UIControlEventTouchUpInside];
-    
-    [PopupRoomBookButton addTarget:self
-                            action:@selector(buttonReservation)
-                  forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.PopupRoomNameTitleLabel setText:room.name];
-    [self.PopupRoomCapacityLabel setText:[NSString stringWithFormat:@"Capacité %@ personnes",room.maxPeople]];
-    [self.PopupRoomDescriptionLabel setText:room.infoRoom];
-    
-    [self setImages:room];
-    [self setStateInfos:room];
-    
-}
+//- (void)setImage:(UIImage*)image withLabel:(NSString*)text
+//{
+////    if([self.Popup1ItemsLabel.text isEqualToString:@""] )
+////    {
+////        self.Popup1ItemsLabel.text = text;
+////        self.Popup1ItemsImage.image = image;
+////    }
+////    else if( [self.Popup2ItemsLabel.text isEqualToString:@""] )
+////    {
+////        [self.Popup2ItemsLabel setText:text];
+////        [self.Popup2ItemsImage setImage:image];
+////    }
+////    else if([self.Popup3ItemsLabel.text isEqualToString:@""]){
+////        [self.Popup3ItemsLabel setText:text];
+////        [self.Popup3ItemsImage setImage:image];
+////    }
+////    else if([self.Popup4ItemsLabel.text isEqualToString:@""]){
+////        [self.Popup4ItemsLabel setText:text];
+////        [self.Popup4ItemsImage setImage:image];
+////    }
+//    
+//    NSArray *labelsAndImages = @[ @{@"label": self.Popup1ItemsLabel, @"image": self.Popup1ItemsImage},
+//                         @{@"label": self.Popup2ItemsLabel, @"image": self.Popup2ItemsImage},
+//                         @{@"label": self.Popup3ItemsLabel, @"image": self.Popup3ItemsImage},
+//                         @{@"label": self.Popup4ItemsLabel, @"image": self.Popup4ItemsImage},
+//                        ];
+//    
+//    for( NSDictionary *labelImage in labelsAndImages )
+//        if( [((UILabel *)labelImage[@"label"]).text isEqualToString:@""] )
+//        {
+//            ((UILabel *)labelImage[@"label"]).text = text;
+//            ((UIImageView *)labelImage[@"image"]).image = image;
+//        }
+//}
 
-- (void) setImages:(Room*)room {
-    if([room.equipments containsObject:[ModelDAO getEquipmentByKey:@"retro"]]){
-        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOffRetro"] withLabel:@"Vidéo-projecteur"];
-    }
-    if([room.equipments containsObject:[ModelDAO getEquipmentByKey:@"screen"]]){
-        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOffScreen"] withLabel:@"Ecran"];
-    }
-    if([room.equipments containsObject:[ModelDAO getEquipmentByKey:@"table"]]){
-        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOffTable"] withLabel:@"Tableau"];
-    }
-    if([room.equipments containsObject:[ModelDAO getEquipmentByKey:@"dock"]]){
-        [self setImage:[UIImage imageNamed:@"WSMImagesBtnOffDock"] withLabel:@"Dock"];
-    }
-}
-
-- (void) setImage:(UIImage*)image withLabel:(NSString*)text {
-    if([self.Popup1ItemsLabel.text isEqualToString:@""]){
-        [self.Popup1ItemsLabel setText:text];
-        [self.Popup1ItemsImage setImage:image];
-    }
-    else if([self.Popup2ItemsLabel.text isEqualToString:@""]){
-        [self.Popup2ItemsLabel setText:text];
-        [self.Popup2ItemsImage setImage:image];
-    }
-    else if([self.Popup3ItemsLabel.text isEqualToString:@""]){
-        [self.Popup3ItemsLabel setText:text];
-        [self.Popup3ItemsImage setImage:image];
-    }
-    else if([self.Popup4ItemsLabel.text isEqualToString:@""]){
-        [self.Popup4ItemsLabel setText:text];
-        [self.Popup4ItemsImage setImage:image];
-    }
-}
-
-- (void) setStateInfos:(Room*)room {
-    if([room.mapState isEqualToString:@"green_free"]){
-        [self.geolocButton setBackgroundImage:[UIImage imageNamed:@"WSMImagesGeolocGreen"] forState:UIControlStateNormal];
-        self.view.layer.borderColor = [[UIColor bnpGreen] CGColor];
-        [self.PopupRoomBookButton setHidden:true];
-        [self.PopupRoomStateLabel setHidden:false];
-        [self.PopupRoomStateLabel setText:@"Salle en accès libre"];
-    }
-    else if([room.mapState isEqualToString:@"green_book_ok"]){
-        [self.geolocButton setBackgroundImage:[UIImage imageNamed:@"WSMImagesGeolocGreen"] forState:UIControlStateNormal];
-        self.view.layer.borderColor = [[UIColor bnpGreen] CGColor];
-        [self.PopupRoomBookButton setHidden:false];
-        [self.PopupRoomStateLabel setHidden:true];
-    }
-    else if([room.mapState isEqualToString:@"green_book_ko"]){
-        [self.geolocButton setBackgroundImage:[UIImage imageNamed:@"WSMImagesGeolocGreen"] forState:UIControlStateNormal];
-        self.view.layer.borderColor = [[UIColor bnpGreen] CGColor];
-        [self.PopupRoomBookButton setHidden:true];
-        [self.PopupRoomStateLabel setHidden:false];
-        [self.PopupRoomStateLabel setText:@"Réservation indisponible"];
-    }
-    else if([room.mapState isEqualToString:@"blue"]){
-        [self.geolocButton setBackgroundImage:[UIImage imageNamed:@"WSMImagesGeolocBlue"] forState:UIControlStateNormal];
-        self.view.layer.borderColor = [[UIColor bnpBlue] CGColor];
-        [self.PopupRoomBookButton setHidden:true];
-        [self.PopupRoomStateLabel setHidden:false];
-        [self.PopupRoomStateLabel setText:@"Votre réservation"];
-    }
-    else if([room.mapState isEqualToString:@"red"]){
-        [self.geolocButton setBackgroundImage:[UIImage imageNamed:@"WSMImagesGeolocRed"] forState:UIControlStateNormal];
-        self.view.layer.borderColor = [[UIColor bnpRed] CGColor];
-        [self.PopupRoomBookButton setHidden:true];
-        [self.PopupRoomStateLabel setHidden:false];
-        [self.PopupRoomStateLabel setText:@"Salle occupée"];
-    }
+- (void)setStateInfos:(Room *)room
+{
+//    if([room.mapState isEqualToString:@"green_free"]){
+//        [self.PopupImagesGeoloc setImage:[UIImage imageNamed:@"WSMImagesGeolocGreen"]];
+//        self.view.layer.borderColor = [[UIColor bnpGreen] CGColor];
+//        [self.PopupRoomBookButton setHidden:true];
+//        [self.PopupRoomStateLabel setHidden:false];
+//        
+//        [self.PopupRoomStateLabel setText:@"Salle en accès libre"];
+//    }
+//    else if([room.mapState isEqualToString:@"green_book_ok"]){
+//        [self.PopupImagesGeoloc setImage:[UIImage imageNamed:@"WSMImagesGeolocGreen"]];
+//        self.view.layer.borderColor = [[UIColor bnpGreen] CGColor];
+//        [self.PopupRoomBookButton setHidden:false];
+//        [self.PopupRoomStateLabel setHidden:true];
+//    }
+//    else if([room.mapState isEqualToString:@"green_book_ko"]){
+//        [self.PopupImagesGeoloc setImage:[UIImage imageNamed:@"WSMImagesGeolocGreen"]];
+//        self.view.layer.borderColor = [[UIColor bnpGreen] CGColor];
+//        [self.PopupRoomBookButton setHidden:true];
+//        [self.PopupRoomStateLabel setHidden:false];
+//        
+//        [self.PopupRoomStateLabel setText:@"Réservation indisponible"];
+//    }
+//    else if([room.mapState isEqualToString:@"blue"]){
+//        [self.PopupImagesGeoloc setImage:[UIImage imageNamed:@"WSMImagesGeolocBlue"]];
+//        self.view.layer.borderColor = [[UIColor bnpBlue] CGColor];
+//        [self.PopupRoomBookButton setHidden:true];
+//        [self.PopupRoomStateLabel setHidden:false];
+//        
+//        [self.PopupRoomStateLabel setText:@"Votre réservation"];
+//    }
+//    else if([room.mapState isEqualToString:@"red"]){
+//        [self.PopupImagesGeoloc setImage:[UIImage imageNamed:@"WSMImagesGeolocRed"]];
+//        self.view.layer.borderColor = [[UIColor bnpRed] CGColor];
+//        [self.PopupRoomBookButton setHidden:true];
+//        [self.PopupRoomStateLabel setHidden:false];
+//        
+//        [self.PopupRoomStateLabel setText:@"Salle occupée"];
+//    }
+    
+    NSString *keyImage            = @"imageName";
+    NSString *keyBorderColor      = @"borderColor";
+    NSString *keyBookButtonHidden = @"bookButtonHidden";
+    NSString *keyRoomStateHidden  = @"roomStateHidden";
+    NSString *keyRoomStateText    = @"roomStateText";
+    
+    NSDictionary *infoDict = @{kDAORoomMapStateGreenFree: @{
+                                       keyImage:            @"WSMImagesGeolocGreen",
+                                       keyBorderColor:      UIColor.bnpGreen,
+                                       keyBookButtonHidden: @(YES),
+                                       keyRoomStateHidden:  @(YES),
+                                       keyRoomStateText:    @"Salle en accès libre"},
+                               
+                               kDAORoomMapStateGreenBook_OK: @{
+                                       keyImage:            @"WSMImagesGeolocGreen",
+                                       keyBorderColor:      UIColor.bnpGreen,
+                                       keyBookButtonHidden: @(NO),
+                                       keyRoomStateHidden:  @(NO),
+                                       keyRoomStateText:    @""},
+                               
+                               kDAORoomMapStateGreenBook_KO: @{
+                                       keyImage:            @"WSMImagesGeolocGreen",
+                                       keyBorderColor:      UIColor.bnpGreen,
+                                       keyBookButtonHidden: @(YES),
+                                       keyRoomStateHidden:  @(NO),
+                                       keyRoomStateText:    @"Réservation indisponible"},
+                               
+                               kDAORoomMapStateBlue: @{
+                                       keyImage:            @"WSMImagesGeolocBlue",
+                                       keyBorderColor:      UIColor.bnpBlue,
+                                       keyBookButtonHidden: @(YES),
+                                       keyRoomStateHidden:  @(NO),
+                                       keyRoomStateText:    @"Votre réservation"},
+                               
+                               kDAORoomMapStateBlueRed: @{
+                                       keyImage:            @"WSMImagesGeolocRed",
+                                       keyBorderColor:      UIColor.bnpRed,
+                                       keyBookButtonHidden: @(YES),
+                                       keyRoomStateHidden:  @(NO),
+                                       keyRoomStateText:    @"Salle occupée"}
+                               };
+    
+    NSDictionary *roomInfo = infoDict[room.mapState];
+    
+    self.PopupImagesGeoloc.image    = [UIImage imageNamed:roomInfo[keyImage]];
+    self.view.layer.borderColor     = ((UIColor *)roomInfo[keyBorderColor]).CGColor;
+    self.PopupRoomBookButton.hidden = ((NSNumber *)roomInfo[keyBookButtonHidden]).boolValue;
+    self.PopupRoomStateLabel.hidden = ((NSNumber *)roomInfo[keyRoomStateHidden]).boolValue;
+    self.PopupRoomStateLabel.text   = roomInfo[keyRoomStateText];
 }
 
 

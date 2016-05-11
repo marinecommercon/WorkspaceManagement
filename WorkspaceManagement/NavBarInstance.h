@@ -11,17 +11,21 @@
 
 @interface NavBarInstance : NSObject
 
-@property (nonatomic, retain) UIViewController *view;
+//@property (nonatomic, retain) UIViewController *viewController;
 @property (nonatomic, retain) UINavigationItem *navItem;
 @property (nonatomic, retain) UINavigationBar  *myNavBar;
-@property (nonatomic, retain) UIButton *buttonLeft;
-@property (nonatomic, retain) UIButton *buttonRight;
+//@property (nonatomic, retain) UIButton *buttonLeft;
+//@property (nonatomic, retain) UIButton *buttonRight;
+
+@property (nonatomic, copy) NSString *navBarTitle;
 
 + (NavBarInstance *) sharedInstance;
 
-- (void)styleNavBar:(UIViewController*)view setTitle:(NSString *)title setLeftButton:(UIImage *)leftButton setRightButton:(UIImage*)rightButton;
-- (void) setNavBarTitle:(NSString*)title;
-- (void) setButtonImageLeft:(UIImage*)leftImage;
-- (void) setButtonImageRight:(UIImage*)rightImage;
+- (void)setTitle:(NSString *)title leftButtonImage:(UIImage *)leftImage rightButtonImage:(UIImage *)rightImage forViewController:(UIViewController *)controller;
+
+//- (void)styleNavBar:(UIViewController*)view setTitle:(NSString *)title setLeftButton:(UIImage *)leftButton setRightButton:(UIImage*)rightButton;
+//- (void)setNavBarTitle:(NSString*)title;
+//- (void)setButtonImageLeft:(UIImage*)leftImage;
+//- (void)setButtonImageRight:(UIImage*)rightImage;
 
 @end

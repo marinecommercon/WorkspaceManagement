@@ -1,13 +1,22 @@
 PODS:
+  - BIZPopupView (1.0.0):
+    - TPKeyboardAvoiding
   - CCMPopup (1.1.0)
+  - IQKeyboardManager (4.0.2)
   - Mapwize (1.4.0)
+  - TPKeyboardAvoiding (1.3)
 
 DEPENDENCIES:
+  - BIZPopupView
   - CCMPopup
+  - IQKeyboardManager
   - Mapwize
 
 SPEC CHECKSUMS:
+  BIZPopupView: 2f16ecbc852baa16e1ef20b67abaa831909ec994
   CCMPopup: e41fad5b8a0823c9cddea8eab6d431670c9dabe5
+  IQKeyboardManager: 2341089c4ae25fa2fa82ce356a259fcd267dc6b6
   Mapwize: 3a0aed15e4c263f41134ceb9053ce36ce2a4a7cf
+  TPKeyboardAvoiding: a5138f318c06fb3e151f886e18ce4a72695d9cbe
 
 COCOAPODS: 0.39.0

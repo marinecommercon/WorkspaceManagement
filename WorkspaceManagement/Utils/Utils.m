@@ -8,45 +8,45 @@
 
 #import "Utils.h"
 
+NSString *kCarouselKeyHours = @"hours";
+NSString *kCarouselKeyPosition = @"position";
+
 @implementation Utils
 
-+ (NSDate*)parseTimeToDate:(NSString*)time {
-    
-     NSCalendar *calendar = [NSCalendar currentCalendar];
++ (NSDate *)parseTimeToDate:(NSString *)time
+{
+    NSCalendar *calendar   = [NSCalendar currentCalendar];
     
     NSInteger customHour   = [time substringWithRange:NSMakeRange(0,2)].integerValue;
     NSInteger customMinute = [time substringWithRange:NSMakeRange(3,2)].integerValue;
     
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:
-                                    NSCalendarUnitDay |
-                                    NSCalendarUnitMonth |
-                                    NSCalendarUnitYear |
-                                    NSCalendarUnitHour |
-                                    NSCalendarUnitMinute
+    NSDateComponents *components = [[NSCalendar currentCalendar] components: NSCalendarUnitDay |
+                                                                             NSCalendarUnitMonth |
+                                                                             NSCalendarUnitYear |
+                                                                             NSCalendarUnitHour |
+                                                                             NSCalendarUnitMinute
                                                                    fromDate:NSDate.date];
     
-    components.hour = customHour;
+    components.hour   = customHour;
     components.minute = customMinute;
     
     return [calendar dateFromComponents:components];
 }
 
-+ (NSString*)parseDateToTime:(NSDate*)date
++ (NSString *)parseDateToTime:(NSDate *)date
 {
     NSDateFormatter* f = [[NSDateFormatter alloc] init];
     f.dateFormat = @"HH:mm";
     return [f stringFromDate:date];
 }
 
-+ (NSArray*)sortReservationsOfRoom:(NSSet*)reservations
++ (NSArray *)sortReservationsOfRoom:(NSSet *)reservations
 {
-    NSSortDescriptor *dateDescriptor = [NSSortDescriptor
-                                        sortDescriptorWithKey:@"beginTime"
-                                        ascending:YES];
+    NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"beginTime" ascending:YES];
     return [reservations sortedArrayUsingDescriptors:@[dateDescriptor]];
 }
 
-+ (NSDictionary*)generateHoursForCaroussel:(NSString*)currentTime
++ (NSDictionary *)generateHoursForCaroussel:(NSString *)currentTime
 {
     NSDate   *date     = NSDate.date;
     //NSDate   *date   = [self aleaDate];
@@ -55,15 +55,20 @@
     int       position = 0;
     
     if([myTime isEqualToString:currentTime])
-    {
         return nil;
-    }
     else
     {
-        NSArray *schedules = @[@"07:30", @"08:00", @"08:30", @"09:00", @"09:30", @"10:00", @"10:30", @"11:00", @"11:30", @"12:00",@"12:30", @"13:00", @"13:30", @"14:00", @"14:30", @"15:00", @"15:30", @"16:00", @"16:30", @"17:00", @"17:30", @"18:00", @"18:30", @"19:00", @"19:30", @"20:00", @"20:30",@"21:00"];
+        NSArray *schedules = @[@"07:30", @"08:00", @"08:30", @"09:00",
+                               @"09:30", @"10:00", @"10:30", @"11:00",
+                               @"11:30", @"12:00",@"12:30", @"13:00",
+                               @"13:30", @"14:00", @"14:30", @"15:00",
+                               @"15:30", @"16:00", @"16:30", @"17:00",
+                               @"17:30", @"18:00", @"18:30", @"19:00",
+                               @"19:30", @"20:00", @"20:30",@"21:00"];
+        
         NSMutableArray *newSchedules = [[NSMutableArray alloc] init];
         
-        if([[self parseTimeToDate:@"07:30"] timeIntervalSinceDate:date] > 0)
+        if( [[self parseTimeToDate:@"07:30"] timeIntervalSinceDate:date] > 0 )
         {
             [newSchedules addObject:myTime];
             [newSchedules addObject:schedules[0]];
@@ -75,7 +80,7 @@
         }
         
         int i = 0;
-        while(i<schedules.count-1)
+        while( i < schedules.count-1 )
         {
             NSDate *beginPlusOne = [[self parseTimeToDate:schedules[i]] dateByAddingTimeInterval:60];
             NSDate *end          = [self parseTimeToDate:schedules[i+1]];
@@ -83,8 +88,7 @@
             // Date is between [BEGIN+1 ; END[
             // "BeginPlusOne" and "end" are Simulated dates
             // Real date = Simulated date + X milliseconds
-            
-            if([date timeIntervalSinceDate:beginPlusOne] >= 0 && [end timeIntervalSinceDate:date] > 0)
+            if( [date timeIntervalSinceDate:beginPlusOne] >= 0 && [end timeIntervalSinceDate:date] > 0 )
             {
                 // Lower boundary is at position i
                 // So our realTime is at position i+1
@@ -93,7 +97,6 @@
                 [newSchedules addObject:schedules[i+1]];
                 position = i+1;
             }
-            
             // If current time = lower boundary
             // Position is the lower boundary
             // We add the upper boundary
@@ -102,25 +105,19 @@
                 [newSchedules addObject:schedules[i+1]];
                 position = i;
             }
-            
-            // If current time is not inside two schedules
-            else {
+            else // If current time is not inside two schedules
+            {
                 
-                // Case realTime = 21:00
-                if([myTime isEqualToString:schedules[i+1]])
+                if( [myTime isEqualToString:schedules[i+1]] ) // Case realTime = 21:00
                 {
                     [newSchedules addObject:schedules[i+1]];
                     position = i+1;
                 }
-                
-                // Not inside, set upper boundary
-                else
-                {
+                else // Not inside, set upper boundary
                     [newSchedules addObject:schedules[i+1]];
-                }
                 
-                // Case realtime after 21:00
-                if(i==[schedules count]-2 && [date timeIntervalSinceDate:[self parseTimeToDate:@"21:01"]] > 0)
+                
+                if( i == schedules.count-2 && [date timeIntervalSinceDate:[self parseTimeToDate:@"21:01"]] > 0 ) // Case realtime after 21:00
                 {
                     [newSchedules addObject:myTime];
                     position = i+2;
@@ -129,7 +126,7 @@
             i++;
         }
         
-        return  @{@"hours": newSchedules, @"position": @(position)};;
+        return @{kCarouselKeyHours: newSchedules, kCarouselKeyPosition: @(position) };
     }
 }
 
@@ -155,7 +152,7 @@
     return [self parseTimeToDate:[NSString stringWithFormat:@"%@:%d", hour, aleaMinute]];
 }
 
-+ (NSDate *)testDate:(NSString*)currentTime
++ (NSDate *)testDate:(NSString *)currentTime
 {
     NSString *newTime;
     NSString *time = @"13:40";
@@ -192,16 +189,18 @@
     return [self parseTimeToDate:newTime];
 }
 
-+ (UIColor*)colorFromHexString:(NSString *)hexString
-{
-    unsigned rgbValue = 0;
-    NSScanner *scanner = [NSScanner scannerWithString:hexString];
-    [scanner setScanLocation:1]; // bypass '#' character
-    [scanner scanHexInt:&rgbValue];
-    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0
-                           green:((rgbValue & 0xFF00) >> 8)/255.0
-                            blue: (rgbValue & 0xFF)/255.0
-                           alpha:1.0];
-}
+// No more used
+//
+//+ (UIColor *)colorFromHexString:(NSString *)hexString
+//{
+//    unsigned rgbValue = 0;
+//    NSScanner *scanner = [NSScanner scannerWithString:hexString];
+//    [scanner setScanLocation:1]; // bypass '#' character
+//    [scanner scanHexInt:&rgbValue];
+//    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0
+//                           green:((rgbValue & 0xFF00) >> 8)/255.0
+//                            blue: (rgbValue & 0xFF)/255.0
+//                           alpha:1.0];
+//}
 
 @end

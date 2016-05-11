@@ -2,7 +2,6 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "WSMImagesBtnSelectedTable.png",
       "scale" : "1x"
     },
     {
@@ -11,6 +10,7 @@
     },
     {
       "idiom" : "universal",
+      "filename" : "WSMImagesBtnSelectedTable@3x.png",
       "scale" : "3x"
     }
   ],

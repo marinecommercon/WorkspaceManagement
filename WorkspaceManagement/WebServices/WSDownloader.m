@@ -7,12 +7,13 @@
 //
 
 #import "WSDownloader.h"
+#import "Constants.h"
 
 @implementation WSDownloader
 
 - (void)startDownload:(NSString*)idDevice withStartDate:(NSString*)startDate andEndDate:(NSString*)endDate
 {
-    self.url = [NSURL URLWithString:[NSString stringWithFormat:@"https://www.rec.docapost.io/mediation/v1/partner/get?idDevice=%@&startDate=%@&endDate=%@&count=1",idDevice,startDate,endDate]];
+    self.url = [NSURL URLWithString:[NSString stringWithFormat:kDocapostSensorUrl, idDevice, startDate, endDate]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.url];
     request.timeoutInterval = 10.0;
     
@@ -28,8 +29,8 @@
         
         NSLog(@"received authentication challenge");
         
-        NSURLCredential *newCredential = [NSURLCredential credentialWithUser:@"5caae365-bb88-42e2-a4a0-5a81cd071f3d"
-                                                                    password:@"wXyHnxckgWYK"
+        NSURLCredential *newCredential = [NSURLCredential credentialWithUser:kDocapostCredentialUser
+                                                                    password:kDocapostCredentialPassword
                                                                  persistence:NSURLCredentialPersistenceForSession];
         NSLog(@"credential created");
         

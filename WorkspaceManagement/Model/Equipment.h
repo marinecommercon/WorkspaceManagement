@@ -10,6 +10,17 @@
 #import <Foundation/Foundation.h>
 #import "Room.h"
 
+typedef enum
+{
+    // State 1 : can be selected
+    // State 2 : is selected
+    // State 0 : Can not be selected
+    
+    kEquipmentUnselectable = 0,
+    kEquipmentSelectable = 1,
+    kEquipmentSelected = 2
+} EquipmentSelectableState;
+
 @class Room;
 
 @interface Equipment : NSManagedObject

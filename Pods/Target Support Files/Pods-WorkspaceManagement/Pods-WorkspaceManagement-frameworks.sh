@@ -84,10 +84,16 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-WorkspaceManagement/BIZPopupView.framework"
   install_framework "Pods-WorkspaceManagement/CCMPopup.framework"
+  install_framework "Pods-WorkspaceManagement/IQKeyboardManager.framework"
   install_framework "Pods-WorkspaceManagement/Mapwize.framework"
+  install_framework "Pods-WorkspaceManagement/TPKeyboardAvoiding.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-WorkspaceManagement/BIZPopupView.framework"
   install_framework "Pods-WorkspaceManagement/CCMPopup.framework"
+  install_framework "Pods-WorkspaceManagement/IQKeyboardManager.framework"
   install_framework "Pods-WorkspaceManagement/Mapwize.framework"
+  install_framework "Pods-WorkspaceManagement/TPKeyboardAvoiding.framework"
 fi

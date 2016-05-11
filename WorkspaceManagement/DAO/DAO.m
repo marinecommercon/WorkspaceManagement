@@ -20,10 +20,14 @@
 + (void)saveContext
 {
     NSError *saveError = nil;
+    
     [[self getContext] save:&saveError];
+    
+    if( saveError )
+        NSLog(@"CoreData Save ERROR: %@", saveError );
 }
 
-+ (NSManagedObject*)getInstance:(NSString *)type
++ (NSManagedObject*)newInstance:(NSString *)type
 {
     return [NSEntityDescription insertNewObjectForEntityForName:type
                                          inManagedObjectContext:[self getContext]];
@@ -42,7 +46,7 @@
     NSEntityDescription *entityDesc = [self getEntityDescription:type];
     [request setEntity:entityDesc];
     
-    if(predicate)
+    if( predicate )
         [request setPredicate:predicate];
     
     NSError *error;

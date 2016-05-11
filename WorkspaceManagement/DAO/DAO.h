@@ -17,9 +17,9 @@
 
 + (void)saveContext;
 
-+ (NSManagedObject *)getInstance:(NSString*) type;
++ (NSManagedObject *)newInstance:(NSString*) type;
 
-+ (NSEntityDescription *) getEntityDescription:(NSString *)type;
++ (NSEntityDescription *)getEntityDescription:(NSString *)type;
 
 + (NSArray *)getObjects:(NSString *)type withPredicate:(NSPredicate *)predicate;
 
