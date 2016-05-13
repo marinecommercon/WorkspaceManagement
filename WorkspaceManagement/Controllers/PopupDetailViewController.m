@@ -278,15 +278,26 @@
                                        keyRoomStateHidden:  @(NO),
                                        keyRoomStateText:    @"Votre réservation"},
                                
-                               kDAORoomMapStateBlueRed: @{
+                               kDAORoomMapStateRed: @{
                                        keyImage:            @"WSMImagesGeolocRed",
                                        keyBorderColor:      UIColor.bnpRed,
                                        keyBookButtonHidden: @(YES),
                                        keyRoomStateHidden:  @(NO),
                                        keyRoomStateText:    @"Salle occupée"}
+//                               ,
+//                               
+//                               kDAORoomMapStateGrey: @{
+//                                       keyImage:            @"WSMImagesGeolocRed",
+//                                       keyBorderColor:      UIColor.bnpGrey,
+//                                       keyBookButtonHidden: @(YES),
+//                                       keyRoomStateHidden:  @(NO),
+//                                       keyRoomStateText:    @"Réservation indisponible"}
                                };
     
     NSDictionary *roomInfo = infoDict[room.mapState];
+    
+    if( !roomInfo )
+        return;
     
     self.PopupImagesGeoloc.image    = [UIImage imageNamed:roomInfo[keyImage]];
     self.view.layer.borderColor     = ((UIColor *)roomInfo[keyBorderColor]).CGColor;

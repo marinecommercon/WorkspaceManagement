@@ -27,5 +27,8 @@ UIColor *_colorWithRGBA(unsigned int r, unsigned int g, unsigned int b, CGFloat 
 + (UIColor *)bnpNavBarText  { return _colorWithRGBA( 81, 76, 68, 1.0); } // #514C44
 + (UIColor *)bnpNavBarShadow { return _colorWithRGBA( 0, 0, 0, 0.8); }
 
++ (UIColor *)bnpValidationButtonOff { return _colorWithRGBA( 106, 103,  92, 1.0); }
++ (UIColor *)bnpValidationButtonOn { return _colorWithRGBA(  20, 176, 111, 1.0); }
+
 
 @end

@@ -28,7 +28,7 @@ extern NSString *kDAORoomMapStateGreenFree;
 extern NSString *kDAORoomMapStateGreenBook_OK;
 extern NSString *kDAORoomMapStateGreenBook_KO;
 extern NSString *kDAORoomMapStateBlue;
-extern NSString *kDAORoomMapStateBlueRed;
+extern NSString *kDAORoomMapStateRed;
 extern NSString *kDAORoomMapStateBlueTest;
 
 extern NSString *kDAOEquipmentEntity;

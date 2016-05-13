@@ -117,7 +117,8 @@
     UIButton *helpView = [UIButton buttonWithType:UIButtonTypeCustom];
     [helpView setImage:[UIImage imageNamed:helpImageName] forState:UIControlStateNormal];
     helpView.adjustsImageWhenHighlighted = NO;
-    [helpView sizeToFit];
+//    [helpView sizeToFit];
+    helpView.frame = self.view.bounds;
     [helpView addTarget:self action:@selector(dismissHelp:) forControlEvents:UIControlEventTouchUpInside];
 //    helpView.alpha = 0.25;
     [((AppDelegate *)UIApplication.sharedApplication.delegate).window addSubview:helpView];
@@ -220,11 +221,11 @@
                         
                         
                         if( [reservationType isEqualToString:kReservationTypeDsi] ) // CURRENT IS DSI
-                            room.mapState = kDAORoomMapStateBlueRed;
+                            room.mapState = kDAORoomMapStateRed;
                         else if([reservationType isEqualToString:kReservationTypeAppInitial]) // CURRENT IS APP-INITIAL
                             room.mapState = kDAORoomMapStateBlue;
                         else if([reservationType isEqualToString:kReservationTypeAppConfirmed]) // CURRENT IS APP-CONFIRMED
-                            room.mapState = kDAORoomMapStateBlueRed;
+                            room.mapState = kDAORoomMapStateRed;
                         else if([reservationType isEqualToString:kReservationTypeImpossible]) // CURRENT IS IMPOSSIBLE (too late)
                             room.mapState = kDAORoomMapStateGreenBook_KO;
                         else if([reservationType isEqualToString:kReservationTypeNoReservation]) // NO RESERVATION
@@ -293,7 +294,7 @@
     else
     {
         if( [CheckDAO roomHasSensorOn:room] ) // ROOMS FREE + REALTIME + SENSOR = 1
-            room.mapState = kDAORoomMapStateBlueRed;
+            room.mapState = kDAORoomMapStateRed;
         else // ROOMS FREE + REALTIME + SENSOR = 0
             room.mapState = kDAORoomMapStateGreenFree;
     }
@@ -311,12 +312,12 @@
     else // ROOMS APP-DSI + REALTIME/FUTURE + NO FILTERS
     {
         if( [type isEqualToString:kReservationTypeDsi] ) // IS DSI
-            room.mapState = kDAORoomMapStateBlueRed;
+            room.mapState = kDAORoomMapStateRed;
         else if( [type isEqualToString:kReservationTypeAppInitial] ) // IS APP-INITIAL
             room.mapState = kDAORoomMapStateBlue;
         // IS APP-CONFIRMED
         else if( [type isEqualToString:kReservationTypeAppConfirmed] )
-            room.mapState = kDAORoomMapStateBlueRed;
+            room.mapState = kDAORoomMapStateRed;
         else if( [type isEqualToString:kReservationTypeImpossible] ) // IS IMPOSSIBLE (too late)
             room.mapState = kDAORoomMapStateGreenBook_KO;
         else if( [type isEqualToString:kReservationTypeNoReservation] ) // NO RESERVATION
@@ -388,7 +389,7 @@
                                     kDAORoomMapStateGreenBook_OK: greenStyle,
                                     kDAORoomMapStateGreenBook_KO: greenStyle,
                                     kDAORoomMapStateBlue: blueStyle,
-                                    kDAORoomMapStateBlueRed: redStyle,
+                                    kDAORoomMapStateRed: redStyle,
                                     kDAORoomMapStateBlueTest: testStyle };
     
     NSArray *listRooms = [DAO getObjects:kDAORoomEntity withPredicate:nil];
@@ -445,7 +446,7 @@
     Room *room = [ModelDAO roomWithId:place.identifier];
     
     // Only if room is not grey
-    if( room ) // && ![room.mapState isEqualToString:kDAORoomMapStateGrey] )
+    if( room && ![room.mapState isEqualToString:kDAORoomMapStateGrey] )
     {
         self.popupDetailViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"PopupDetailController"];
         self.popupDetailViewController.room = room;

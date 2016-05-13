@@ -545,8 +545,9 @@
     {
         CGRect carouselFrm = self.carousel.frame;
         
-        view = [[UIImageView alloc] initWithFrame:CGRectMake( carouselFrm.origin.x, carouselFrm.origin.y, carouselFrm.size.width / 2.97, carouselFrm.size.height)];
-        ((UIImageView *)view).image = [UIImage imageNamed:@"CarouselitemindexGrey.png"];
+//        view = [[UIImageView alloc] initWithFrame:CGRectMake( carouselFrm.origin.x, carouselFrm.origin.y, carouselFrm.size.width / 5.0, carouselFrm.size.height)];
+        view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CarouselitemindexGrey.png"]];
+//        ((UIImageView *)view).image = [UIImage imageNamed:@"CarouselitemindexGrey.png"];
         view.contentMode = UIViewContentModeCenter;
         label = [[UILabel alloc] initWithFrame:view.bounds];
         label.backgroundColor = UIColor.clearColor;

@@ -23,4 +23,7 @@
 + (UIColor *)bnpNavBarText;
 + (UIColor *)bnpNavBarShadow;
 
++ (UIColor *)bnpValidationButtonOff;
++ (UIColor *)bnpValidationButtonOn;
+
 @end

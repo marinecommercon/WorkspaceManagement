@@ -100,7 +100,7 @@
 //    NavBarInstance *custom = [NavBarInstance sharedInstance];
 //    [custom styleNavBar:self setTitle:@"RÉSERVER UNE SALLE" setLeftButton:nil setRightButton:right];
     
-    [[NavBarInstance sharedInstance] setTitle:@"RÉSERVER UNE SALLE"
+    [[NavBarInstance sharedInstance] setTitle:[NSString stringWithFormat:@"RÉSERVER %@", self.reservation.room.name]
                               leftButtonImage:nil
                              rightButtonImage:[UIImage imageNamed:@"WSMImagesNavbarQuit"]
                             forViewController:self];

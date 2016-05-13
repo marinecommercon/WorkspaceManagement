@@ -361,6 +361,7 @@
 				TargetAttributes = {
 					301832A81CAD22A100964F60 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = D7XBJ3PC59;
 					};
 				};
 			};
@@ -597,7 +598,7 @@
 				INFOPLIST_FILE = WorkspaceManagement/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = docapost.WorkspaceManagement;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.buquet-net.docapost.WorkspaceManagement";
 				PRODUCT_NAME = WorkspaceManagement;
 			};
 			name = Debug;
@@ -616,7 +617,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = docapost.WorkspaceManagement;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.buquet-net.docapost.WorkspaceManagement";
 				PRODUCT_NAME = WorkspaceManagement;
 			};
 			name = Release;

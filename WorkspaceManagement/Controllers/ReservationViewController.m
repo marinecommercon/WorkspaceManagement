@@ -10,6 +10,7 @@
 #import "NavBarInstance.h"
 #import "Constants.h"
 #import "UIFont+AppAdditions.h"
+#import "UIColor+AppAdditions.h"
 
 @interface ReservationViewController ()
 
@@ -46,6 +47,8 @@
     
     buttonValidationReservation.layer.cornerRadius = 5;
     buttonValidationReservation.clipsToBounds = YES;
+    buttonValidationReservation.backgroundColor = UIColor.bnpValidationButtonOff;
+    buttonValidationReservation.userInteractionEnabled = NO;
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onKeyboardHide:) name:UIKeyboardWillHideNotification object:nil];
 }
@@ -53,6 +56,17 @@
 - (IBAction)textFieldEditingChanged:(id)sender
 {
     textFieldAuthor.font = UIFont.reservationEditing;
+    
+    if( textFieldAuthor.text.length > 0 )
+    {
+        buttonValidationReservation.backgroundColor = UIColor.bnpValidationButtonOn;
+        buttonValidationReservation.userInteractionEnabled = YES;
+    }
+    else
+    {
+        buttonValidationReservation.backgroundColor = UIColor.bnpValidationButtonOff;
+        buttonValidationReservation.userInteractionEnabled = NO;
+    }
 }
 
 - (IBAction)textFieldEditingChanged2:(id)sender
@@ -162,14 +176,14 @@
 
 // HANDLE NAVBAR
 
-- (void) updateNavBar {
+- (void)updateNavBar {
     
 //    UIImage *left = [UIImage imageNamed:@"WSMImagesNavbarPrevious"];
 //    
 //    NavBarInstance *custom = [NavBarInstance sharedInstance];
 //    [custom styleNavBar:self setTitle:@"RÉSERVER UNE SALLE" setLeftButton:left setRightButton:nil];
  
-    [[NavBarInstance sharedInstance] setTitle:@"RÉSERVER UNE SALLE"
+    [[NavBarInstance sharedInstance] setTitle:[NSString stringWithFormat:@"RÉSERVER %@", self.room.name]
                               leftButtonImage:[UIImage imageNamed:@"WSMImagesNavbarPrevious"]
                              rightButtonImage:nil
                             forViewController:self];

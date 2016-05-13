@@ -30,7 +30,7 @@ NSString *kDAORoomMapStateGreenFree = @"green_free";
 NSString *kDAORoomMapStateGreenBook_OK = @"green_book_ok";
 NSString *kDAORoomMapStateGreenBook_KO = @"green_book_ko";
 NSString *kDAORoomMapStateBlue = @"blue";
-NSString *kDAORoomMapStateBlueRed = @"red";
+NSString *kDAORoomMapStateRed = @"red";
 NSString *kDAORoomMapStateBlueTest = @"test";
 
 NSString *kDAOEquipmentEntity = @"Equipment";
