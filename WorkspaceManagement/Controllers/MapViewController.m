@@ -44,6 +44,29 @@
     self.manager.delegate = self;
 }
 
+- (void)adjustContainerFrame
+{
+    CGRect pFrm = self.view.frame;
+    CGRect frm = CGRectZero;
+    
+    if( self.stepForSwipe == 1 )
+        frm = CGRectMake(0, pFrm.size.height*0.82, pFrm.size.width, pFrm.size.height * 1.02 - 64.0);
+    else if( self.stepForSwipe == 2 )
+        frm = CGRectMake(0, pFrm.size.height*0.685, pFrm.size.width, pFrm.size.height * 1.02 - 64.0);
+    else if( self.stepForSwipe == 3 )
+        frm = CGRectMake(0, pFrm.size.height*0.18, pFrm.size.width, pFrm.size.height * 1.02 - 64.0);
+    
+    self.container.frame = frm;
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    
+    [self adjustContainerFrame];
+}
+
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -55,7 +78,7 @@
     // Because of small bug
     // [self initContainerSwipeGesture];
    
-    self.stepForSwipe = 1;
+//    self.stepForSwipe = 1;
     
     if( !self.filterViewController )
     {
@@ -63,7 +86,7 @@
         self.filterViewController = [storyboard instantiateViewControllerWithIdentifier:@"filterViewController"];
         self.filterViewController.delegate = self;
         [self addChildViewController:self.filterViewController];
-        self.filterViewController.view.frame = CGRectMake(0, 0, self.container.frame.size.width, self.container.frame.size.height);
+        self.filterViewController.view.frame = self.container.bounds;
         [self.container addSubview:self.filterViewController.view];
         [self.filterViewController didMoveToParentViewController:self];
     }
@@ -493,6 +516,7 @@
         self.filtersON = NO;
         [self decide];
         [self.filterViewController initState];
+
     }
 }
 
@@ -536,23 +560,18 @@
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration: 0.3];
     
-    CGRect frame = container.frame;
-    
     switch (self.stepForSwipe)
     {
         case 1 : // CAROUSEL -> CAROUSEL + DURATION
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.57;
-//            [self changeTitle2];
-            container.frame = frame;
             self.stepForSwipe = 2;
+            [self adjustContainerFrame];
             self.filterViewController.stepForSwipe = 2;
             [self decide];
             break;
             
         case 2 : // CAROUSEL + DURATION -> FILTERS
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 6.35;
-            container.frame = frame;
             self.stepForSwipe = 3;
+            [self adjustContainerFrame];
             self.filterViewController.stepForSwipe = 3;
             self.myMapView.userInteractionEnabled = NO;
             [self shouldStopAsynchtaskSensors];
@@ -569,22 +588,19 @@
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration: 0.3];
     
-    CGRect frame = container.frame;
-    
     switch (self.stepForSwipe)
     {
         case 2 : // CAROUSEL + DURATION -> CAROUSEL
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.22;
-            container.frame = frame;
             self.stepForSwipe = 1;
+            [self adjustContainerFrame];
             self.filterViewController.stepForSwipe = 1;
             [self decide];
+
             break;
             
         case 3 : // FILTERS -> CAROUSEL + DURATION
-            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) / 1.22;
-            container.frame = frame;
             self.stepForSwipe = 1;
+            [self adjustContainerFrame];
             self.myMapView.userInteractionEnabled = true;
             self.filtersON = self.filterViewController.filtersChanged;
             [self shouldStartAsynchtaskSensors];
@@ -597,6 +613,7 @@
     }
 
     [UIView commitAnimations];
+
 }
 
 // HANDLE SENSORS

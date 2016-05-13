@@ -66,6 +66,7 @@
     [self updatePeopleLabel];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onKeyboardHide:) name:UIKeyboardWillHideNotification object:nil];
+    
 }
 
 - (IBAction)textFieldEditingChanged:(id)sender
@@ -127,7 +128,7 @@
 
 // Buttons and logic
 
-- (void) updatePeopleLabel
+- (void)updatePeopleLabel
 {
     self.peopleLabel.text = [NSString stringWithFormat:@"%d", self.numberOfPeople];
 }
@@ -211,6 +212,8 @@
 
     [self checkStepper];
 }
+
+
 
 - (void)checkStepper
 {
@@ -543,7 +546,7 @@
     
     if (view == nil)
     {
-        CGRect carouselFrm = self.carousel.frame;
+//        CGRect carouselFrm = self.carousel.frame;
         
 //        view = [[UIImageView alloc] initWithFrame:CGRectMake( carouselFrm.origin.x, carouselFrm.origin.y, carouselFrm.size.width / 5.0, carouselFrm.size.height)];
         view = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"CarouselitemindexGrey.png"]];

@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WorkspaceManagement/Controllers/MapViewController.m"
-            timestampString = "484808540.167114"
+            timestampString = "484845889.006972"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "495"
-            endingLineNumber = "495"
-            landmarkName = "-map:didClickLong:"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
+            landmarkName = "-launchLeft"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +41,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WorkspaceManagement/Controllers/MapViewController.m"
-            timestampString = "484655968.574"
+            filePath = "WorkspaceManagement/Controllers/FilterViewController.m"
+            timestampString = "484843936.116005"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
-            landmarkName = "-launchLeft"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
+            landmarkName = "-stepperAction:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WorkspaceManagement/Controllers/MapViewController.m"
+            timestampString = "484845889.006972"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "-viewDidLayoutSubviews"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

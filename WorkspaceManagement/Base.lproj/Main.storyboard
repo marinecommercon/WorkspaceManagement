@@ -42,19 +42,16 @@
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="adK-Xe-Euz">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <variation key="heightClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="652" width="600" height="752"/>
+                                </variation>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="p0z-Df-AK2" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.82" id="2ri-YN-fiJ"/>
-                            <constraint firstItem="adK-Xe-Euz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="3Cm-Gl-rHK"/>
-                            <constraint firstAttribute="trailing" secondItem="adK-Xe-Euz" secondAttribute="trailing" id="4i3-ix-k1Y"/>
-                            <constraint firstItem="adK-Xe-Euz" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="1.02" constant="-64" id="84I-z8-M5i"/>
                             <constraint firstItem="p0z-Df-AK2" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="GZd-qB-dVx"/>
                             <constraint firstItem="p0z-Df-AK2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Mxe-zv-LxK"/>
-                            <constraint firstItem="adK-Xe-Euz" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="dMl-9B-X3r"/>
-                            <constraint firstItem="adK-Xe-Euz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="2.57" id="ibF-1m-5Nx"/>
-                            <constraint firstItem="adK-Xe-Euz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="kkt-k6-JIb"/>
                             <constraint firstItem="p0z-Df-AK2" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="xqY-wH-MnY"/>
                         </constraints>
                     </view>
@@ -1274,7 +1271,7 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="WSMStepper" translatesAutoresizingMaskIntoConstraints="NO" id="Rrm-Eh-T4Q">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     </imageView>
-                                    <stepper opaque="NO" alpha="0.050000000000000003" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="oDw-Si-Ge7">
+                                    <stepper opaque="NO" alpha="0.050000000000000003" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minimumValue="1" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="oDw-Si-Ge7">
                                         <rect key="frame" x="-47" y="-14" width="94" height="29"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <variation key="heightClass=regular" misplaced="YES">
